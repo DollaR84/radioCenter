@@ -20,6 +20,9 @@ this addon allows you to play online radio stations and save the stream to a fil
 * added settings to the nvda settings panel;
 * added the ability to record;
 
+###Version 1.1.1
+* added Turkish localization (Umut Korkmaz);
+
 ###Version 1.1.0
 * added GUI control center;
 
