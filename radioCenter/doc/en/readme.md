@@ -3,7 +3,7 @@
 * Author: Ruslan Dolovaniuk (Ukraine)
 * PayPal: ruslan.dolovaniuk84@gmail.com
 
-this addon allows you to play online radio stations and save the stream to a file.
+this addon allows you to play online radio stations.
 
 
 ## List of hotkeys:
@@ -18,7 +18,9 @@ this addon allows you to play online radio stations and save the stream to a fil
 ##List of changes:
 ###Version 1.2.0
 * added settings to the nvda settings panel;
-* added the ability to record;
+* added several options for sorting radio stations;
+* changed the muting function;
+* fixed the problem of opening several control windows;
 
 ###Version 1.1.1
 * added Turkish localization (Umut Korkmaz);

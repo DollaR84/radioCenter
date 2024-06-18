@@ -1,0 +1,20 @@
+﻿from enum import Enum
+
+import addonHandler
+
+
+addonHandler.initTranslation()
+
+
+class SortType(Enum):
+    Nothing = _('nothing')
+    NameDirect = _('name direct')
+    NameReverse = _('name reverse')
+    PriorityDirect = _('priority direct')
+    PriorityReverse = _('priority reverse')
+
+
+class PriorityType(Enum):
+    High = _('high')
+    Middle = _('middle')
+    Low = _('low')

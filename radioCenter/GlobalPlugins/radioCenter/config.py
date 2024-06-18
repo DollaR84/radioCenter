@@ -1,18 +1,17 @@
 ﻿from dataclasses import dataclass
 
+from .stations import Station
 
-@dataclass
-class Station:
-    name: str
-    url: str
+from .types import SortType
 
 
 @dataclass
 class Config:
     stations: list[Station]
-    current: int = 0
 
     volume: int = 50
     is_muted: bool = False
 
     record_path: str = ""
+
+    sort_type: SortType = SortType.Nothing

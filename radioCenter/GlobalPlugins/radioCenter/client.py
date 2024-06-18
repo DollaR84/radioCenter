@@ -8,9 +8,13 @@ import wx
 
 from . import vlc\
 
-from .config import Config, Station
+from .config import Config
 
 from .saver import Saver
+
+from .stations import Station, StationsControl
+
+from .types import SortType, PriorityType
 
 
 addonHandler.initTranslation()
@@ -21,8 +25,8 @@ class RadioClient:
     def __init__(self):
         self.saver: Saver = Saver()
         self.config: Config = self.saver.load()
-        if len(self.config.stations) <= self.config.current:
-            self.config.current = 0
+        self.stations_control = StationsControl(self.config.stations)
+        self.stations_control.sort(self.config.sort_type)
 
         self.instance = vlc.Instance('--no-video', '--input-repeat=-1')
         self.player = None
@@ -62,6 +66,10 @@ class RadioClient:
             vlc.Meta.DiscTotal,
         ], None)
 
+    @property
+    def stations(self) -> list[Station]:
+        return self.stations_control.stations
+
     def play(self, count: int = 1):
         if self.is_playing:
             if count > 1:
@@ -78,6 +86,7 @@ class RadioClient:
                     self.set_media()
                 self.player.play()
                 self._need_paused = True
+
                 if self.track_process:
                     self.track_process.Stop()
                 self.track_process = wx.CallLater(5 * 1000, self.track_data)
@@ -105,7 +114,7 @@ class RadioClient:
                 ui.message(_("radio turned off"))
 
     def set_media(self, commands: list[str] = []):
-        station = self.config.stations[self.config.current]
+        station = self.stations_control.selected
         self.media = self.instance.media_new(station.url, *commands)
         self.media.get_mrl()
 
@@ -114,27 +123,27 @@ class RadioClient:
             self.player.audio_set_volume(self.config.volume)
         self.player.set_media(self.media)
 
-    def change_station(self, index: int):
+    def station_up(self):
         need_playing = self.is_playing
         self.stop()
-        self.config.current = index
+
+        self.stations_control.next()
         self.set_media()
         self.save()
 
         if need_playing:
             self.play()
 
-    def station_up(self):
-        index = self.config.current + 1
-        if len(self.config.stations) == index:
-            index = 0
-        self.change_station(index)
-
     def station_down(self):
-        index = self.config.current - 1
-        if index < 0:
-            index = len(self.config.stations) - 1
-        self.change_station(index)
+        need_playing = self.is_playing
+        self.stop()
+
+        self.stations_control.previous()
+        self.set_media()
+        self.save()
+
+        if need_playing:
+            self.play()
 
     def change_volume(self, volume: int):
         self.config.volume = volume
@@ -157,30 +166,18 @@ class RadioClient:
             self.change_volume(volume)
 
     def mute(self):
-        self.config.is_muted = not self.config.is_muted
+        self.config.is_muted = not self.player.audio_get_mute()
+        self.player.audio_set_mute(self.config.is_muted)
         self.save()
 
-        volume = 0 if self.config.is_muted else self.config.volume
-        self.player.audio_set_volume(volume)
+    def add_station(self, name: str, url: str, priority: PriorityType) -> int:
+        index = self.stations_control.add(name, url, priority, self.config.sort_type)
 
-    def add_station(self, station: Station) -> int:
-        new_position = self.config.current
-        unique_urls = list(set([station.url for station in self.config.stations]))
-        if station.url not in unique_urls:
-            self.config.stations.append(station)
-            self.save()
-            new_position = len(self.config.stations) - 1
-            self.config.current = new_position
-        return new_position
+        self.save()
+        return index
 
     def remove_station(self, index: int) -> int:
-        self.config.stations.pop(index)
-
-        if len(self.config.stations) > 0:
-            index = index - 1
-            if index < 0:
-                index = 0
-            self.config.current = index
+        index = self.stations_control.remove(index)
 
         self.save()
         return index

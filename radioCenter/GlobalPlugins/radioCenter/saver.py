@@ -12,8 +12,10 @@ class Saver:
         base_dir = globalVars.appArgs.configPath
         self.file_name = os.path.join(base_dir, 'radio_center.dat')
 
-    def get_default(self) -> Config:
+    @property
+    def default(self) -> Config:
         station = Station(
+            id=1,
             name="Gomer",
             url='https://homer.in.ua/listen/radio_homer/radio128.aac',
         )
@@ -24,11 +26,23 @@ class Saver:
             pickle.dump(config, data_file)
 
     def load(self) -> Config:
-        config = self.get_default()
+        config = self.default
         try:
             data_file = open(self.file_name, 'rb')
             config = pickle.load(data_file)
+
+            config = self.fixed_stations(config)
         except Exception:
             pass
 
+        return config
+
+    def fixed_stations(self, config: Config) -> Config:
+        if not hasattr(config.stations[0], 'id'):
+            config.stations = [
+                Station(id=index, name=old_station.name, url=old_station.url)
+                for index, old_station in enumerate(config.stations, start=1)
+            ]
+
+            self.save(config)
         return config

@@ -3,7 +3,7 @@
 * Yazar: Ruslan Dolovaniuk (Ukrayna)
 * PayPal: ruslan.dolovaniuk84@gmail.com
 
-bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve akışı bir dosyaya kaydetmenize olanak tanır.
+Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 
 
 ## Kısayol listesi:
@@ -17,6 +17,12 @@ bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve akışı bir dosyay
 * NVDA+ALT+R: Radyo merkezi penceresini aç;
 
 ## Değişiklik listesi:
+### Sürüm 1.2.0
+* nvda ayarlar paneline ayarlar eklendi;
+* radyo istasyonlarını sıralamak için çeşitli seçenekler eklendi;
+* sessize alma işlevi değiştirildi;
+* birden fazla kontrol penceresinin açılması sorunu düzeltildi;
+
 ### Sürüm 1.1.1
 * Türkçe yerelleştirme eklendi (Umut Korkmaz);
 
