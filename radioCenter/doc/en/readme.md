@@ -18,6 +18,7 @@ this addon allows you to play online radio stations.
 ##List of changes:
 ###Version 1.2.0
 * added settings to the nvda settings panel;
+* added the ability to edit an existing radio station;
 * added several options for sorting radio stations;
 * changed the muting function;
 * fixed the problem of opening several control windows;

@@ -19,6 +19,7 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 ## Değişiklik listesi:
 ### Sürüm 1.2.0
 * nvda ayarlar paneline ayarlar eklendi;
+* mevcut bir radyo istasyonunu düzenleme yeteneği eklendi;
 * radyo istasyonlarını sıralamak için çeşitli seçenekler eklendi;
 * sessize alma işlevi değiştirildi;
 * birden fazla kontrol penceresinin açılması sorunu düzeltildi;
