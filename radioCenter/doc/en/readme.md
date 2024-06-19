@@ -15,6 +15,13 @@ this addon allows you to play online radio stations.
 * NVDA+ALT+O: get station info;
 * NVDA+ALT+R: open window control center;
 
+## Sorting stations:
+* without sorting;
+* by name in forward direction;
+* by name in the reverse direction;
+* by priority and name in the forward direction;
+* by priority and name in the reverse direction;
+
 ##List of changes:
 ###Version 1.2.0
 * added settings to the nvda settings panel;

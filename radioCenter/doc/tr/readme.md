@@ -16,6 +16,13 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * NVDA+ALT+O: istasyon bilgisini al;
 * NVDA+ALT+R: merkezi penceresini aç;
 
+## İstasyonları sıralama:
+* sıralama yapmadan;
+* ileri yönde isme göre;
+* ters yönde isimle;
+* ileri yönde öncelik ve isme göre;
+* önceliğe ve isme göre ters yönde;
+
 ## Değişiklik listesi:
 ### Sürüm 1.2.0
 * nvda ayarlar paneline ayarlar eklendi;
