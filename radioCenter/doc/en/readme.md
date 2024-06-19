@@ -13,7 +13,7 @@ this addon allows you to play online radio stations.
 * NVDA+ALT+RightArrow: station next;
 * NVDA+ALT+LeftArrow: station previous;
 * NVDA+ALT+O: get station info;
-* NVDA+ALT+R: open window radio control center;
+* NVDA+ALT+R: open window control center;
 
 ##List of changes:
 ###Version 1.2.0

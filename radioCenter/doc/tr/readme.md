@@ -14,7 +14,7 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * NVDA+ALT+Sağ ok: sonraki istasyon;
 * NVDA+ALT+Sol Ok: önceki istasyon;
 * NVDA+ALT+O: istasyon bilgisini al;
-* NVDA+ALT+R: Radyo merkezi penceresini aç;
+* NVDA+ALT+R: merkezi penceresini aç;
 
 ## Değişiklik listesi:
 ### Sürüm 1.2.0
