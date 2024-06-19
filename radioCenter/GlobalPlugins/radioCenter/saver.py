@@ -16,7 +16,7 @@ class Saver:
     def default(self) -> Config:
         station = Station(
             id=1,
-            name="Gomer",
+            name="Homer",
             url='https://homer.in.ua/listen/radio_homer/radio128.aac',
         )
         return Config(stations=[station])

@@ -23,7 +23,7 @@ this addon allows you to play online radio stations.
 * by priority and name in the reverse direction;
 
 ##List of changes:
-###Version 1.2.0
+###Version 1.2.5
 * added settings to the nvda settings panel;
 * added the ability to edit an existing radio station;
 * added several options for sorting radio stations;

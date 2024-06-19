@@ -192,8 +192,6 @@ class RadioGUI(wx.Dialog):
 
     def change_station(self, event):
         index = self.stations.GetSelection()
-        if not index:
-            return
         station = self.radio.stations[index]
 
         name = self.new_station_name.GetValue()
@@ -214,6 +212,8 @@ class RadioGUI(wx.Dialog):
         self.stations.SetString(index, station.name_url)
         self.radio.stations_control.sort(self.radio.config.sort_type)
         self.stations.Set(self.stations_names)
+        self.new_station_name.SetValue('')
+        self.new_station_url.SetValue('')
         self.change_station_button.Disable()
         self.Layout()
 
