@@ -21,20 +21,24 @@ this addon allows you to play online radio stations.
 * by name in the reverse direction;
 * by priority and name in the forward direction;
 * by priority and name in the reverse direction;
+* manually;
 
-##List of changes:
-###Version 1.2.5
+## List of changes:
+### Version 1.4.0
+* added manual sorting of stations;
+
+### Version 1.2.5
 * added settings to the nvda settings panel;
 * added the ability to edit an existing radio station;
 * added several options for sorting radio stations;
 * changed the muting function;
 * fixed the problem of opening several control windows;
 
-###Version 1.1.1
+### Version 1.1.1
 * added Turkish localization (Umut Korkmaz);
 
-###Version 1.1.0
+### Version 1.1.0
 * added GUI control center;
 
-###Version 1.0.0
+### Version 1.0.0
 * created online radio on base vlc player;
