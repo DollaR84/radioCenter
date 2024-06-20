@@ -15,6 +15,10 @@ this addon allows you to play online radio stations.
 * NVDA+ALT+O: get station info;
 * NVDA+ALT+R: open window control center;
 
+When manually sorting in the list of stations:
+* ALT+Up Arrow: move the station to a higher position;
+* ALT+Down arrow: move the station to a lower position;
+
 ## Sorting stations:
 * without sorting;
 * by name in forward direction;
@@ -24,7 +28,7 @@ this addon allows you to play online radio stations.
 * manually;
 
 ## List of changes:
-### Version 1.4.0
+### Version 1.4.1
 * added manual sorting of stations;
 
 ### Version 1.2.5

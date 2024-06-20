@@ -16,6 +16,10 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * NVDA+ALT+O: istasyon bilgisini al;
 * NVDA+ALT+R: merkezi penceresini aç;
 
+İstasyon listesinde manuel olarak sıralama yaparken:
+* ALT+Yukarı Ok: istasyonu daha yüksek bir konuma taşıyın;
+* ALT+Aşağı ok: istasyonu daha düşük bir konuma taşıyın;
+
 ## İstasyonları sıralama:
 * sıralama yapmadan;
 * ileri yönde isme göre;
@@ -25,7 +29,7 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * manuel olarak;
 
 ## Değişiklik listesi:
-### Sürüm 1.4.0
+### Sürüm 1.4.1
 * istasyonların manuel olarak sıralanması eklendi;
 
 ### Sürüm 1.2.5
