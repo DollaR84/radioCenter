@@ -113,7 +113,7 @@ class StationsControl:
         index = len(self.stations)
         unique_urls = list(set([station.url for station in self.stations]))
         if url not in unique_urls:
-            station = Station(id=index, name=name, url=url, priority=priority)
+            station = Station(id=index, manual_id=index, name=name, url=url, priority=priority)
             self.stations.append(station)
             return station
         return None
