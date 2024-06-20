@@ -5,7 +5,9 @@ import wx
 
 from .client import RadioClient
 
-from .types import SortType, PriorityType
+from .player import Player
+
+from .types import SortType, PriorityType, SoundType
 
 
 addonHandler.initTranslation()
@@ -60,7 +62,10 @@ class RadioGUI(wx.Dialog):
         left_helper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
         left_helper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("List stations:")))
-        self.stations = left_helper.addItem(wx.ListBox(self, wx.ID_ANY, choices=self.stations_names))
+        self.stations = left_helper.addItem(wx.ListBox(
+            self, wx.ID_ANY, choices=self.stations_names,
+            style=wx.LB_HSCROLL | wx.LB_NEEDED_SB | wx.LB_SINGLE,
+        ))
         left_sizer.Add(left_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
 
         sort_types = [item.value for item in SortType]
@@ -79,8 +84,8 @@ class RadioGUI(wx.Dialog):
 
         station_text_sizer = wx.BoxSizer(wx.VERTICAL)
         station_text_helper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-        self.new_station_name = station_text_helper.addLabeledControl(_("New station name:"), wx.TextCtrl)
-        self.new_station_url = station_text_helper.addLabeledControl(_("New station url:"), wx.TextCtrl)
+        self.station_name = station_text_helper.addLabeledControl(_("station name:"), wx.TextCtrl)
+        self.station_url = station_text_helper.addLabeledControl(_("station url:"), wx.TextCtrl)
 
         station_ctrl_sizer = wx.BoxSizer(wx.HORIZONTAL)
         station_ctrl_helper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.HORIZONTAL)
@@ -121,11 +126,13 @@ class RadioGUI(wx.Dialog):
 
     def _bindEvents(self):
         self.Bind(wx.EVT_CLOSE, self.close_window)
-        self.Bind(wx.EVT_LISTBOX, self.selection_station)
+        self.Bind(wx.EVT_LISTBOX, self.selection_station, self.stations)
+        self.stations.Bind(wx.EVT_KEY_UP, self.process_hot_keys)
+
         self.Bind(wx.EVT_CHOICE, self.selection_sort_type, self.sort_type)
         self.Bind(wx.EVT_CHOICE, self.selection_priority_type, self.priority_type)
-        self.Bind(wx.EVT_TEXT, self.changed_text_station, self.new_station_name)
-        self.Bind(wx.EVT_TEXT, self.changed_text_station, self.new_station_url)
+        self.Bind(wx.EVT_TEXT, self.changed_text_station, self.station_name)
+        self.Bind(wx.EVT_TEXT, self.changed_text_station, self.station_url)
 
         self.Bind(wx.EVT_BUTTON, self.play, self.play_button)
         self.Bind(wx.EVT_BUTTON, self.stop, self.stop_button)
@@ -136,6 +143,21 @@ class RadioGUI(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.add_station, self.add_station_button)
         self.Bind(wx.EVT_BUTTON, self.change_station, self.change_station_button)
         self.Bind(wx.EVT_BUTTON, self.remove_station, self.remove_station_button)
+
+    def process_hot_keys(self, event):
+        sort_type_status = self.radio.config.sort_type == SortType.Manual
+        if event.GetId() == self.stations.GetId() and event.AltDown() and sort_type_status:
+            index = self.stations.GetSelection()
+            keycode = event.GetKeyCode()
+            new_position = self.radio.stations_control.manual_sort(index, keycode)
+            if new_position is not None:
+                self.radio.save()
+                self.stations.Set(self.stations_names)
+                self.stations.SetSelection(new_position)
+                Player.play(SoundType.Move)
+            else:
+                Player.play(SoundType.Failure)
+        event.Skip()
 
     def selection_station(self, event):
         index = self.stations.GetSelection()
@@ -164,14 +186,14 @@ class RadioGUI(wx.Dialog):
         self.change_station_button.Enable()
 
     def changed_text_station(self, event):
-        if event.GetEventObject() == self.new_station_url:
+        if event.GetId() == self.station_url.GetId():
             self.add_station_button.Enable()
         if self.stations.GetSelection():
             self.change_station_button.Enable()
 
     def add_station(self, event):
-        name = self.get_new_station_name()
-        url = self.new_station_url.GetValue()
+        name = self.get_station_name()
+        url = self.station_url.GetValue()
         if all([name, url]):
             index = self.priority_type.GetSelection()
             for i, priority in enumerate(PriorityType):
@@ -181,8 +203,8 @@ class RadioGUI(wx.Dialog):
                 priority = PriorityType.Middle
 
             new_position = self.radio.add_station(name, url, priority)
-            self.new_station_name.SetValue('')
-            self.new_station_url.SetValue('')
+            self.station_name.SetValue('')
+            self.station_url.SetValue('')
             self.add_station_button.Disable()
 
             station = self.radio.stations_control.selected
@@ -194,8 +216,8 @@ class RadioGUI(wx.Dialog):
         index = self.stations.GetSelection()
         station = self.radio.stations[index]
 
-        name = self.new_station_name.GetValue()
-        url = self.new_station_url.GetValue()
+        name = self.station_name.GetValue()
+        url = self.station_url.GetValue()
         priority_index = self.priority_type.GetSelection()
         for i, priority in enumerate(PriorityType):
             if priority_index == i:
@@ -212,8 +234,8 @@ class RadioGUI(wx.Dialog):
         self.stations.SetString(index, station.name_url)
         self.radio.stations_control.sort(self.radio.config.sort_type)
         self.stations.Set(self.stations_names)
-        self.new_station_name.SetValue('')
-        self.new_station_url.SetValue('')
+        self.station_name.SetValue('')
+        self.station_url.SetValue('')
         self.change_station_button.Disable()
         self.Layout()
 
@@ -277,8 +299,8 @@ class RadioGUI(wx.Dialog):
     def mute_label(self) -> str:
         return _("Unmute") if self.radio.config.is_muted else _("Mute")
 
-    def get_new_station_name(self) -> str:
-        name = self.new_station_name.GetValue()
+    def get_station_name(self) -> str:
+        name = self.station_name.GetValue()
         if not name:
             name = " ".join([_("Station"), str(len(self.radio.config.stations) + 1)])
         return name

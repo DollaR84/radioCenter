@@ -1,12 +1,15 @@
 ﻿from dataclasses import dataclass
 from operator import attrgetter
 
+import wx
+
 from .types import SortType, PriorityType
 
 
 @dataclass
 class Station:
     id: int
+    manual_id: int
     name: str
     url: str
 
@@ -84,6 +87,9 @@ class StationsControl:
         if sort_by == SortType.Nothing:
             self.stations.sort(key=attrgetter('id'))
 
+        elif sort_by == SortType.Manual:
+            self.stations.sort(key=attrgetter('manual_id'))
+
         elif sort_by in (SortType.NameDirect, SortType.NameReverse,):
             is_reverse = sort_by == SortType.NameReverse
             self.stations.sort(
@@ -133,3 +139,16 @@ class StationsControl:
             station = self.stations[index]
             self.select(station)
         return index
+
+    def manual_sort(self, index: int, order_type) -> int | None:
+        station1 = self.stations[index]
+        if order_type == wx.WXK_UP and index > 0:
+            station2 = self.stations[index - 1]
+        elif order_type == wx.WXK_DOWN and index < len(self.stations) - 1:
+            station2 = self.stations[index + 1]
+        else:
+            return None
+
+        station1.manual_id, station2.manual_id = station2.manual_id, station1.manual_id
+        self.sort(SortType.Manual)
+        return station1.manual_id - 1

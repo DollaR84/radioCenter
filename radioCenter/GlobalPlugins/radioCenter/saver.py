@@ -1,3 +1,4 @@
+from enum import Enum
 import os
 import pickle
 
@@ -16,6 +17,7 @@ class Saver:
     def default(self) -> Config:
         station = Station(
             id=1,
+            manual_id=1,
             name="Homer",
             url='https://homer.in.ua/listen/radio_homer/radio128.aac',
         )
@@ -40,9 +42,16 @@ class Saver:
     def fixed_stations(self, config: Config) -> Config:
         if not hasattr(config.stations[0], 'id'):
             config.stations = [
-                Station(id=index, name=old_station.name, url=old_station.url)
+                Station(id=index, manual_id=index, name=old_station.name, url=old_station.url)
                 for index, old_station in enumerate(config.stations, start=1)
             ]
-
             self.save(config)
+
+        if not hasattr(config.stations[0], 'manual_id'):
+            config.stations = [
+                Station(id=old_station.id, manual_id=old_station.id, name=old_station.name, url=old_station.url)
+                for old_station in config.stations
+            ]
+            self.save(config)
+
         return config
