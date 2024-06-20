@@ -8,6 +8,7 @@ this addon allows you to play online radio stations.
 
 ## List of hotkeys:
 * NVDA+ALT+P: play/pause radio;
+* NVDA+ALT+M: enable/disable muting;
 * NVDA+ALT+UpArrow: volume up;
 * NVDA+ALT+DownArrow: volume down;
 * NVDA+ALT+RightArrow: station next;
@@ -28,8 +29,9 @@ When manually sorting in the list of stations:
 * manually;
 
 ## List of changes:
-### Version 1.4.1
+### Version 1.4.2
 * added manual sorting of stations;
+* added a key combination for mute mode;
 
 ### Version 1.2.5
 * added settings to the nvda settings panel;

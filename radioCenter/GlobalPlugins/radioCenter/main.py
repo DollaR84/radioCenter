@@ -47,6 +47,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         self.radio.volume_down()
 
     @scriptHandler.script(
+        description=_("mute/unmute"),
+        gesture="kb:NVDA+ALT+M"
+    )
+    def script_mute(self, gesture):
+        self.radio.mute()
+
+    @scriptHandler.script(
         description=_("station next"),
         gesture="kb:NVDA+ALT+RightArrow"
     )

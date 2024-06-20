@@ -166,6 +166,9 @@ class RadioClient:
             self.change_volume(volume)
 
     def mute(self):
+        if not self.player:
+            return
+
         self.config.is_muted = not self.player.audio_get_mute()
         self.player.audio_set_mute(self.config.is_muted)
         self.save()

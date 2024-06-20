@@ -9,6 +9,7 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 ## Kısayol listesi:
 
 * NVDA+ALT+P: radyoyu Çal/duraklat;
+* NVDA+ALT+M: sessize almayı etkinleştirme/devre dışı bırakma;
 * NVDA+ALT+Yukarı Ok: sesi arttır;
 * NVDA+ALT+Aşağı Ok: sesi azalt;
 * NVDA+ALT+Sağ ok: sonraki istasyon;
@@ -29,8 +30,9 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * manuel olarak;
 
 ## Değişiklik listesi:
-### Sürüm 1.4.1
+### Sürüm 1.4.2
 * istasyonların manuel olarak sıralanması eklendi;
+* sessiz modu için bir tuş kombinasyonu eklendi;
 
 ### Sürüm 1.2.5
 * nvda ayarlar paneline ayarlar eklendi;
