@@ -1,4 +1,5 @@
 ﻿import os
+from typing import Callable
 
 import addonHandler
 from logHandler import log
@@ -173,11 +174,12 @@ class RadioClient:
         self.player.audio_set_mute(self.config.is_muted)
         self.save()
 
-    def add_station(self, name: str, url: str, priority: PriorityType) -> int:
-        index = self.stations_control.add(name, url, priority, self.config.sort_type)
+    def add_station(self, name: str, url: str, priority: PriorityType) -> int | None:
+        new_position = self.stations_control.add(name, url, priority, self.config.sort_type)
 
-        self.save()
-        return index
+        if new_position is not None:
+            self.save()
+        return new_position
 
     def remove_station(self, index: int) -> int:
         index = self.stations_control.remove(index)

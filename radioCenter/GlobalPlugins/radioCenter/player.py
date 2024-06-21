@@ -10,6 +10,7 @@ class Player:
     _names = {
         SoundType.Failure: "failure.wav",
         SoundType.Move: "move.wav",
+        SoundType.Success: "success.wav",
     }
 
     @classmethod

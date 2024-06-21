@@ -29,6 +29,10 @@ When manually sorting in the list of stations:
 * manually;
 
 ## List of changes:
+### Version 1.5.0
+* added a link functionality check before adding a new radio station;
+* fixed a number of minor errors in operation;
+
 ### Version 1.4.2
 * added manual sorting of stations;
 * added a key combination for mute mode;

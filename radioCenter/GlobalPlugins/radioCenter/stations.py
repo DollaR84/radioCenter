@@ -118,8 +118,8 @@ class StationsControl:
             return station
         return None
 
-    def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> int:
-        new_position = self.selected_index
+    def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> int | None:
+        new_position = None
         station = self.create(name, url, priority)
         if station:
             self.sort(sort_by)

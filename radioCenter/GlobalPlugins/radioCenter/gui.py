@@ -7,6 +7,8 @@ from .client import RadioClient
 
 from .player import Player
 
+from .tester import RadioTestData, RadioTester
+
 from .types import SortType, PriorityType, SoundType
 
 
@@ -194,23 +196,21 @@ class RadioGUI(wx.Dialog):
     def add_station(self, event):
         name = self.get_station_name()
         url = self.station_url.GetValue()
-        if all([name, url]):
-            index = self.priority_type.GetSelection()
-            for i, priority in enumerate(PriorityType):
-                if index == i:
-                    break
-            else:
-                priority = PriorityType.Middle
 
-            new_position = self.radio.add_station(name, url, priority)
-            self.station_name.SetValue('')
-            self.station_url.SetValue('')
-            self.add_station_button.Disable()
+        index = self.priority_type.GetSelection()
+        for i, priority in enumerate(PriorityType):
+            if index == i:
+                break
+        else:
+            priority = PriorityType.Middle
 
-            station = self.radio.stations_control.selected
-            self.stations.Insert(station.name_url, new_position)
-            self.stations.SetSelection(new_position)
-        self.Layout()
+        data = RadioTestData(
+            name=name,
+            url=url,
+            priority=priority,
+            callback_after=self.add_station_after,
+        )
+        RadioTester(data, self.radio.config.repeat_count)
 
     def change_station(self, event):
         index = self.stations.GetSelection()
@@ -304,3 +304,16 @@ class RadioGUI(wx.Dialog):
         if not name:
             name = " ".join([_("Station"), str(len(self.radio.config.stations) + 1)])
         return name
+
+    def add_station_after(self, data: RadioTestData):
+        if data.is_success:
+            new_position = self.radio.add_station(data.name, data.url, data.priority)
+            station = self.radio.stations_control.selected
+            if new_position is not None:
+                self.stations.Insert(station.name_url, new_position)
+                self.stations.SetSelection(new_position)
+
+        self.station_name.SetValue('')
+        self.station_url.SetValue('')
+        self.add_station_button.Disable()
+        self.Layout()

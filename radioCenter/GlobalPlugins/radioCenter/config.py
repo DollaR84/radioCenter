@@ -14,4 +14,5 @@ class Config:
 
     record_path: str = ""
 
+    repeat_count: int = 10
     sort_type: SortType = SortType.Nothing
