@@ -109,10 +109,13 @@ class StationsControl:
 
         return self.stations
 
+    def check_unique_url(self, url: str) -> bool:
+        unique_urls = list(set([station.url for station in self.stations]))
+        return url not in unique_urls
+
     def create(self, name: str, url: str, priority: PriorityType) -> Station | None:
         index = len(self.stations)
-        unique_urls = list(set([station.url for station in self.stations]))
-        if url not in unique_urls:
+        if self.check_unique_url(url):
             station = Station(id=index, manual_id=index, name=name, url=url, priority=priority)
             self.stations.append(station)
             return station

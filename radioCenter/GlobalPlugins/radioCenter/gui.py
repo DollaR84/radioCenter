@@ -205,10 +205,8 @@ class RadioGUI(wx.Dialog):
             priority = PriorityType.Middle
 
         data = RadioTestData(
-            name=name,
-            url=url,
-            priority=priority,
-            callback_after=self.add_station_after,
+            callback_after=self.add_station_after, url=url,
+            name=name, priority=priority,
         )
         RadioTester(data, self.radio.config.repeat_count)
 
@@ -222,18 +220,26 @@ class RadioGUI(wx.Dialog):
         for i, priority in enumerate(PriorityType):
             if priority_index == i:
                 break
+        else:
+            priority = None
 
-        if name and name != station.name:
+        if name and name != station.name and not url:
             station.name = name
         if url and url != station.url:
-            station.url = url
-        if priority != station.priority:
+            data = RadioTestData(
+                callback_after=self.change_station_after, url=url,
+                name=name, station_index=index,
+            )
+            RadioTester(data, self.radio.config.repeat_count)
+        if priority and priority != station.priority:
             station.priority = priority
 
-        self.radio.save()
-        self.stations.SetString(index, station.name_url)
-        self.radio.stations_control.sort(self.radio.config.sort_type)
-        self.stations.Set(self.stations_names)
+        if not url:
+            self.radio.save()
+            self.stations.SetString(index, station.name_url)
+            self.radio.stations_control.sort(self.radio.config.sort_type)
+            self.stations.Set(self.stations_names)
+
         self.station_name.SetValue('')
         self.station_url.SetValue('')
         self.change_station_button.Disable()
@@ -317,3 +323,17 @@ class RadioGUI(wx.Dialog):
         self.station_url.SetValue('')
         self.add_station_button.Disable()
         self.Layout()
+
+    def change_station_after(self, data:RadioTestData):
+        if data.is_success:
+            station = self.radio.stations[data.station_index]
+            if self.radio.stations_control.check_unique_url(data.url):
+                station.url = data.url
+
+            if data.name and data.name != station.name:
+                station.name = data.name
+
+            self.radio.save()
+            self.stations.SetString(data.station_index, station.name_url)
+            self.radio.stations_control.sort(self.radio.config.sort_type)
+            self.stations.Set(self.stations_names)

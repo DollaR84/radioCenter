@@ -18,10 +18,13 @@ addonHandler.initTranslation()
 
 @dataclass
 class RadioTestData:
-    name: str
-    url: str
-    priority: PriorityType
     callback_after: Callable
+    url: str
+
+    name: str | None = None
+    priority: PriorityType | None = None
+    station_index: int | None = None
+
     is_success: bool = False
 
 

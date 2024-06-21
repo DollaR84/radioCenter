@@ -30,8 +30,9 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * manuel olarak;
 
 ## Değişiklik listesi:
-### Sürüm 1.5.0
+### Sürüm 1.5.1
 * yeni bir radyo istasyonu eklemeden önce bir bağlantı işlevselliği kontrolü eklendi;
+* radyo istasyonu bağlantısını değiştirmeden önce bir bağlantı işlevselliği kontrolü eklendi;
 * operasyondaki bir dizi küçük hata düzeltildi;
 
 ### Sürüm 1.4.2
