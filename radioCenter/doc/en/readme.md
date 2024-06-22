@@ -29,6 +29,9 @@ When manually sorting in the list of stations:
 * manually;
 
 ## List of changes:
+### Version 1.5.2
+* added Czech localization (Jiri Holz);
+
 ### Version 1.5.1
 * added a link functionality check before adding a new radio station;
 * added a link functionality check before changing the radio station link;
