@@ -29,7 +29,7 @@ Při ručním řazení v seznamu stanic:
 * ručně;
 
 ## Seznam změn:
-### Verze 1.5.2
+### Verze 1.5.3
 * přidána česká lokalizace (Jiri Holz);
 
 ### Verze 1.5.1

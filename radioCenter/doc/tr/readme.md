@@ -30,7 +30,7 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * manuel olarak;
 
 ## Değişiklik listesi:
-### Sürüm 1.5.2
+### Sürüm 1.5.3
 * Çek yerelleştirmesi eklendi (Jiri Holz);
 
 ### Sürüm 1.5.1

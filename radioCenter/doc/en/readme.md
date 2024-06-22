@@ -29,7 +29,7 @@ When manually sorting in the list of stations:
 * manually;
 
 ## List of changes:
-### Version 1.5.2
+### Version 1.5.3
 * added Czech localization (Jiri Holz);
 
 ### Version 1.5.1
