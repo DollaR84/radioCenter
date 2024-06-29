@@ -3,7 +3,8 @@
 * Yazar: Ruslan Dolovaniuk (Ukrayna)
 * PayPal: ruslan.dolovaniuk84@gmail.com
 
-Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
+bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve ses akışını bir dosyaya kaydetmenize olanak tanır.
+Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini engellemez.
 
 
 ## Kısayol listesi:
@@ -30,6 +31,9 @@ Bu eklenti çevrimiçi radyo istasyonlarını dinlemenizi sağlar.
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 2.0.0
+* bir dosyaya ses akışını kaydetme özelliği eklendi;
+
 ### Sürüm 1.5.3
 * Çek yerelleştirmesi eklendi (Jiri Holz);
 

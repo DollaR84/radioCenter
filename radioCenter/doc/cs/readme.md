@@ -3,7 +3,8 @@
 * Autor: Ruslan Dolovanyuk (Ukrajina)
 * PayPal: ruslan.dolovaniuk84@gmail.com
 
-Tento doplněk umožňuje poslouchat online rozhlasové stanice.
+tento doplněk vám umožňuje poslouchat online rozhlasové stanice a uložit audio stream do souboru.
+Nahrávání jedné rozhlasové stanice neruší poslech jiné rozhlasové stanice.
 
 
 ## Seznam klávesových zkratek:
@@ -29,6 +30,9 @@ Při ručním řazení v seznamu stanic:
 * ručně;
 
 ## Seznam změn:
+### Verze 2.0.0
+* přidána možnost nahrávat audio stream do souboru;
+
 ### Verze 1.5.3
 * přidána česká lokalizace (Jiri Holz);
 

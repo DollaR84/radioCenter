@@ -26,6 +26,7 @@ class RadioGUI(wx.Dialog):
 
         gui.mainFrame.prePopup()
         window = RadioGUI(gui.mainFrame, client)
+        client.gui = window
 
         window.Show()
         gui.mainFrame.postPopup()
@@ -80,7 +81,7 @@ class RadioGUI(wx.Dialog):
         self.play_button = right_helper.addItem(wx.Button(self, label=self.play_label))
         self.stop_button = right_helper.addItem(wx.Button(self, label=_("Stop")))
         self.mute_button = right_helper.addItem(wx.Button(self, label=self.mute_label))
-        # self.record_button = right_helper.addItem(wx.Button(self, label=self.record_label))
+        self.record_button = right_helper.addItem(wx.Button(self, label=self.record_label))
         self.close_button = right_helper.addItem(wx.Button(self, wx.ID_ANY, label=_("Close")))
         right_sizer.Add(right_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
 
@@ -112,12 +113,12 @@ class RadioGUI(wx.Dialog):
         if not self.radio.is_stations_available:
             self.play_button.Disable()
             self.stop_button.Disable()
-            # self.record_button.Disable()
+            self.record_button.Disable()
         elif not self.radio.is_playing:
             self.stop_button.Disable()
-            # self.record_button.Disable()
+            self.record_button.Disable()
         if not self.radio.is_recording_allowed:
-            pass # self.record_button.Disable()
+            self.record_button.Disable()
         self.close_button.SetDefault()
 
         main_sizer.Add(left_sizer, border=5, flag=wx.EXPAND | wx.ALL)
@@ -139,7 +140,7 @@ class RadioGUI(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.play, self.play_button)
         self.Bind(wx.EVT_BUTTON, self.stop, self.stop_button)
         self.Bind(wx.EVT_BUTTON, self.mute, self.mute_button)
-        # self.Bind(wx.EVT_BUTTON, self.record, self.record_button)
+        self.Bind(wx.EVT_BUTTON, self.record, self.record_button)
         self.Bind(wx.EVT_BUTTON, self.close, self.close_button)
 
         self.Bind(wx.EVT_BUTTON, self.add_station, self.add_station_button)
@@ -168,8 +169,8 @@ class RadioGUI(wx.Dialog):
         self.change_station_button.Enable()
         self.remove_station_button.Enable()
         self.play_button.SetLabel(self.play_label)
-        if self.radio.is_playing:
-            pass # self.record_button.Enable()
+        if self.radio.is_playing and self.radio.is_recording_allowed:
+            self.record_button.Enable()
         self.priority_type.SetStringSelection(self.radio.stations_control.selected.priority.value)
         self.Layout()
 
@@ -263,13 +264,14 @@ class RadioGUI(wx.Dialog):
 
         self.stop_button.Enable()
         if self.radio.is_recording_allowed:
-            pass # self.record_button.Enable()
+            self.record_button.Enable()
 
     def stop(self, event):
         self.radio.stop()
         self.play_button.SetLabel(self.play_label)
         self.stop_button.Disable()
-        # self.record_button.Disable()
+        if not self.radio.is_recording:
+            self.record_button.Disable()
 
     def mute(self, event):
         self.radio.mute()
@@ -277,19 +279,14 @@ class RadioGUI(wx.Dialog):
 
     def record(self, event):
         self.radio.record()
-        # self.record_button.SetLabel(self.record_label)
-        if self.radio.is_recording:
-            self.play_button.Disable()
-            self.stop_button.Disable()
-        else:
-            self.play_button.Enable()
-            self.stop_button.Enable()
+        self.record_button.SetLabel(self.record_label)
 
     def close(self, event):
         self.Close(True)
 
     def close_window(self, event):
         self.radio.save()
+        self.radio.gui = None
         self.Destroy()
         self._instance = None
 

@@ -11,6 +11,8 @@ from . import vlc\
 
 from .config import Config
 
+from .recorder import RadioRecorder
+
 from .saver import Saver
 
 from .stations import Station, StationsControl
@@ -28,6 +30,8 @@ class RadioClient:
         self.config: Config = self.saver.load()
         self.stations_control = StationsControl(self.config.stations)
         self.stations_control.sort(self.config.sort_type)
+        self.recorder = None
+        self.gui = None
 
         self.instance = vlc.Instance('--no-video', '--input-repeat=-1')
         self.player = None
@@ -255,16 +259,12 @@ class RadioClient:
         if not self.is_recording_allowed:
             return
 
-        self._is_recording = not self._is_recording
+        if self._is_recording and self.recorder:
+            self.recorder.stop()
+            self.recorder = None
 
-        if self._is_recording:
-            pass
         else:
-            audiofile = self.get_name_file_for_record(self.config.record_path)
+            station = self.stations_control.selected
+            self.recorder = RadioRecorder(self.gui, self.config.record_path, station.url)
 
-    def get_name_file_for_record(self, record_path: str, ext: str = ".mp3") -> str:
-        names = set(x[:8] for x in os.listdir(record_path) if x.endswith(ext) and len(x) == 12)
-        for i in range(10**8):
-            filename = "%08i" % i
-            if filename not in names:
-                return os.path.join(record_path, "".join([filename, ext]))
+        self._is_recording = not self._is_recording

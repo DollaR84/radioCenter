@@ -3,7 +3,8 @@
 * Author: Ruslan Dolovaniuk (Ukraine)
 * PayPal: ruslan.dolovaniuk84@gmail.com
 
-this addon allows you to play online radio stations.
+this addon allows you to play online radio stations and save audio stream to file.
+Recording one radio station does not interfere with listening to another radio station.
 
 
 ## List of hotkeys:
@@ -29,6 +30,9 @@ When manually sorting in the list of stations:
 * manually;
 
 ## List of changes:
+### Version 2.0.0
+* added the ability to record an audio stream to a file;
+
 ### Version 1.5.3
 * added Czech localization (Jiri Holz);
 
