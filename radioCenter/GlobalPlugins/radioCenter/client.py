@@ -29,6 +29,9 @@ class RadioClient:
         self.saver: Saver = Saver()
         self.config: Config = self.saver.load()
         self.stations_control = StationsControl(self.config.stations)
+        need_fix = self.stations_control.check_and_fix_ids()
+        if need_fix:
+            self.save()
         self.stations_control.sort(self.config.sort_type)
         self.recorder = None
         self.gui = None

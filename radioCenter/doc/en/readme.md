@@ -30,6 +30,11 @@ When manually sorting in the list of stations:
 * manually;
 
 ## List of changes:
+### Version 2.1.0
+* added checking and correction if errors are found in the indexing of stations;
+* added Spanish localization (Rémy Ruiz);
+* added French localization (Rémy Ruiz);
+
 ### Version 2.0.0
 * added the ability to record an audio stream to a file;
 

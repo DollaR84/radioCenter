@@ -1,4 +1,4 @@
-﻿from dataclasses import dataclass
+﻿from dataclasses import dataclass, field
 
 from .stations import Station
 
@@ -7,7 +7,7 @@ from .types import SortType
 
 @dataclass
 class Config:
-    stations: list[Station]
+    stations: list[Station] = field(default_factory=list)
 
     volume: int = 50
     is_muted: bool = False

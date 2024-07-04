@@ -31,6 +31,11 @@ Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini 
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 2.1.0
+* istasyonların indekslenmesinde hatalar bulunursa kontrol ve düzeltme eklendi;
+* İspanyolca yerelleştirme eklendi (Rémy Ruiz);
+* Fransızca yerelleştirme eklendi (Rémy Ruiz);
+
 ### Sürüm 2.0.0
 * bir dosyaya ses akışını kaydetme özelliği eklendi;
 

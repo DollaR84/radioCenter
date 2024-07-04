@@ -30,6 +30,30 @@ class StationsControl:
     def __init__(self, stations: list[Station]):
         self.stations = stations
 
+    def check_and_fix_ids(self) -> bool:
+        need_fix_id = len(self.stations) != len(list(set([station.id for station in self.stations])))
+        need_fix_manual_id = len(self.stations) != len(list(set([station.manual_id for station in self.stations])))
+        if not need_fix_id and not need_fix_manual_id:
+            return False
+
+        ids: set[int] = set()
+        manual_ids: set[int] = set()
+
+        for station in self.stations:
+            if need_fix_id:
+                station.id = self.fix_id(station.id, ids)
+            if need_fix_manual_id:
+                station.manual_id = self.fix_id(station.manual_id, manual_ids)
+
+        return True
+
+    def fix_id(self, id_: int, fix_set: set[int]):
+        new_id = id_
+        while new_id in fix_set:
+            new_id += 1
+        fix_set.add(new_id)
+        return new_id
+
     @property
     def selected_index(self) -> int:
         index = 0

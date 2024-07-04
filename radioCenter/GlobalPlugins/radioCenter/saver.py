@@ -4,7 +4,7 @@ import pickle
 
 import globalVars
 
-from .config import Config, Station
+from .config import Config
 
 
 class Saver:
@@ -13,22 +13,12 @@ class Saver:
         base_dir = globalVars.appArgs.configPath
         self.file_name = os.path.join(base_dir, 'radio_center.dat')
 
-    @property
-    def default(self) -> Config:
-        station = Station(
-            id=1,
-            manual_id=1,
-            name="Homer",
-            url='https://homer.in.ua/listen/radio_homer/radio128.aac',
-        )
-        return Config(stations=[station])
-
     def save(self, config: Config):
         with open(self.file_name, 'wb') as data_file:
             pickle.dump(config, data_file)
 
     def load(self) -> Config:
-        config = self.default
+        config = Config()
         try:
             data_file = open(self.file_name, 'rb')
             config = pickle.load(data_file)

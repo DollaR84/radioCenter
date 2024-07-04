@@ -3,13 +3,13 @@ import gui
 
 import wx
 
-from .client import RadioClient
+from ..client import RadioClient
 
-from .player import Player
+from ..player import Player
 
-from .tester import RadioTestData, RadioTester
+from ..tester import RadioTestData, RadioTester
 
-from .types import SortType, PriorityType, SoundType
+from ..types import SortType, PriorityType, SoundType
 
 
 addonHandler.initTranslation()

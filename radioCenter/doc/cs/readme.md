@@ -30,6 +30,11 @@ Při ručním řazení v seznamu stanic:
 * ručně;
 
 ## Seznam změn:
+### Verze 2.1.0
+* přidána kontrola a oprava, pokud jsou nalezeny chyby v indexování stanic;
+* přidána španělská lokalizace (Rémy Ruiz);
+* přidána francouzská lokalizace (Rémy Ruiz);
+
 ### Verze 2.0.0
 * přidána možnost nahrávat audio stream do souboru;
 
