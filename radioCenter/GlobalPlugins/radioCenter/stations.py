@@ -148,6 +148,7 @@ class StationsControl:
     def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> int | None:
         new_position = None
         station = self.create(name, url, priority)
+        self.check_and_fix_ids()
         if station:
             self.sort(sort_by)
             new_position = self.select(station)
