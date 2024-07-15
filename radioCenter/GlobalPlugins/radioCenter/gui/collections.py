@@ -102,7 +102,7 @@ class TabCollection(wx.Panel):
         if not self.collection_data:
             self.test_button.Disable()
             self.play_button.Disable()
-        self.add_button.Disable()
+            self.add_button.Disable()
             event.Skip()
             return
 
