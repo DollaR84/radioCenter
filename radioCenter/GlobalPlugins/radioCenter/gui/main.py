@@ -1,11 +1,17 @@
 ﻿import addonHandler
 import gui
+from logHandler import log
+import ui
 
 import wx
+
+from .collections import RadioCollectionsGUI
 
 from ..client import RadioClient
 
 from ..player import Player
+
+from ..stations import Station
 
 from ..tester import RadioTestData, RadioTester
 
@@ -82,6 +88,7 @@ class RadioGUI(wx.Dialog):
         self.stop_button = right_helper.addItem(wx.Button(self, label=_("Stop")))
         self.mute_button = right_helper.addItem(wx.Button(self, label=self.mute_label))
         self.record_button = right_helper.addItem(wx.Button(self, label=self.record_label))
+        self.collections_button = right_helper.addItem(wx.Button(self, wx.ID_ANY, label=_("Collections")))
         self.close_button = right_helper.addItem(wx.Button(self, wx.ID_ANY, label=_("Close")))
         right_sizer.Add(right_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
 
@@ -129,6 +136,8 @@ class RadioGUI(wx.Dialog):
 
     def _bindEvents(self):
         self.Bind(wx.EVT_CLOSE, self.close_window)
+        self.Bind(wx.EVT_CHAR_HOOK, self.process_char_hooks)
+
         self.Bind(wx.EVT_LISTBOX, self.selection_station, self.stations)
         self.stations.Bind(wx.EVT_KEY_UP, self.process_hot_keys)
 
@@ -141,11 +150,24 @@ class RadioGUI(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.stop, self.stop_button)
         self.Bind(wx.EVT_BUTTON, self.mute, self.mute_button)
         self.Bind(wx.EVT_BUTTON, self.record, self.record_button)
+        self.Bind(wx.EVT_BUTTON, self.collections, self.collections_button)
         self.Bind(wx.EVT_BUTTON, self.close, self.close_button)
 
         self.Bind(wx.EVT_BUTTON, self.add_station, self.add_station_button)
         self.Bind(wx.EVT_BUTTON, self.change_station, self.change_station_button)
         self.Bind(wx.EVT_BUTTON, self.remove_station, self.remove_station_button)
+
+    def process_char_hooks(self, event):
+        keycode = event.GetKeyCode()
+        if keycode == wx.WXK_ESCAPE:
+            self.Close(True)
+
+        elif event.GetId() == self.stations.GetId() and chr(keycode) == 'C' and event.ControlDown():
+            index = self.stations.GetSelection()
+            station = self.radio.stations[index]
+            self.copy_to_clipboard(station.url)
+
+        event.Skip()
 
     def process_hot_keys(self, event):
         sort_type_status = self.radio.config.sort_type == SortType.Manual
@@ -267,7 +289,7 @@ class RadioGUI(wx.Dialog):
             self.record_button.Enable()
 
     def stop(self, event):
-        self.radio.stop()
+        self.radio.release()
         self.play_button.SetLabel(self.play_label)
         self.stop_button.Disable()
         if not self.radio.is_recording:
@@ -289,6 +311,9 @@ class RadioGUI(wx.Dialog):
         self.radio.gui = None
         self.Destroy()
         self._instance = None
+
+    def collections(self, event):
+        RadioCollectionsGUI.create_collections_gui(self)
 
     @property
     def play_label(self) -> str:
@@ -312,14 +337,17 @@ class RadioGUI(wx.Dialog):
         if data.is_success:
             new_position = self.radio.add_station(data.name, data.url, data.priority)
             station = self.radio.stations_control.selected
-            if new_position is not None:
-                self.stations.Insert(station.name_url, new_position)
-                self.stations.SetSelection(new_position)
+            self.add_station_to_listbox(station, new_position)
 
         self.station_name.SetValue('')
         self.station_url.SetValue('')
         self.add_station_button.Disable()
         self.Layout()
+
+    def add_station_to_listbox(self, station: Station, new_position: int | None):
+        if new_position is not None:
+            self.stations.Insert(station.name_url, new_position)
+            self.stations.SetSelection(new_position)
 
     def change_station_after(self, data:RadioTestData):
         if data.is_success:
@@ -334,3 +362,16 @@ class RadioGUI(wx.Dialog):
             self.stations.SetString(data.station_index, station.name_url)
             self.radio.stations_control.sort(self.radio.config.sort_type)
             self.stations.Set(self.stations_names)
+
+    def copy_to_clipboard(self, text: str, need_speak_phrase: bool = True):
+        data = wx.TextDataObject()
+        data.SetText(text)
+        if wx.TheClipboard.Open():
+            wx.TheClipboard.SetData(data)
+            wx.TheClipboard.Close()
+
+            if need_speak_phrase:
+                ui.message(_("Link copied to clipboard"))
+
+        else:
+            log.error("error opening clipboard")

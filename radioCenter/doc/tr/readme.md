@@ -2,25 +2,40 @@
 
 * Yazar: Ruslan Dolovaniuk (Ukrayna)
 * PayPal: ruslan.dolovaniuk84@gmail.com
+* Bank card number: 5375 4199 0919 2831
 
 bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve ses akışını bir dosyaya kaydetmenize olanak tanır.
 Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini engellemez.
+
+Warnings!
+Checking radio stations from collections is a rather lengthy and resource-intensive process.
+It is recommended to perform it in parts, periodically closing the window, and rerun it later.
+After reopening the collections window, testing will continue until all radio stations have been checked.
+Also, the health status of links often changes, so it is recommended to check the health of the link at the moment before adding it to the general list.
 
 
 ## Kısayol listesi:
 
 * NVDA+ALT+P: radyoyu Çal/duraklat;
-* NVDA+ALT+M: sessize almayı etkinleştirme/devre dışı bırakma;
+* NVDA+ALT+P çift tıklama: radyoyu kapatır;
+* NVDA+ALT+M: sessize almayı etkinleştir/devre dışı bırak;
 * NVDA+ALT+Yukarı Ok: sesi arttır;
 * NVDA+ALT+Aşağı Ok: sesi azalt;
 * NVDA+ALT+Sağ ok: sonraki istasyon;
 * NVDA+ALT+Sol Ok: önceki istasyon;
 * NVDA+ALT+O: istasyon bilgisini al;
-* NVDA+ALT+R: merkezi penceresini aç;
+* NVDA+ALT+R: Radyo merkezi penceresini açar;
+* ESC: Kontrol Merkezi ve Koleksiyonlar pencerelerini kapatır;
+* CTRL+C: radyo istasyonunun bağlantısını panoya kopyalar;
 
 İstasyon listesinde manuel olarak sıralama yaparken:
-* ALT+Yukarı Ok: istasyonu daha yüksek bir konuma taşıyın;
-* ALT+Aşağı ok: istasyonu daha düşük bir konuma taşıyın;
+* ALT+Yukarı Ok: istasyonu daha üst sıraya taşır;
+* ALT+Aşağı ok: istasyonu daha alt sıraya taşır;
+
+Koleksiyon listelerinde:
+* ALT+Yukarı Ok veya ALT+Sağ Ok: bağlantıyı bir sonrakine geçirir (radyo istasyonunun ses akışına birden fazla bağlantısı varsa);
+* ALT+Aşağı Ok veya ALT+Sol Ok: bağlantıyı bir öncekine geçirir (radyo istasyonunun ses akışına birden fazla bağlantısı varsa);
+* CTRL+C: radyo istasyonunun bağlantısını panoya kopyalar;
 
 ## İstasyonları sıralama:
 * sıralama yapmadan;
@@ -31,6 +46,20 @@ Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini 
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 3.0.0
+* kataloglardan radyo istasyonlarını seçmek için bir koleksiyon seçeneği oluşturuldu;
+* radyo istasyonlarını içeren 3 koleksiyon eklendi;
+* koleksiyonlardaki her radyo istasyonunun işlevsellik açısından otomatik olarak kontrol edilmesi için bir mekanizma oluşturuldu;
+* işlevsellik açısından radyo istasyonunun manuel kontrolü eklendi;
+* radyo istasyonunun çalınması doğrudan koleksiyon listesine eklendi;
+* radyo istasyonlarını koleksiyondan genel listeye kaydetme eklendi;
+* koleksiyonlara duruma göre filtreleme eklendi;
+* koleksiyonlara başlıktaki metne göre filtreleme eklendi;
+* koleksiyonlara ek bilgilerdeki metne göre filtreleme eklendi;
+* ESC tuşuna basarak iletişim kutularını kapatma seçeneği eklendi;
+* Ana listede ve koleksiyon listelerinde radyo istasyonunun bağlantısını panoya kopyalama özelliği eklendi;
+* daha önce her zaman geçiş yapılamadığı için, kısayol tuşları kullanılarak istasyonlar arasında geçiş iyileştirildi;
+
 ### Sürüm 2.1.0
 * istasyonların indekslenmesinde hatalar bulunursa kontrol ve düzeltme eklendi;
 * İspanyolca yerelleştirme eklendi (Rémy Ruiz);

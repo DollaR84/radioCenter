@@ -4,6 +4,8 @@ import pickle
 
 import globalVars
 
+from .collections import CollectionDataExt
+
 from .config import Config
 
 
@@ -12,6 +14,7 @@ class Saver:
     def __init__(self):
         base_dir = globalVars.appArgs.configPath
         self.file_name = os.path.join(base_dir, 'radio_center.dat')
+        self.collections_file_name = os.path.join(base_dir, 'radio_collections.dat')
 
     def save(self, config: Config):
         with open(self.file_name, 'wb') as data_file:
@@ -45,3 +48,18 @@ class Saver:
             self.save(config)
 
         return config
+
+    def save_collections(self, collections_data: dict[str, CollectionDataExt | None]):
+        with open(self.collections_file_name, 'wb') as data_file:
+            pickle.dump(collections_data, data_file)
+
+    def load_collections(self) -> dict[str, CollectionDataExt | None]:
+        collections_data = {}
+        try:
+            data_file = open(self.collections_file_name, 'rb')
+            collections_data = pickle.load(data_file)
+
+        except Exception:
+            pass
+
+        return collections_data

@@ -3,20 +3,30 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>radioCenter 2.1.1</title>
+<title>radioCenter 3.0.0</title>
 </head>
 <body>
 <h1>radioCenter</h1>
 <ul>
 <li>Auteur: Ruslan Dolovaniuk (Ukraine)</li>
 <li>PayPal: ruslan.dolovaniuk84@gmail.com</li>
+<li>Bank card number: 5375 4199 0919 2831</li>
 </ul>
 <p>cette extension vous permet d'écouter des stations de radio en ligne et d'enregistrer le flux audio dans un fichier.<br>
 L'enregistrement d'une station de radio n'interfère pas avec l'écoute d'une autre station de radio.
 </p>
+<p>
+<b>Avertissements!</b><br>
+Vérifier les stations de radio à partir des collections est un processus assez long et gourmand en ressources.<br>
+Il est recommandé de l'exécuter par parties, en fermant périodiquement la fenêtre, et de le réexécuter plus tard.<br>
+Après avoir rouvert la fenêtre des collections, les tests se poursuivront jusqu'à ce que toutes les stations de radio aient été vérifiées.<br>
+De plus, l'état de santé des liens change souvent, il est donc recommandé de vérifier l'état du lien sur le moment avant de l'ajouter à la liste générale.
+</p>
+
 <h2>Liste des raccourcis clavier:</h2>
 <ul>
 <li>NVDA+ALT+P: lire/mettre en pause la radio;</li>
+<li>NVDA+ALT+P double clic: désactiver la radio ;</li>
 <li>NVDA+ALT+M: activer/désactiver le mode sourdine;</li>
 <li>NVDA+ALT+Flèche Haut: augmenter le volume;</li>
 <li>NVDA+ALT+Flèche Bas: réduire le volume;</li>
@@ -24,12 +34,22 @@ L'enregistrement d'une station de radio n'interfère pas avec l'écoute d'une au
 <li>NVDA+ALT+Flèche Gauche: station précédente;</li>
 <li>NVDA+ALT+O: obtenir des informations sur la station;</li>
 <li>NVDA+ALT+R: ouvrir la fenêtre Contrôle Radio Center;</li>
+<li>ÉCHAP: fermer les fenêtres Contrôle Radio Center et Collections de Radio ;</li>
+<li>CTRL+C: copier le lien de la station de radio dans le presse-papiers ;</li>
 </ul>
 <p>
 Lors d'un tri manuel dans la liste des stations:
 <ul>
 <li>ALT+Flèche Haut: déplacer la station vers une position plus haute;</li>
 <li>ALT+Flèche Bas: déplacer la station vers une position plus basse;</li>
+</ul>
+</p>
+<p>
+Dans les listes de collections:
+<ul>
+<li>ALT+Flèche Haut ou ALT+Flèche Droit: basculer vers le suivant lien (si la radio dispose de plusieurs liens vers le flux audio) ;</li>
+<li>ALT+Flèche Bas ou ALT+Flèche Gauche: basculer vers le précédent lien (si la radio dispose de plusieurs liens vers le flux audio) ;</li>
+<li>CTRL+C: copier le lien de la station dans le presse-papiers ;</li>
 </ul>
 </p>
 
@@ -44,6 +64,22 @@ Lors d'un tri manuel dans la liste des stations:
 </ul>
 
 <h2>Liste des changements:</h2>
+<h3>Version 3.0.0</h3>
+<ul>
+<li>créé un mécanisme de collection pour sélectionner les stations de radio à partir des catalogues ;</li>
+<li>ajouté 3 collections avec des stations de radio ;</li>
+<li>créé un mécanisme pour vérifier automatiquement la fonctionnalité de chaque station de radio dans les collections ;</li>
+<li>ajout d'une vérification manuelle de la fonctionnalité de la station de radio ;</li>
+<li>ajout de la lecture de la radio directement dans la liste des collections ;</li>
+<li>ajout de la sauvegarde des stations de radio à partir de la collection vers la liste générale ;</li>
+<li>ajout d'un filtrage dans les collections par statut ;</li>
+<li>ajout du filtrage dans les collections par texte dans le titre ;</li>
+<li>ajout du filtrage dans les collections par texte dans les informations supplémentaires ;</li>
+<li>ajout de la fermeture des dialogues en appuyant sur ÉCHAP ;</li>
+<li>ajout de la copie du lien de la station de radio dans le presse-papiers dans la liste principale et dans les listes de collection ;</li>
+<li>basculement  des stations améliorées à l'aide de touches de raccourci, car auparavant, elles ne basculent pas toujours ;</li>
+</ul>
+
 <h3>Version 2.1.0</h3>
 <ul>
 <li>ajout d'une vérification et d'une correction si des erreurs sont trouvées dans l'indexation des stations ;</li>

@@ -2,13 +2,21 @@
 
 * Autor: Ruslan Dolovanyuk (Ukrajina)
 * PayPal: ruslan.dolovaniuk84@gmail.com
+* Bank card number: 5375 4199 0919 2831
 
 tento doplněk vám umožňuje poslouchat online rozhlasové stanice a uložit audio stream do souboru.
 Nahrávání jedné rozhlasové stanice neruší poslech jiné rozhlasové stanice.
 
+Varování!
+Kontrola rádiových stanic ze sbírek je poměrně zdlouhavý a náročný proces.
+Doporučuje se provádět jej po částech, pravidelně zavírat okno a spouštět jej později.
+Po opětovném otevření okna kolekcí bude testování pokračovat, dokud nebudou zkontrolovány všechny rádiové stanice.
+Stav odkazů se také často mění, proto se doporučuje zkontrolovat stav odkazu v tuto chvíli před přidáním do obecného seznamu.
+
 
 ## Seznam klávesových zkratek:
 * NVDA+ALT+P: přehrávání/pozastavení rádia;
+* Dvojité kliknutí NVDA+ALT+P: vypněte rádio;
 * NVDA+ALT+M: povolit/zakázat ztlumení;
 * NVDA+ALT+šipka nahoru: zvýšení hlasitosti;
 * NVDA+ALT+šipka dolů: snížení hlasitosti;
@@ -16,10 +24,17 @@ Nahrávání jedné rozhlasové stanice neruší poslech jiné rozhlasové stani
 * NVDA+ALT+šipka doleva: Předchozí stanice;
 * NVDA+ALT+O: získat informace o stanici;
 * NVDA+ALT+R: otevření okna ovládacího centra;
+* ESC: zavře okna Control Center a Collections;
+* CTRL+C: zkopírujte odkaz na rozhlasovou stanici do schránky;
 
 Při ručním řazení v seznamu stanic:
 * ALT+šipka nahoru: přesune stanici na vyšší pozici;
 * ALT+šipka dolů: přesunutí stanice na nižší pozici;
+
+V seznamech sbírek:
+* ALT+šipka nahoru nebo ALT+šipka doprava: přepnutí odkazu na další (pokud má rozhlasová stanice několik odkazů na audio stream);
+* ALT+šipka dolů nebo ALT+šipka doleva: přepne odkaz na předchozí (pokud má rozhlasová stanice několik odkazů na audio stream);
+* CTRL+C: zkopírujte odkaz na rozhlasovou stanici do schránky;
 
 ## Třídící stanice:
 * bez řazení;
@@ -30,6 +45,20 @@ Při ručním řazení v seznamu stanic:
 * ručně;
 
 ## Seznam změn:
+### Verze 3.0.0
+* vytvořil sbírkový mechanismus pro výběr rozhlasových stanic z katalogů;
+* přidány 3 sbírky s rozhlasovými stanicemi;
+* vytvořili mechanismus pro automatickou kontrolu funkčnosti každé rádiové stanice ve sbírkách;
+* přidána manuální kontrola funkčnosti rádiové stanice;
+* přidáno přehrávání rozhlasové stanice přímo v seznamu kolekcí;
+* přidáno ukládání rozhlasových stanic z kolekce do obecného seznamu;
+* přidáno filtrování ve sbírkách podle stavu;
+* přidáno filtrování ve sbírkách podle textu v názvu;
+* přidáno filtrování ve sbírkách podle textu v dalších informacích;
+* přidáno zavírání dialogových oken stisknutím ESC;
+* přidáno kopírování odkazu na rozhlasovou stanici do schránky v hlavním seznamu a v seznamech sbírek;
+* vylepšené přepínání stanic pomocí horkých kláves, protože dříve se ne vždy přepínalo;
+
 ### Verze 2.1.0
 * přidána kontrola a oprava, pokud jsou nalezeny chyby v indexování stanic;
 * přidána španělská lokalizace (Rémy Ruiz);

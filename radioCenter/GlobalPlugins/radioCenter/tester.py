@@ -30,9 +30,10 @@ class RadioTestData:
 
 class RadioTester:
 
-    def __init__(self, data: RadioTestData, repeat_count: int):
+    def __init__(self, data: RadioTestData, repeat_count: int, is_speech_mode: bool = True):
         self.data = data
         self.repeat_count = repeat_count
+        self.is_speech_mode = is_speech_mode
 
         self.instance = vlc.Instance('--no-video', '--input-repeat=-1')
         self.player = self.instance.media_player_new()
@@ -42,7 +43,8 @@ class RadioTester:
         self.player.play()
 
         self.repeats = 0
-        ui.message(_("link checking started"))
+        if self.is_speech_mode:
+            ui.message(_("link checking started"))
         wx.CallLater(1000, self.check)
 
     def check(self):
@@ -51,8 +53,10 @@ class RadioTester:
 
         if not self.data.is_success and self.repeats < self.repeat_count:
             self.repeats += 1
-            Player.play(SoundType.Move)
+            if self.is_speech_mode:
+                Player.play(SoundType.Move)
             wx.CallLater(1000, self.check)
+
         else:
             self.finish()
 
@@ -62,10 +66,12 @@ class RadioTester:
         self.player.release()
 
         if self.data.is_success:
-            Player.play(SoundType.Success)
-            ui.message(_("The link to the radio station audio stream has been successfully verified"))
+            if self.is_speech_mode:
+                Player.play(SoundType.Success)
+                ui.message(_("The link to the radio station audio stream has been successfully verified"))
         else:
-            Player.play(SoundType.Failure)
-            ui.message(_("The link to the radio station audio stream is not working"))
+            if self.is_speech_mode:
+                Player.play(SoundType.Failure)
+                ui.message(_("The link to the radio station audio stream is not working"))
 
         self.data.callback_after(self.data)

@@ -3,20 +3,29 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>radioCenter 2.1.1</title>
+<title>radioCenter 3.0.0</title>
 </head>
 <body>
 <h1>radioCenter</h1>
 <ul>
 <li>Author: Ruslan Dolovaniuk (Ukraine)</li>
 <li>PayPal: ruslan.dolovaniuk84@gmail.com</li>
+<li>Bank card number: 5375 4199 0919 2831</li>
 </ul>
 <p>this addon allows you to play online radio stations and save audio stream to file.<br>
 Recording one radio station does not interfere with listening to another radio station.
 </p>
+<p>
+<b>Warnings!</b><br>
+Checking radio stations from collections is a rather lengthy and resource-intensive process.<br>
+It is recommended to perform it in parts, periodically closing the window, and rerun it later.<br>
+After reopening the collections window, testing will continue until all radio stations have been checked.<br>
+Also, the health status of links often changes, so it is recommended to check the health of the link at the moment before adding it to the general list.
+</p>
 <h2>List of hotkeys:</h2>
 <ul>
 <li>NVDA+ALT+P: play/pause radio;</li>
+<li>NVDA+ALT+P double click: turn off the radio;</li>
 <li>NVDA+ALT+M: enable/disable muting;</li>
 <li>NVDA+ALT+UpArrow: volume up;</li>
 <li>NVDA+ALT+DownArrow: volume down;</li>
@@ -24,6 +33,8 @@ Recording one radio station does not interfere with listening to another radio s
 <li>NVDA+ALT+LeftArrow: station previous;</li>
 <li>NVDA+ALT+O: get station info;</li>
 <li>NVDA+ALT+R: open window control center;</li>
+<li>ESC: close Control Center and Collections windows;</li>
+<li>CTRL+C: copy the link to the radio station to the clipboard;</li>
 </ul>
 
 <p>
@@ -31,6 +42,14 @@ When manually sorting in the list of stations:
 <ul>
 <li>ALT+Up Arrow: move the station to a higher position;</li>
 <li>ALT+Down arrow: move the station to a lower position;</li>
+</ul>
+</p>
+<p>
+In the lists of collections:
+<ul>
+<li>ALT+Up Arrow or ALT+Right Arrow: switch the link to the next one (if the radio station has several links to the audio stream);</li>
+<li>ALT+Down Arrow or ALT+Left Arrow: switch the link to the previous one (if the radio station has several links to the audio stream);</li>
+<li>CTRL+C: copy the link to the radio station to the clipboard;</li>
 </ul>
 </p>
 
@@ -45,6 +64,22 @@ When manually sorting in the list of stations:
 </ul>
 
 <h2>List of changes:</h2>
+<h3>Version 3.0.0</h3>
+<ul>
+<li>created a collection mechanism for selecting radio stations from catalogs;</li>
+<li>added 3 collections with radio stations;</li>
+<li>made a mechanism for automatically checking each radio station in the collections for functionality;</li>
+<li>added a manual check of the radio station for functionality;</li>
+<li>added playback of the radio station directly in the list of collections;</li>
+<li>added saving radio stations from the collection to the general list;</li>
+<li>added filtering in collections by status;</li>
+<li>added filtering in collections by text in the title;</li>
+<li>added filtering in collections by text in additional information;</li>
+<li>added closing dialog boxes by pressing ESC;</li>
+<li>added copying the link to the radio station to the clipboard in the main list and in collection lists;</li>
+<li>improved switching stations using hot keys, as previously it did not always switch;</li>
+</ul>
+
 <h3>Version 2.1.0</h3>
 <ul>
 <li>added checking and correction if errors are found in the indexing of stations;</li>

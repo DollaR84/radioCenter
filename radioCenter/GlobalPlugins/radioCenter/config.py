@@ -15,4 +15,7 @@ class Config:
     record_path: str = ""
 
     repeat_count: int = 10
+    repeat_count_collection: int = 3
+    verify_part_count_limit: int = 50
+
     sort_type: SortType = SortType.Nothing

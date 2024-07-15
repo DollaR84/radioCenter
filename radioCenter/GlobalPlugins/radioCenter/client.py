@@ -34,6 +34,7 @@ class RadioClient:
             self.save()
         self.stations_control.sort(self.config.sort_type)
         self.recorder = None
+
         self.gui = None
 
         self.instance = vlc.Instance('--no-video', '--input-repeat=-1')
@@ -78,7 +79,7 @@ class RadioClient:
     def stations(self) -> list[Station]:
         return self.stations_control.stations
 
-    def play(self, count: int = 1):
+    def play(self, count: int = 1, url: str | None = None):
         if self.is_playing:
             if count > 1:
                 self.release()
@@ -91,13 +92,16 @@ class RadioClient:
                 self.release()
             else:
                 if not self._need_paused:
-                    self.set_media()
+                    self.set_media(url)
                 self.player.play()
                 self._need_paused = True
 
                 if self.track_process:
                     self.track_process.Stop()
                 self.track_process = wx.CallLater(5 * 1000, self.track_data)
+
+        if self.gui:
+            wx.CallLater(1000, self.gui.play_button.SetLabel, self.gui.play_label)
 
     def stop(self):
         self._need_paused = False
@@ -121,9 +125,12 @@ class RadioClient:
             if need_speak_phrase:
                 ui.message(_("radio turned off"))
 
-    def set_media(self, commands: list[str] = []):
-        station = self.stations_control.selected
-        self.media = self.instance.media_new(station.url, *commands)
+    def set_media(self, url: str | None = None, commands: list[str] = []):
+        if not url:
+            station = self.stations_control.selected
+            url = station.url
+
+        self.media = self.instance.media_new(url, *commands)
         self.media.get_mrl()
 
         if not self.player:
@@ -133,7 +140,7 @@ class RadioClient:
 
     def station_up(self):
         need_playing = self.is_playing
-        self.stop()
+        self.release(need_speak_phrase=False)
 
         self.stations_control.next()
         self.set_media()
@@ -144,7 +151,7 @@ class RadioClient:
 
     def station_down(self):
         need_playing = self.is_playing
-        self.stop()
+        self.release(need_speak_phrase=False)
 
         self.stations_control.previous()
         self.set_media()
@@ -232,7 +239,6 @@ class RadioClient:
     def get_info(self):
         for key, value in self.data.items():
             if value is not None:
-                log.info(f"{key}: {value}")
                 ui.message(value)
 
     @property
@@ -241,7 +247,7 @@ class RadioClient:
 
     @property
     def is_playing(self) -> bool:
-        return self.player and self.player.is_playing()
+        return bool(self.player) and self.player.is_playing()
 
     @property
     def need_paused(self) -> bool:

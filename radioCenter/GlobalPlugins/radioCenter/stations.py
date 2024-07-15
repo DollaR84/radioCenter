@@ -89,13 +89,17 @@ class StationsControl:
         return index
 
     def change_station(self, index: int) -> Station:
-        station = self.stations[index]
+        try:
+            station = self.stations[index]
+        except Exception:
+            station = self.stations[0]
+
         self.select(station)
         return station
 
     def next(self) -> Station:
         index = self.selected_index + 1
-        if len(self.stations) == index:
+        if index >= len(self.stations):
             index = 0
 
         return self.change_station(index)
