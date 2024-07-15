@@ -16,7 +16,7 @@ addonHandler.initTranslation()
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    scriptCategory = "RadioCenter"
+    scriptCategory = _("RadioCenter")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

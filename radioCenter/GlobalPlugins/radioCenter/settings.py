@@ -13,7 +13,7 @@ addonHandler.initTranslation()
 
 
 class RadioSettings(SettingsPanel):
-    title = "RadioCenter"
+    title = _("RadioCenter")
     radio: RadioClient = None
 
     def makeSettings(self, settingsSizer):
