@@ -2,7 +2,7 @@
 
 * Autor: Ruslan Dolovaniuk (Ucrania)
 * PayPal: ruslan.dolovaniuk84@gmail.com
-* Bank card number: 5375 4199 0919 2831
+* Número de tarjeta bancaria: 5375 4199 0919 2831
 
 este complemento te permite escuchar estaciones de radio en línea y guardar  el flujo de audio en un archivo.
 Grabar una estación de radio no interfiere con escuchar otra estación de radio.

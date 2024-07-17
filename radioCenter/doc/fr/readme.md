@@ -2,7 +2,7 @@
 
 * Auteur: Ruslan Dolovaniuk (Ukraine)
 * PayPal: ruslan.dolovaniuk84@gmail.com
-* Bank card number: 5375 4199 0919 2831
+* Numéro de carte bancaire: 5375 4199 0919 2831
 
 cette extension vous permet d'écouter des stations de radio en ligne et d'enregistrer le flux audio dans un fichier.
 L'enregistrement d'une station de radio n'interfère pas avec l'écoute d'une autre station de radio.
