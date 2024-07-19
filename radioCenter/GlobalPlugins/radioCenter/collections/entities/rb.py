@@ -2,9 +2,11 @@
 
 from .base import BaseCollection
 
-from ..data import ItemData, CollectionData
+from ..data import CollectionData
 
 from ...pyradios import RadioBrowser
+
+from ...utils.parsers.data import ItemData
 
 
 class RadioBrowserCollection(BaseCollection):

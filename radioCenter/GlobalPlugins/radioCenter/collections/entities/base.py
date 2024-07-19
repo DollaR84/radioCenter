@@ -2,12 +2,11 @@
 
 from abc import ABC, abstractmethod
 import re
-import requests
 
-from logHandler import log
+from ...utils.parsers.base import BaseParser
 
 
-class BaseCollection(ABC):
+class BaseCollection(BaseParser, ABC):
     _collections: dict[str, BaseCollection] = {}
 
     def __init_subclass__(cls, **kwargs):
@@ -31,18 +30,6 @@ class BaseCollection(ABC):
 
     def __init__(self, name: str):
         self.name = name
-
-    def get_request(self, url: str):
-        content = ""
-
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                content = response.content.decode("utf-8")
-        except Exception as error:
-            log.error(error, exc_info=True)
-
-        return content
 
     def parse(self) -> list[CollectionData]:
         return self.process_data(self.make_url())

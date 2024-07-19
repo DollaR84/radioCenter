@@ -13,13 +13,12 @@ from ..collections.types import StationStatusType
 
 from ..config import Config
 
-from ..player import Player
-
 from ..saver import Saver
 
-from ..tester import RadioTestData
+from ..types import PriorityType
 
-from ..types import PriorityType, SoundType
+from ..utils import RadioTestData
+from ..utils.player import Player, SoundType
 
 
 addonHandler.initTranslation()

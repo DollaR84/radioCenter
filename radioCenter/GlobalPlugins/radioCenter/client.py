@@ -11,13 +11,13 @@ from . import vlc\
 
 from .config import Config
 
-from .recorder import RadioRecorder
-
 from .saver import Saver
 
 from .stations import Station, StationsControl
 
 from .types import SortType, PriorityType
+
+from .utils import RadioRecorder
 
 
 addonHandler.initTranslation()

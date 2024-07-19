@@ -2,9 +2,11 @@
 
 from .base import BaseCollection
 
-from ..data import ItemData, CollectionData
+from ..data import CollectionData
 
 from ...bs4 import BeautifulSoup
+
+from ...utils.parsers.data import ItemData
 
 
 class Mp3RadioStationsCollection(BaseCollection):

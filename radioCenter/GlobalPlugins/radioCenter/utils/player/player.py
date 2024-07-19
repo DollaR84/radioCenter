@@ -18,6 +18,6 @@ class Player:
         if not cls._names.get(sound_type):
             return
 
-        base_dir = os.path.dirname(__file__)
+        base_dir = os.path.dirname(os.path.dirname(__file__))
         file_name = os.path.join(base_dir, cls._folder_path, cls._names[sound_type])
         winsound.PlaySound(file_name, winsound.SND_ASYNC)

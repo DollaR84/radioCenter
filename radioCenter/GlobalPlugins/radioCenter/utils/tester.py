@@ -6,11 +6,11 @@ import ui
 
 import wx
 
-from .player import Player
+from .player import Player, SoundType
 
-from . import vlc\
+from .. import vlc
 
-from .types import PriorityType, SoundType
+from ..types import PriorityType
 
 
 addonHandler.initTranslation()

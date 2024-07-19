@@ -19,9 +19,3 @@ class PriorityType(Enum):
     High = _('high')
     Middle = _('middle')
     Low = _('low')
-
-
-class SoundType(Enum):
-    Failure = 0
-    Move = 1
-    Success = 2

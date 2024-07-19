@@ -9,13 +9,15 @@ from .collections import RadioCollectionsGUI
 
 from ..client import RadioClient
 
-from ..player import Player
-
 from ..stations import Station
 
-from ..tester import RadioTestData, RadioTester
+from ..types import SortType, PriorityType
 
-from ..types import SortType, PriorityType, SoundType
+from ..utils import RadioTestData, RadioTester
+from ..utils.player import Player, SoundType
+
+from ..utils.parsers import PLSParser
+from ..utils.parsers.data import ItemData
 
 
 addonHandler.initTranslation()
@@ -227,11 +229,18 @@ class RadioGUI(wx.Dialog):
         else:
             priority = PriorityType.Middle
 
-        data = RadioTestData(
-            callback_after=self.add_station_after, url=url,
-            name=name, priority=priority,
-        )
-        RadioTester(data, self.radio.config.repeat_count)
+        if url.endswith(".pls"):
+            parser = PLSParser(url)
+            items = parser.get_data()
+        else:
+            items = [ItemData(name=name, url=url)]
+
+        for item in items:
+            data = RadioTestData(
+                callback_after=self.add_station_after, url=item.url,
+                name=item.name, priority=priority,
+            )
+            RadioTester(data, self.radio.config.repeat_count)
 
     def change_station(self, event):
         index = self.stations.GetSelection()
