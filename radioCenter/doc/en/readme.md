@@ -45,6 +45,11 @@ In the lists of collections:
 * manually;
 
 ## List of changes:
+### Version 3.2.0
+* added support for .pls links;
+* added a name from the audio stream information when saving the recorded file;
+* added error handling when recording cannot be started;
+
 ### Version 3.0.0
 * created a collection mechanism for selecting radio stations from catalogs;
 * added 3 collections with radio stations;

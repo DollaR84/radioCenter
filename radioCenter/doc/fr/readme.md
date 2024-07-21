@@ -45,6 +45,11 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
+### Version 3.2.0
+* ajout de la prise en charge des liens .pls ;
+* ajout d'un nom à partir des informations du flux audio lors de la sauvegarde du fichier enregistré ;
+* ajout de la gestion des erreurs lorsque l'enregistrement ne peut pas être démarré ;
+
 ### Version 3.0.0
 * créé un mécanisme de collection pour sélectionner les stations de radio à partir des catalogues ;
 * ajouté 3 collections avec des stations de radio ;

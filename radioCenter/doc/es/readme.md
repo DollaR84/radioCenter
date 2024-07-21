@@ -45,6 +45,11 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
+### Versión 3.2.0
+* soporte agregado para enlaces .pls;
+* agregó un nombre a la información de la transmisión de audio al guardar el archivo grabado;
+* Se agregó manejo de errores cuando no se puede iniciar la grabación;
+
 ### Versión 3.0.0
 * se creó un mecanismo de colección para seleccionar estaciones de radio de catálogos;
 * se agregaron 3 colecciones con estaciones de radio;

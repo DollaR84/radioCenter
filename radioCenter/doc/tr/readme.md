@@ -46,6 +46,11 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 3.2.0
+* .pls bağlantıları için destek eklendi;
+* kaydedilen dosyayı kaydederken ses akışı bilgilerinden bir ad eklendi;
+* kayıt başlatılamadığında hata yönetimi eklendi;
+
 ### Sürüm 3.0.0
 * kataloglardan radyo istasyonlarını seçmek için bir koleksiyon seçeneği oluşturuldu;
 * radyo istasyonlarını içeren 3 koleksiyon eklendi;

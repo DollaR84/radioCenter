@@ -45,6 +45,11 @@ V seznamech sbírek:
 * ručně;
 
 ## Seznam změn:
+### Verze 3.2.0
+* přidána podpora pro odkazy .pls;
+* přidán název z informace o audio streamu při ukládání nahraného souboru;
+* přidáno zpracování chyb, když nelze spustit nahrávání;
+
 ### Verze 3.0.0
 * vytvořil sbírkový mechanismus pro výběr rozhlasových stanic z katalogů;
 * přidány 3 sbírky s rozhlasovými stanicemi;
