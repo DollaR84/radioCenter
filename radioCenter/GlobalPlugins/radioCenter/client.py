@@ -7,7 +7,7 @@ import ui
 
 import wx
 
-from . import vlc\
+from . import vlc
 
 from .config import Config
 
@@ -212,7 +212,7 @@ class RadioClient:
         if not self.check_media():
             return
 
-        self.media.parse_with_options(vlc.MediaParseFlag.network, 0)
+        self.media.parse_with_options(vlc.MediaParseFlag.network, -1)
         wx.CallLater(5 * 1000, self.parse_data)
 
     def parse_data(self):
@@ -275,5 +275,13 @@ class RadioClient:
         else:
             station = self.stations_control.selected
             self.recorder = RadioRecorder(self.gui, self.config.record_path, station.url)
+            wx.CallLater(500, self.check_recording)
 
         self._is_recording = not self._is_recording
+
+    def check_recording(self):
+        if not self.recorder.is_progress_recording:
+            self.recorder = None
+            self._is_recording = not self._is_recording
+            self.gui.record_button.SetLabel(self.gui.record_label)
+            ui.message(_("Unable to record audio stream. Recording connection error"))
