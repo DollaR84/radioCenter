@@ -1,4 +1,6 @@
-﻿from logHandler import log
+﻿from typing import List
+
+from logHandler import log
 
 from .base import BaseCollection
 
@@ -20,7 +22,7 @@ class RadioBrowserCollection(BaseCollection):
     def make_url(self) -> str:
         return ""
 
-    def load(self, url: str) -> list[ItemData]:
+    def load(self, url: str) -> List[ItemData]:
         results = []
 
         for data in self.client.stations():
@@ -33,7 +35,7 @@ class RadioBrowserCollection(BaseCollection):
 
         return results
 
-    def process_data(self, url: str) -> list[CollectionData]:
+    def process_data(self, url: str) -> List[CollectionData]:
         results = []
         try:
             data = self.load(url)

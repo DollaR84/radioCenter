@@ -1,6 +1,6 @@
 ﻿from concurrent.futures import ThreadPoolExecutor, Future, as_completed
 import json
-from typing import Callable, Optional
+from typing import Callable, List, Optional
 
 import wx
 
@@ -23,7 +23,7 @@ class RadioCollections:
         self._future: Optional[Future] = None
 
     @property
-    def collections_names(self) -> list[str]:
+    def collections_names(self) -> List[str]:
         return self.collections.get_collections_names()
 
     def get_collection(self, name: str) -> BaseCollection:

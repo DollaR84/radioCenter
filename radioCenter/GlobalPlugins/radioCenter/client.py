@@ -1,5 +1,5 @@
 ﻿import os
-from typing import Callable
+from typing import Callable, List, Union
 
 import addonHandler
 from logHandler import log
@@ -76,10 +76,10 @@ class RadioClient:
         ], None)
 
     @property
-    def stations(self) -> list[Station]:
+    def stations(self) -> List[Station]:
         return self.stations_control.stations
 
-    def play(self, count: int = 1, url: str | None = None):
+    def play(self, count: int = 1, url: Union[str, None] = None):
         if self.is_playing:
             if count > 1:
                 self.release()
@@ -125,7 +125,7 @@ class RadioClient:
             if need_speak_phrase:
                 ui.message(_("radio turned off"))
 
-    def set_media(self, url: str | None = None, commands: list[str] = []):
+    def set_media(self, url: Union[str, None] = None, commands: List[str] = []):
         if not url:
             station = self.stations_control.selected
             url = station.url
@@ -188,7 +188,7 @@ class RadioClient:
         self.player.audio_set_mute(self.config.is_muted)
         self.save()
 
-    def add_station(self, name: str, url: str, priority: PriorityType) -> int | None:
+    def add_station(self, name: str, url: str, priority: PriorityType) -> Union[int, None]:
         new_position = self.stations_control.add(name, url, priority, self.config.sort_type)
 
         if new_position is not None:

@@ -1,4 +1,6 @@
-﻿import addonHandler
+﻿from typing import List, Union
+
+import addonHandler
 import gui
 import ui
 
@@ -46,7 +48,7 @@ class DataSource:
 
 class TabCollection(wx.Panel):
 
-    def __init__(self, notebook, parent, collection, data: CollectionDataExt | None = None):
+    def __init__(self, notebook, parent, collection, data: Union[CollectionDataExt, None] = None):
         super().__init__(notebook, wx.ID_ANY)
 
         self.notebook = notebook
@@ -137,7 +139,7 @@ class TabCollection(wx.Panel):
         self.is_collection_data_updating = True
         self.parent.collections.update(self.collection, self.update_finish)
 
-    def update_finish(self, collection_name: str, data: list[CollectionData]):
+    def update_finish(self, collection_name: str, data: List[CollectionData]):
         if self.collection.name != collection_name:
             return
 

@@ -1,4 +1,6 @@
-﻿from logHandler import log
+﻿from typing import List
+
+from logHandler import log
 
 from .base import BaseCollection
 
@@ -23,7 +25,7 @@ class Mp3RadioStationsCollection(BaseCollection):
     def make_url(self, page_number: int = 1) -> str:
         return "/".join([self.base_url, f"page{page_number}"])
 
-    def load(self, url: str) -> list[ItemData]:
+    def load(self, url: str) -> List[ItemData]:
         results = []
         content = self.get_request(url)
 
@@ -68,7 +70,7 @@ class Mp3RadioStationsCollection(BaseCollection):
 
         return results
 
-    def process_data(self, url: str) -> list[CollectionData]:
+    def process_data(self, url: str) -> List[CollectionData]:
         results = []
         try:
             data = self.load(url)

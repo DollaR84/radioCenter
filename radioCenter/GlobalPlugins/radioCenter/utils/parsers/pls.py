@@ -1,4 +1,6 @@
-﻿from .base import BaseParser
+﻿from typing import List
+
+from .base import BaseParser
 
 from .data import ItemData
 
@@ -8,7 +10,7 @@ class PLSParser(BaseParser):
     def __init__(self, url: str):
         self.url: str = url
 
-    def get_data(self) -> list[ItemData]:
+    def get_data(self) -> List[ItemData]:
         results = []
         data = self.get_request(self.url)
         urls = {}

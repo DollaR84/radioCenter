@@ -1,6 +1,7 @@
 ﻿from __future__ import annotations
 
 from enum import Enum
+from typing import List
 
 import addonHandler
 
@@ -16,7 +17,7 @@ class StationStatusType(Enum):
     Works = _('works')
 
     @classmethod
-    def get_list_values(cls) -> list[str]:
+    def get_list_values(cls) -> List[str]:
         return [item.value for item in cls]
 
     @classmethod

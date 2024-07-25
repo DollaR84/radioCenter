@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 import re
+from typing import List
 
 from ...utils.parsers.base import BaseParser
 
@@ -24,14 +25,14 @@ class BaseCollection(BaseParser, ABC):
         return cls._collections.get(name)(name)
 
     @classmethod
-    def get_collections_names(cls) -> list[str]:
+    def get_collections_names(cls) -> List[str]:
         data = dict(sorted(cls._collections.items(), key=lambda item: item[1].order_id))
         return list(data.keys())
 
     def __init__(self, name: str):
         self.name = name
 
-    def parse(self) -> list[CollectionData]:
+    def parse(self) -> List[CollectionData]:
         return self.process_data(self.make_url())
 
     @abstractmethod
@@ -39,7 +40,7 @@ class BaseCollection(BaseParser, ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def process_data(self, url: str) -> list[CollectionData]:
+    def process_data(self, url: str) -> List[CollectionData]:
         raise NotImplementedError
 
     @abstractmethod

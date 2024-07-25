@@ -1,6 +1,7 @@
 ﻿from dataclasses import dataclass
 from enum import Enum
 import json
+from typing import List, Union
 
 from .base import BaseCollection
 
@@ -30,12 +31,12 @@ class InternetRadioStreamsCollection(BaseCollection):
         self.base_directory_url: str = "https://github.com/mikepierce/internet-radio-streams/tree"
         self.base_file_url: str = "https://raw.githubusercontent.com/mikepierce/internet-radio-streams"
 
-    def make_url(self, url_type: UrlType | str = UrlType.DIRECTORY, element_url: str = "") -> str:
+    def make_url(self, url_type: Union[UrlType, str] = UrlType.DIRECTORY, element_url: str = "") -> str:
         if isinstance(url_type, UrlType):
             url_type = url_type.value
         return "/".join([getattr(self, f"base_{url_type}_url"), "main", element_url])
 
-    def load(self, url: str) -> list[ItemData]:
+    def load(self, url: str) -> List[ItemData]:
         results = []
         search_data = []
         content = self.get_request(url)
@@ -80,7 +81,7 @@ class InternetRadioStreamsCollection(BaseCollection):
 
         return results
 
-    def process_data(self, url: str) -> list[CollectionData]:
+    def process_data(self, url: str) -> List[CollectionData]:
         results = []
         data = self.load(url)
 

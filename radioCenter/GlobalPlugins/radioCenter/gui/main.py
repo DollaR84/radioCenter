@@ -1,4 +1,6 @@
-﻿import addonHandler
+﻿from typing import List, Union
+
+import addonHandler
 import gui
 from logHandler import log
 import ui
@@ -59,7 +61,7 @@ class RadioGUI(wx.Dialog):
         self._bindEvents()
 
     @property
-    def stations_names(self) -> list[str]:
+    def stations_names(self) -> List[str]:
         return [
             station.name_url
             for station in self.radio.stations
@@ -353,7 +355,7 @@ class RadioGUI(wx.Dialog):
         self.add_station_button.Disable()
         self.Layout()
 
-    def add_station_to_listbox(self, station: Station, new_position: int | None):
+    def add_station_to_listbox(self, station: Station, new_position: Union[int, None]):
         if new_position is not None:
             self.stations.Insert(station.name_url, new_position)
             self.stations.SetSelection(new_position)

@@ -3,7 +3,7 @@ import os
 import re
 import requests
 from threading import Event
-from typing import Optional
+from typing import Optional, Union
 
 import addonHandler
 from gui.message import displayDialogAsModal
@@ -57,7 +57,7 @@ class RadioRecorder:
             self.ext = ".aac"
         return self.get_name_file_for_record(self.ext)
 
-    def get_audio_label(self) -> str | None:
+    def get_audio_label(self) -> Union[str, None]:
         result = None
 
         now_playing = self.data.get(vlc.Meta.NowPlaying)
@@ -107,7 +107,7 @@ class RadioRecorder:
         path_to_save = self.get_path_to_save()
         self.save(path_to_save)
 
-    def get_path_to_save(self) -> str | None:
+    def get_path_to_save(self) -> Union[str, None]:
         if not self.parent:
             return None
 
@@ -130,7 +130,7 @@ class RadioRecorder:
             return None
         return fd.GetPath()
 
-    def save(self, path_to_save: str | None):
+    def save(self, path_to_save: Union[str, None]):
         if not path_to_save:
             return
 

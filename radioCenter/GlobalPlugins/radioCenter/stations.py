@@ -1,5 +1,6 @@
 ﻿from dataclasses import dataclass
 from operator import attrgetter
+from typing import List, Set, Union
 
 import wx
 
@@ -27,7 +28,7 @@ class Station:
 
 class StationsControl:
 
-    def __init__(self, stations: list[Station]):
+    def __init__(self, stations: List[Station]):
         self.stations = stations
 
     def check_and_fix_ids(self) -> bool:
@@ -47,7 +48,7 @@ class StationsControl:
 
         return True
 
-    def fix_id(self, id_: int, fix_set: set[int]):
+    def fix_id(self, id_: int, fix_set: Set[int]):
         new_id = id_
         while new_id in fix_set:
             new_id += 1
@@ -111,7 +112,7 @@ class StationsControl:
 
         return self.change_station(index)
 
-    def sort(self, sort_by: SortType) -> list[Station]:
+    def sort(self, sort_by: SortType) -> List[Station]:
         if sort_by == SortType.Nothing:
             self.stations.sort(key=attrgetter('id'))
 
@@ -141,7 +142,7 @@ class StationsControl:
         unique_urls = list(set([station.url for station in self.stations]))
         return url not in unique_urls
 
-    def create(self, name: str, url: str, priority: PriorityType) -> Station | None:
+    def create(self, name: str, url: str, priority: PriorityType) -> Union[Station, None]:
         index = len(self.stations)
         if self.check_unique_url(url):
             station = Station(id=index, manual_id=index, name=name, url=url, priority=priority)
@@ -149,7 +150,7 @@ class StationsControl:
             return station
         return None
 
-    def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> int | None:
+    def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> Union[int, None]:
         new_position = None
         station = self.create(name, url, priority)
         self.check_and_fix_ids()
@@ -172,7 +173,7 @@ class StationsControl:
             self.select(station)
         return index
 
-    def manual_sort(self, index: int, order_type) -> int | None:
+    def manual_sort(self, index: int, order_type) -> Union[int, None]:
         station1 = self.stations[index]
         if order_type == wx.WXK_UP and index > 0:
             station2 = self.stations[index - 1]

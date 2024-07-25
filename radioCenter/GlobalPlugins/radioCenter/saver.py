@@ -1,5 +1,6 @@
 import os
 import pickle
+from typing import Dict, Union
 
 import globalVars
 
@@ -48,11 +49,11 @@ class Saver:
 
         return config
 
-    def save_collections(self, collections_data: dict[str, CollectionDataExt | None]):
+    def save_collections(self, collections_data: Dict[str, Union[CollectionDataExt, None]]):
         with open(self.collections_file_name, 'wb') as data_file:
             pickle.dump(collections_data, data_file)
 
-    def load_collections(self) -> dict[str, CollectionDataExt | None]:
+    def load_collections(self) -> Dict[str, Union[CollectionDataExt, None]]:
         collections_data = {}
         try:
             data_file = open(self.collections_file_name, 'rb')
