@@ -2,7 +2,6 @@
 
 * Author: Ruslan Dolovaniuk (Ukraine)
 * PayPal: ruslan.dolovaniuk84@gmail.com
-* Bank card number: 5375 4199 0919 2831
 
 this addon allows you to play online radio stations and save audio stream to file.
 Recording one radio station does not interfere with listening to another radio station.

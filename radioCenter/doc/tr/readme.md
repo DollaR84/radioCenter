@@ -2,7 +2,6 @@
 
 * Yazar: Ruslan Dolovaniuk (Ukrayna)
 * PayPal: ruslan.dolovaniuk84@gmail.com
-* Bank card number: 5375 4199 0919 2831
 
 bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve ses akışını bir dosyaya kaydetmenize olanak tanır.
 Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini engellemez.

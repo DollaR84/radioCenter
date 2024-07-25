@@ -2,7 +2,6 @@
 
 * Autor: Ruslan Dolovanyuk (Ukrajina)
 * PayPal: ruslan.dolovaniuk84@gmail.com
-* Bank card number: 5375 4199 0919 2831
 
 tento doplněk vám umožňuje poslouchat online rozhlasové stanice a uložit audio stream do souboru.
 Nahrávání jedné rozhlasové stanice neruší poslech jiné rozhlasové stanice.
