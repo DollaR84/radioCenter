@@ -12,6 +12,7 @@ class SortType(Enum):
     NameReverse = _('name reverse')
     PriorityDirect = _('priority direct')
     PriorityReverse = _('priority reverse')
+    Manual = _('manual')
 
 
 class PriorityType(Enum):

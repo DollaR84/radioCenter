@@ -1,4 +1,5 @@
 ﻿import os
+from typing import Callable, List, Union
 
 import addonHandler
 from logHandler import log
@@ -6,7 +7,7 @@ import ui
 
 import wx
 
-from . import vlc\
+from . import vlc
 
 from .config import Config
 
@@ -15,6 +16,8 @@ from .saver import Saver
 from .stations import Station, StationsControl
 
 from .types import SortType, PriorityType
+
+from .utils import RadioRecorder
 
 
 addonHandler.initTranslation()
@@ -26,7 +29,13 @@ class RadioClient:
         self.saver: Saver = Saver()
         self.config: Config = self.saver.load()
         self.stations_control = StationsControl(self.config.stations)
+        need_fix = self.stations_control.check_and_fix_ids()
+        if need_fix:
+            self.save()
         self.stations_control.sort(self.config.sort_type)
+        self.recorder = None
+
+        self.gui = None
 
         self.instance = vlc.Instance('--no-video', '--input-repeat=-1')
         self.player = None
@@ -67,10 +76,10 @@ class RadioClient:
         ], None)
 
     @property
-    def stations(self) -> list[Station]:
+    def stations(self) -> List[Station]:
         return self.stations_control.stations
 
-    def play(self, count: int = 1):
+    def play(self, count: int = 1, url: Union[str, None] = None):
         if self.is_playing:
             if count > 1:
                 self.release()
@@ -83,13 +92,16 @@ class RadioClient:
                 self.release()
             else:
                 if not self._need_paused:
-                    self.set_media()
+                    self.set_media(url)
                 self.player.play()
                 self._need_paused = True
 
                 if self.track_process:
                     self.track_process.Stop()
                 self.track_process = wx.CallLater(5 * 1000, self.track_data)
+
+        if self.gui:
+            wx.CallLater(1000, self.gui.play_button.SetLabel, self.gui.play_label)
 
     def stop(self):
         self._need_paused = False
@@ -113,9 +125,12 @@ class RadioClient:
             if need_speak_phrase:
                 ui.message(_("radio turned off"))
 
-    def set_media(self, commands: list[str] = []):
-        station = self.stations_control.selected
-        self.media = self.instance.media_new(station.url, *commands)
+    def set_media(self, url: Union[str, None] = None, commands: List[str] = []):
+        if not url:
+            station = self.stations_control.selected
+            url = station.url
+
+        self.media = self.instance.media_new(url, *commands)
         self.media.get_mrl()
 
         if not self.player:
@@ -125,7 +140,7 @@ class RadioClient:
 
     def station_up(self):
         need_playing = self.is_playing
-        self.stop()
+        self.release(need_speak_phrase=False)
 
         self.stations_control.next()
         self.set_media()
@@ -136,7 +151,7 @@ class RadioClient:
 
     def station_down(self):
         need_playing = self.is_playing
-        self.stop()
+        self.release(need_speak_phrase=False)
 
         self.stations_control.previous()
         self.set_media()
@@ -166,15 +181,19 @@ class RadioClient:
             self.change_volume(volume)
 
     def mute(self):
+        if not self.player:
+            return
+
         self.config.is_muted = not self.player.audio_get_mute()
         self.player.audio_set_mute(self.config.is_muted)
         self.save()
 
-    def add_station(self, name: str, url: str, priority: PriorityType) -> int:
-        index = self.stations_control.add(name, url, priority, self.config.sort_type)
+    def add_station(self, name: str, url: str, priority: PriorityType) -> Union[int, None]:
+        new_position = self.stations_control.add(name, url, priority, self.config.sort_type)
 
-        self.save()
-        return index
+        if new_position is not None:
+            self.save()
+        return new_position
 
     def remove_station(self, index: int) -> int:
         index = self.stations_control.remove(index)
@@ -193,7 +212,7 @@ class RadioClient:
         if not self.check_media():
             return
 
-        self.media.parse_with_options(vlc.MediaParseFlag.network, 0)
+        self.media.parse_with_options(vlc.MediaParseFlag.network, -1)
         wx.CallLater(5 * 1000, self.parse_data)
 
     def parse_data(self):
@@ -220,7 +239,6 @@ class RadioClient:
     def get_info(self):
         for key, value in self.data.items():
             if value is not None:
-                log.info(f"{key}: {value}")
                 ui.message(value)
 
     @property
@@ -229,7 +247,7 @@ class RadioClient:
 
     @property
     def is_playing(self) -> bool:
-        return self.player and self.player.is_playing()
+        return bool(self.player) and self.player.is_playing()
 
     @property
     def need_paused(self) -> bool:
@@ -250,16 +268,20 @@ class RadioClient:
         if not self.is_recording_allowed:
             return
 
+        if self._is_recording and self.recorder:
+            self.recorder.stop()
+            self.recorder = None
+
+        else:
+            station = self.stations_control.selected
+            self.recorder = RadioRecorder(self.gui, self.config.record_path, station.url)
+            wx.CallLater(500, self.check_recording)
+
         self._is_recording = not self._is_recording
 
-        if self._is_recording:
-            pass
-        else:
-            audiofile = self.get_name_file_for_record(self.config.record_path)
-
-    def get_name_file_for_record(self, record_path: str, ext: str = ".mp3") -> str:
-        names = set(x[:8] for x in os.listdir(record_path) if x.endswith(ext) and len(x) == 12)
-        for i in range(10**8):
-            filename = "%08i" % i
-            if filename not in names:
-                return os.path.join(record_path, "".join([filename, ext]))
+    def check_recording(self):
+        if not self.recorder.is_progress_recording:
+            self.recorder = None
+            self._is_recording = not self._is_recording
+            self.gui.record_button.SetLabel(self.gui.record_label)
+            ui.message(_("Unable to record audio stream. Recording connection error"))

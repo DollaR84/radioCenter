@@ -1,5 +1,8 @@
 ﻿from dataclasses import dataclass
 from operator import attrgetter
+from typing import List, Set, Union
+
+import wx
 
 from .types import SortType, PriorityType
 
@@ -7,6 +10,7 @@ from .types import SortType, PriorityType
 @dataclass
 class Station:
     id: int
+    manual_id: int
     name: str
     url: str
 
@@ -24,8 +28,32 @@ class Station:
 
 class StationsControl:
 
-    def __init__(self, stations: list[Station]):
+    def __init__(self, stations: List[Station]):
         self.stations = stations
+
+    def check_and_fix_ids(self) -> bool:
+        need_fix_id = len(self.stations) != len(list(set([station.id for station in self.stations])))
+        need_fix_manual_id = len(self.stations) != len(list(set([station.manual_id for station in self.stations])))
+        if not need_fix_id and not need_fix_manual_id:
+            return False
+
+        ids: set[int] = set()
+        manual_ids: set[int] = set()
+
+        for station in self.stations:
+            if need_fix_id:
+                station.id = self.fix_id(station.id, ids)
+            if need_fix_manual_id:
+                station.manual_id = self.fix_id(station.manual_id, manual_ids)
+
+        return True
+
+    def fix_id(self, id_: int, fix_set: Set[int]):
+        new_id = id_
+        while new_id in fix_set:
+            new_id += 1
+        fix_set.add(new_id)
+        return new_id
 
     @property
     def selected_index(self) -> int:
@@ -62,13 +90,17 @@ class StationsControl:
         return index
 
     def change_station(self, index: int) -> Station:
-        station = self.stations[index]
+        try:
+            station = self.stations[index]
+        except Exception:
+            station = self.stations[0]
+
         self.select(station)
         return station
 
     def next(self) -> Station:
         index = self.selected_index + 1
-        if len(self.stations) == index:
+        if index >= len(self.stations):
             index = 0
 
         return self.change_station(index)
@@ -80,9 +112,12 @@ class StationsControl:
 
         return self.change_station(index)
 
-    def sort(self, sort_by: SortType) -> list[Station]:
+    def sort(self, sort_by: SortType) -> List[Station]:
         if sort_by == SortType.Nothing:
             self.stations.sort(key=attrgetter('id'))
+
+        elif sort_by == SortType.Manual:
+            self.stations.sort(key=attrgetter('manual_id'))
 
         elif sort_by in (SortType.NameDirect, SortType.NameReverse,):
             is_reverse = sort_by == SortType.NameReverse
@@ -103,18 +138,22 @@ class StationsControl:
 
         return self.stations
 
-    def create(self, name: str, url: str, priority: PriorityType) -> Station | None:
-        index = len(self.stations)
+    def check_unique_url(self, url: str) -> bool:
         unique_urls = list(set([station.url for station in self.stations]))
-        if url not in unique_urls:
-            station = Station(id=index, name=name, url=url, priority=priority)
+        return url not in unique_urls
+
+    def create(self, name: str, url: str, priority: PriorityType) -> Union[Station, None]:
+        index = len(self.stations)
+        if self.check_unique_url(url):
+            station = Station(id=index, manual_id=index, name=name, url=url, priority=priority)
             self.stations.append(station)
             return station
         return None
 
-    def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> int:
-        new_position = self.selected_index
+    def add(self, name: str, url: str, priority: PriorityType, sort_by: SortType) -> Union[int, None]:
+        new_position = None
         station = self.create(name, url, priority)
+        self.check_and_fix_ids()
         if station:
             self.sort(sort_by)
             new_position = self.select(station)
@@ -133,3 +172,16 @@ class StationsControl:
             station = self.stations[index]
             self.select(station)
         return index
+
+    def manual_sort(self, index: int, order_type) -> Union[int, None]:
+        station1 = self.stations[index]
+        if order_type == wx.WXK_UP and index > 0:
+            station2 = self.stations[index - 1]
+        elif order_type == wx.WXK_DOWN and index < len(self.stations) - 1:
+            station2 = self.stations[index + 1]
+        else:
+            return None
+
+        station1.manual_id, station2.manual_id = station2.manual_id, station1.manual_id
+        self.sort(SortType.Manual)
+        return station1.manual_id - 1

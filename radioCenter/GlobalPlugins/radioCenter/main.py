@@ -16,7 +16,7 @@ addonHandler.initTranslation()
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    scriptCategory = "RadioCenter"
+    scriptCategory = _("RadioCenter")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -45,6 +45,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     )
     def script_volume_down(self, gesture):
         self.radio.volume_down()
+
+    @scriptHandler.script(
+        description=_("mute/unmute"),
+        gesture="kb:NVDA+ALT+M"
+    )
+    def script_mute(self, gesture):
+        self.radio.mute()
 
     @scriptHandler.script(
         description=_("station next"),
