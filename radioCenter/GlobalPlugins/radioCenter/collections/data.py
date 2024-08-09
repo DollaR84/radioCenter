@@ -1,18 +1,35 @@
-﻿from dataclasses import dataclass, field
+﻿from dataclasses import dataclass
+from typing import List
 
 import wx
 
 from .types import StationStatusType
 
 
-@dataclass(slots=True)
+@dataclass(init=False)
 class CollectionData:
-    name: str
-    urls: list[str] = field(default_factory=list)
-    info_data: list[str] = field(default_factory=list)
+    __slots__ = ("name", "urls", "info_data", "status", "_current_url_index",)
 
-    status: StationStatusType = StationStatusType.NotVerified
-    _current_url_index: int = 0
+    name: str
+    urls: List[str]
+    info_data: List[str]
+
+    status: StationStatusType
+    _current_url_index: int
+
+    def __init__(
+            self,
+            name: str,
+            urls: List[str] = [],
+            info_data: List[str] = [],
+            status: StationStatusType = StationStatusType.NotVerified,
+            current_url_index: int = 0,
+    ):
+        self.name = name
+        self.urls = urls
+        self.info_data = info_data
+        self.status = status
+        self._current_url_index = current_url_index
 
     @property
     def url(self) -> str:
@@ -64,11 +81,23 @@ class CollectionData:
         return False
 
 
-@dataclass(slots=True)
+@dataclass(init=False)
 class CollectionDataExt:
-    stations: list[CollectionData]
-    current_check_index: int = 0
-    _verified: bool = False
+    __slots____ = ("stations", "current_check_index", "_verified",)
+
+    stations: List[CollectionData]
+    current_check_index: int
+    _verified: bool
+
+    def __init__(
+            self,
+            stations: List[CollectionData],
+            current_check_index: int = 0,
+            verified: bool = False,
+    ):
+        self.stations = stations
+        self.current_check_index = current_check_index
+        self._verified = verified
 
     def __iter__(self):
         return self

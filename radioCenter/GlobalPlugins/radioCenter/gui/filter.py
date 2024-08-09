@@ -3,8 +3,20 @@
 from ..collections.types import StationStatusType
 
 
-@dataclass(slots=True)
+@dataclass(init=False)
 class Filters:
-    status: StationStatusType = StationStatusType.All
-    name: str = ""
-    info: str = ""
+    __slots__ = ("status", "name", "info",)
+
+    status: StationStatusType
+    name: str
+    info: str
+
+    def __init__(
+            self,
+            status: StationStatusType = StationStatusType.All,
+            name: str = "",
+            info: str = "",
+    ):
+        self.status = status
+        self.name = name
+        self.info = info

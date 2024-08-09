@@ -10,8 +10,10 @@ from ..data import CollectionData
 from ...bs4 import BeautifulSoup
 
 
-@dataclass(slots=True)
+@dataclass
 class ItemData:
+    __slots__ = ("name", "path", "type",)
+
     name: str
     path: str
     type: str

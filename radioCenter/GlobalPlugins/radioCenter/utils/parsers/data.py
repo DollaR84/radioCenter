@@ -1,11 +1,24 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import List
 
 
-@dataclass(slots=True)
+@dataclass(init=False)
 class ItemData:
+    __slots__ = ("name", "url", "info",)
+
     name: str
     url: str
-    info: list[str] = field(default_factory=list)
+    info: List[str]
+
+    def __init__(
+            self,
+            name: str,
+            url: str,
+            info: List[str] = [],
+    ):
+        self.name = name
+        self.url = url
+        self.info = info
 
     def add_info(self, *infos):
         for info in infos:

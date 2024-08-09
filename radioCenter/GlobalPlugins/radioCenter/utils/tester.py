@@ -1,5 +1,5 @@
 ﻿from dataclasses import dataclass
-from typing import Callable
+from typing import Callable, Optional
 
 import addonHandler
 import ui
@@ -21,9 +21,9 @@ class RadioTestData:
     callback_after: Callable
     url: str
 
-    name: str | None = None
-    priority: PriorityType | None = None
-    station_index: int | None = None
+    name: Optional[str] = None
+    priority: Optional[PriorityType] = None
+    station_index: Optional[int] = None
 
     is_success: bool = False
 
