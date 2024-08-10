@@ -1,4 +1,4 @@
-﻿from typing import List, Union
+﻿from typing import List, Optional, Union
 
 import addonHandler
 import gui
@@ -55,8 +55,8 @@ class TabCollection(wx.Panel):
         self.parent = parent
         self.collection = collection
 
-        self.collection_data_ext: CollectionDataExt | None = data
-        self.collection_data: list[CollectionData] = data.stations if data else []
+        self.collection_data_ext: Optional[CollectionDataExt] = data
+        self.collection_data: List[CollectionData] = data.stations if data else []
         self.is_collection_data_updating: bool = False
         self.is_collection_data_updated: bool = False
 
@@ -122,7 +122,7 @@ class TabCollection(wx.Panel):
             is_changed = item.change_url(keycode)
 
             if is_changed:
-                Player.play(SoundType.Move)
+                Player.play(SoundType.Action)
                 self.parent.collections.verify(
                     item, index,
                     self.parent.config.repeat_count_collection,
@@ -228,6 +228,7 @@ class TabCollection(wx.Panel):
         if index == data.station_index:
             self.action_button.SetLabel(self.action_label)
             ui.message(_("Station link verified"))
+            ui.message(f"{_('Status')}: {station.status.value}")
 
         self.collection_data_ext.verified()
         if self.parent and data.station_index == self.collection_data_ext.current_check_index:
@@ -247,10 +248,12 @@ class TabCollection(wx.Panel):
         self.collection_data = self.collection_data_ext.stations
         if filters.status != StationStatusType.All:
             self.collection_data = [item for item in self.collection_data if item.status == filters.status]
+
         if filters.name:
-            self.collection_data = [item for item in self.collection_data if filters.name in item.name]
+            self.collection_data = [item for item in self.collection_data if filters.name in item.name.lower()]
+
         if filters.info:
-            self.collection_data = [item for item in self.collection_data if filters.info in item.info]
+            self.collection_data = [item for item in self.collection_data if filters.info in item.info.lower()]
 
         self.show_items()
 

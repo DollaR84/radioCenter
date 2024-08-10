@@ -54,7 +54,7 @@ class RadioTester:
         if not self.data.is_success and self.repeats < self.repeat_count:
             self.repeats += 1
             if self.is_speech_mode:
-                Player.play(SoundType.Move)
+                Player.play(SoundType.Action)
             wx.CallLater(1000, self.check)
 
         else:

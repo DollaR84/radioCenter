@@ -34,17 +34,21 @@ class RadioCollections:
             self._future = None
 
         self._future = self._executor.submit(collection.parse)
-        wx.CallLater(1000, self.check, collection.name, callback_finish)
+        wx.CallLater(1000, self.check, self._future, collection.name, callback_finish)
 
-    def check(self, collection_name: str, callback_finish: Callable):
-        if self._future.done():
-            data = self._future.result()
+    def check(self, future: Future, collection_name: str, callback_finish: Callable):
+        if future and future.done():
+            data = future.result()
+            future = None
             Player.play(SoundType.Success)
             callback_finish(collection_name, data)
 
+        elif future:
+            Player.play(SoundType.Action)
+            wx.CallLater(1000, self.check, future, collection_name, callback_finish)
+
         else:
-            Player.play(SoundType.Move)
-            wx.CallLater(1000, self.check, collection_name, callback_finish)
+            Player.play(SoundType.Failure)
 
     def verify(self, collection_data: CollectionData, index: int, repeat_count: int, callback_after: Callable):
         if self._future is not None:

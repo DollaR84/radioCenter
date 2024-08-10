@@ -3,5 +3,5 @@
 
 class SoundType(Enum):
     Failure = 0
-    Move = 1
-    Success = 2
+    Success = 1
+    Action = 2

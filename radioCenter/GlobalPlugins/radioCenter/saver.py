@@ -1,10 +1,15 @@
 import os
+import sys
 import pickle
 from typing import Dict, Union
 
 import globalVars
 
-from .collections import CollectionDataExt
+if sys.version_info >= (3, 10):
+    from .collections import CollectionDataExt
+else:
+    class CollectionDataExt:
+        pass
 
 from .config import Config
 
@@ -50,11 +55,17 @@ class Saver:
         return config
 
     def save_collections(self, collections_data: Dict[str, Union[CollectionDataExt, None]]):
+        if sys.version_info < (3, 10):
+            return
+
         with open(self.collections_file_name, 'wb') as data_file:
             pickle.dump(collections_data, data_file)
 
     def load_collections(self) -> Dict[str, Union[CollectionDataExt, None]]:
         collections_data = {}
+        if sys.version_info < (3, 10):
+            return collections_data
+
         try:
             data_file = open(self.collections_file_name, 'rb')
             collections_data = pickle.load(data_file)

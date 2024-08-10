@@ -1,24 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import sys
 from typing import List
 
 
-@dataclass(init=False)
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class ItemData:
-    __slots__ = ("name", "url", "info",)
-
     name: str
     url: str
-    info: List[str]
-
-    def __init__(
-            self,
-            name: str,
-            url: str,
-            info: List[str] = [],
-    ):
-        self.name = name
-        self.url = url
-        self.info = info
+    info: List[str] = field(default_factory=list)
 
     def add_info(self, *infos):
         for info in infos:

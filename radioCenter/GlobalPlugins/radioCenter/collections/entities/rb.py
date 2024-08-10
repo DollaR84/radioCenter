@@ -48,7 +48,7 @@ class RadioBrowserCollection(BaseCollection):
         return results
 
     def read(self, item: ItemData) -> CollectionData:
-        result = CollectionData(name=item.name)
+        result = CollectionData(name=item.name.strip())
         result.add(item.url)
         result.add_info(*item.info)
         return result

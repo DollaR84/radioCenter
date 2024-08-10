@@ -19,12 +19,12 @@ class PLSParser(BaseParser):
         for line in data.splitlines():
             line = line.strip()
 
-            if line.startswith("File"):
+            if line.startswith("File") or line.startswith("file"):
                 var, url = line.split("=")
                 index = var.replace("File", "")
                 urls[index] = url
 
-            if line.startswith("Title"):
+            if line.startswith("Title") or line.startswith("title"):
                 var, title = line.split("=")
                 index = var.replace("Title", "")
                 titles[index] = title

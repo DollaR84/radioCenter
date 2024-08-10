@@ -10,10 +10,8 @@ from ..data import CollectionData
 from ...bs4 import BeautifulSoup
 
 
-@dataclass
+@dataclass(slots=True)
 class ItemData:
-    __slots__ = ("name", "path", "type",)
-
     name: str
     path: str
     type: str
@@ -96,7 +94,8 @@ class InternetRadioStreamsCollection(BaseCollection):
         return results
 
     def read(self, item: ItemData) -> CollectionData:
-        result = CollectionData(name=item.name.replace("-", " ").replace("_", " "))
+        item.name = item.name.strip().replace("-", " ").replace("_", " ")
+        result = CollectionData(name=item.name)
         data = self.get_request(self.make_url(item.type, item.path))
 
         for line in data.splitlines():

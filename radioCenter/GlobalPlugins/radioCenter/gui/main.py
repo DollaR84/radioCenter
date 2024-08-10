@@ -1,4 +1,5 @@
-﻿from typing import List, Union
+﻿import sys
+from typing import List, Union
 
 import addonHandler
 import gui
@@ -7,7 +8,14 @@ import ui
 
 import wx
 
-from .collections import RadioCollectionsGUI
+if sys.version_info >= (3, 10):
+    from .collections import RadioCollectionsGUI
+else:
+    class RadioCollectionsGUI:
+
+        @staticmethod
+        def create_collections_gui(parent):
+            pass
 
 from ..client import RadioClient
 
@@ -125,11 +133,17 @@ class RadioGUI(wx.Dialog):
             self.play_button.Disable()
             self.stop_button.Disable()
             self.record_button.Disable()
+
         elif not self.radio.is_playing:
             self.stop_button.Disable()
             self.record_button.Disable()
+
         if not self.radio.is_recording_allowed:
             self.record_button.Disable()
+
+        if sys.version_info < (3, 10):
+            self.collections_button.Disable()
+
         self.close_button.SetDefault()
 
         main_sizer.Add(left_sizer, border=5, flag=wx.EXPAND | wx.ALL)
@@ -183,7 +197,7 @@ class RadioGUI(wx.Dialog):
                 self.radio.save()
                 self.stations.Set(self.stations_names)
                 self.stations.SetSelection(new_position)
-                Player.play(SoundType.Move)
+                Player.play(SoundType.Action)
             else:
                 Player.play(SoundType.Failure)
         event.Skip()

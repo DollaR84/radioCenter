@@ -1,4 +1,4 @@
-﻿from dataclasses import dataclass
+﻿from dataclasses import dataclass, field
 from typing import List
 
 import wx
@@ -6,30 +6,14 @@ import wx
 from .types import StationStatusType
 
 
-@dataclass(init=False)
+@dataclass(slots=True)
 class CollectionData:
-    __slots__ = ("name", "urls", "info_data", "status", "_current_url_index",)
-
     name: str
-    urls: List[str]
-    info_data: List[str]
+    urls: List[str] = field(default_factory=list)
+    info_data: List[str] = field(default_factory=list)
 
-    status: StationStatusType
-    _current_url_index: int
-
-    def __init__(
-            self,
-            name: str,
-            urls: List[str] = [],
-            info_data: List[str] = [],
-            status: StationStatusType = StationStatusType.NotVerified,
-            current_url_index: int = 0,
-    ):
-        self.name = name
-        self.urls = urls
-        self.info_data = info_data
-        self.status = status
-        self._current_url_index = current_url_index
+    status: StationStatusType = StationStatusType.NotVerified
+    current_url_index: int = 0
 
     @property
     def url(self) -> str:
@@ -81,13 +65,8 @@ class CollectionData:
         return False
 
 
-@dataclass(init=False)
 class CollectionDataExt:
     __slots____ = ("stations", "current_check_index", "_verified",)
-
-    stations: List[CollectionData]
-    current_check_index: int
-    _verified: bool
 
     def __init__(
             self,
