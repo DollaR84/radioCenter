@@ -44,6 +44,14 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
+### Version 3.6.0
+* apporté des modifications pour la compatibilité avec nvda 2023 (les collections sont désactivées pour la version 2023) ;
+* ajout de la prise en charge des liens m3u ;
+* ajout d'ignorer la casse lors du filtrage par nom et/ou information ;
+* ajout de la suppression des espaces au début et à la fin des noms des stations de radio lors de l'analyse dans les collections ;
+* ajout de la prononciation de l'état de la station lors de la vérification manuelle à l'aide du bouton de test dans les collections ;
+* correction d'une erreur flottante lors de la mise à jour des collections ;
+
 ### Version 3.2.0
 * ajout de la prise en charge des liens .pls ;
 * ajout d'un nom à partir des informations du flux audio lors de la sauvegarde du fichier enregistré ;

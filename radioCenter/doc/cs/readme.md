@@ -44,6 +44,14 @@ V seznamech sbírek:
 * ručně;
 
 ## Seznam změn:
+### Verze 3.6.0
+* provedli změny pro kompatibilitu s nvda 2023 (sbírky jsou pro verzi 2023 zakázány);
+* přidána podpora pro odkazy m3u;
+* přidáno ignorování velikosti písmen při filtrování podle jména a/nebo informací;
+* přidáno vymazání mezer na začátku a konci názvů rozhlasových stanic při analýze ve sbírkách;
+* přidána výslovnost stavu stanice při ruční kontrole pomocí testovacího tlačítka v kolekcích;
+* opravena plovoucí chyba při aktualizaci kolekcí;
+
 ### Verze 3.2.0
 * přidána podpora pro odkazy .pls;
 * přidán název z informace o audio streamu při ukládání nahraného souboru;

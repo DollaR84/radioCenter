@@ -44,6 +44,14 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
+### Versión 3.6.0
+* se realizaron cambios para compatibilidad con nvda 2023 (las colecciones están deshabilitadas para la versión 2023);
+* soporte agregado para enlaces m3u;
+* agregado ignorando mayúsculas y minúsculas al filtrar por nombre y/o información;
+* se agregó limpieza de espacios al principio y al final de los nombres de las estaciones de radio al analizar en colecciones;
+* pronunciación agregada del estado de la estación al verificar manualmente usando el botón de prueba en las colecciones;
+* Se corrigió un error flotante al actualizar colecciones;
+
 ### Versión 3.2.0
 * soporte agregado para enlaces .pls;
 * agregó un nombre a la información de la transmisión de audio al guardar el archivo grabado;

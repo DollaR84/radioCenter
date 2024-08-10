@@ -45,6 +45,14 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 3.6.0
+* nvda 2023 ile uyumluluk için değişiklikler yapıldı (koleksiyonlar 2023 sürümü için devre dışı bırakıldı);
+* m3u bağlantıları için destek eklendi;
+* isme ve/veya bilgiye göre filtreleme yaparken büyük/küçük harfin göz ardı edilmesi eklendi;
+* koleksiyonlarda ayrıştırma yapılırken radyo istasyonları adlarının başına ve sonuna boşlukların temizlenmesi eklendi;
+* koleksiyonlardaki test düğmesini kullanarak manuel olarak kontrol ederken istasyon durumunun telaffuzu eklendi;
+* koleksiyonları güncellerken oluşan kayan hata düzeltildi;
+
 ### Sürüm 3.2.0
 * .pls bağlantıları için destek eklendi;
 * kaydedilen dosyayı kaydederken ses akışı bilgilerinden bir ad eklendi;
