@@ -26,7 +26,7 @@ from ..types import SortType, PriorityType
 from ..utils import RadioTestData, RadioTester
 from ..utils.player import Player, SoundType
 
-from ..utils.parsers import PLSParser
+from ..utils.parsers import M3UParser, PLSParser
 from ..utils.parsers.data import ItemData
 
 
@@ -248,6 +248,12 @@ class RadioGUI(wx.Dialog):
         if url.endswith(".pls"):
             parser = PLSParser(url)
             items = parser.get_data()
+
+        elif url.endswith(".m3u"):
+            m3u_name = self.station_name.GetValue()
+            parser = M3UParser(url, name=m3u_name)
+            items = parser.get_data()
+
         else:
             items = [ItemData(name=name, url=url)]
 

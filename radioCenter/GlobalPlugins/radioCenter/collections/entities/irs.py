@@ -99,7 +99,10 @@ class InternetRadioStreamsCollection(BaseCollection):
         data = self.get_request(self.make_url(item.type, item.path))
 
         for line in data.splitlines():
-            if line.strip().startswith("http"):
+            line = line.strip()
+            line_start = line[:4]
+
+            if line_start.lower().startswith("http"):
                 result.add(line)
 
         return result
