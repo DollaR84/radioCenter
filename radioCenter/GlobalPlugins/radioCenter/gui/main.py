@@ -1,5 +1,4 @@
-﻿import sys
-from typing import List, Union
+﻿from typing import List, Union
 
 import addonHandler
 import gui
@@ -8,14 +7,7 @@ import ui
 
 import wx
 
-if sys.version_info >= (3, 10):
-    from .collections import RadioCollectionsGUI
-else:
-    class RadioCollectionsGUI:
-
-        @staticmethod
-        def create_collections_gui(parent):
-            pass
+from .collections import RadioCollectionsGUI
 
 from ..client import RadioClient
 
@@ -141,9 +133,6 @@ class RadioGUI(wx.Dialog):
         if not self.radio.is_recording_allowed:
             self.record_button.Disable()
 
-        if sys.version_info < (3, 10):
-            self.collections_button.Disable()
-
         self.close_button.SetDefault()
 
         main_sizer.Add(left_sizer, border=5, flag=wx.EXPAND | wx.ALL)
@@ -251,7 +240,7 @@ class RadioGUI(wx.Dialog):
 
         elif url.endswith(".m3u"):
             m3u_name = self.station_name.GetValue()
-            parser = M3UParser(url, name=m3u_name)
+            parser = M3UParser(url=url, name=m3u_name)
             items = parser.get_data()
 
         else:

@@ -29,6 +29,10 @@ class BaseCollection(BaseParser, ABC):
         data = dict(sorted(cls._collections.items(), key=lambda item: item[1].order_id))
         return list(data.keys())
 
+    @property
+    def is_available(self) -> bool:
+        return True
+
     def __init__(self, name: str):
         self.name = name
 

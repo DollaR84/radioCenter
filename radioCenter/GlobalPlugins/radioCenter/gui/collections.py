@@ -317,9 +317,13 @@ class RadioCollectionsGUI(wx.Dialog):
 
         self.notebook = wx.Notebook(self, wx.ID_ANY)
         for collection_name in self.collections.collections_names:
+            collection = self.collections.get_collection(collection_name)
+            if not collection.is_available:
+                continue
+
             tab = TabCollection(
                 self.notebook, self,
-                self.collections.get_collection(collection_name),
+                collection,
                 data = collections_data.get(collection_name),
             )
             self.notebook.AddPage(tab, collection_name)

@@ -1,6 +1,7 @@
 ﻿from dataclasses import dataclass
 from enum import Enum
 import json
+import sys
 from typing import List, Union
 
 from .base import BaseCollection
@@ -10,7 +11,7 @@ from ..data import CollectionData
 from ...bs4 import BeautifulSoup
 
 
-@dataclass(slots=True)
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class ItemData:
     name: str
     path: str

@@ -1,4 +1,5 @@
-﻿from typing import List
+﻿import sys
+from typing import List
 
 from logHandler import log
 
@@ -18,6 +19,10 @@ class RadioBrowserCollection(BaseCollection):
         super().__init__(name)
 
         self.client: RadioBrowser = RadioBrowser()
+
+    @property
+    def is_available(self) -> bool:
+        return sys.version_info >= (3, 10)
 
     def make_url(self) -> str:
         return ""

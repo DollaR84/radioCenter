@@ -1,4 +1,5 @@
 ﻿from dataclasses import dataclass, field
+import sys
 from typing import List
 
 import wx
@@ -6,7 +7,7 @@ import wx
 from .types import StationStatusType
 
 
-@dataclass(slots=True)
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class CollectionData:
     name: str
     urls: List[str] = field(default_factory=list)
