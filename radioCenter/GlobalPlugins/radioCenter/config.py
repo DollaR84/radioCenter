@@ -13,6 +13,7 @@ class Config:
     volume: int = 50
     is_muted: bool = False
 
+    fs_collection_path: str = ""
     record_path: str = ""
 
     repeat_count: int = 10

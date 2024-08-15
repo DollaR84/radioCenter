@@ -317,7 +317,7 @@ class RadioCollectionsGUI(wx.Dialog):
 
         self.notebook = wx.Notebook(self, wx.ID_ANY)
         for collection_name in self.collections.collections_names:
-            collection = self.collections.get_collection(collection_name)
+            collection = self.collections.get_collection(collection_name, config=self.config)
             if not collection.is_available:
                 continue
 

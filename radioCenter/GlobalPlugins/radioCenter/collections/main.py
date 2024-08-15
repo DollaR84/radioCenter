@@ -26,8 +26,8 @@ class RadioCollections:
     def collections_names(self) -> List[str]:
         return self.collections.get_collections_names()
 
-    def get_collection(self, name: str) -> BaseCollection:
-        return self.collections.get_collection(name)
+    def get_collection(self, name: str, **kwargs) -> BaseCollection:
+        return self.collections.get_collection(name, **kwargs)
 
     def update(self, collection: BaseCollection, callback_finish: Callable):
         if self._future is not None:

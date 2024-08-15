@@ -15,7 +15,7 @@ from ...utils.parsers.data import ItemData
 class RadioBrowserCollection(BaseCollection):
     order_id: int = 1
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, **kwargs):
         super().__init__(name)
 
         self.client: RadioBrowser = RadioBrowser()

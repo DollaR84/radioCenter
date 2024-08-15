@@ -14,7 +14,7 @@ from ...utils.parsers.data import ItemData
 class Mp3RadioStationsCollection(BaseCollection):
     order_id: int = 3
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, **kwargs):
         super().__init__(name)
 
         self.base_url: str = "https://www.rcast.net/dir/mp3"

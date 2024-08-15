@@ -21,8 +21,8 @@ class BaseCollection(BaseParser, ABC):
         return " ".join([word for word in re.findall(r"[A-Z][a-z0-9]+", _name)])
 
     @classmethod
-    def get_collection(cls, name: str) -> BaseCollection:
-        return cls._collections.get(name)(name)
+    def get_collection(cls, name: str, **kwargs) -> BaseCollection:
+        return cls._collections.get(name)(name, **kwargs)
 
     @classmethod
     def get_collections_names(cls) -> List[str]:

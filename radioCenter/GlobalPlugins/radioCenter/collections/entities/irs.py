@@ -26,7 +26,7 @@ class UrlType(Enum):
 class InternetRadioStreamsCollection(BaseCollection):
     order_id: int = 2
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, **kwargs):
         super().__init__(name)
 
         self.base_directory_url: str = "https://github.com/mikepierce/internet-radio-streams/tree"
