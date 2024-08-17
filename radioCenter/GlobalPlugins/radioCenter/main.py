@@ -7,7 +7,7 @@ import      wx
 
 from .client import RadioClient
 
-from .gui import RadioGUI
+from .gui import RadioGUI, ToolsMenu
 
 from .settings import RadioSettings
 
@@ -22,8 +22,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         super().__init__(*args, **kwargs)
 
         self.radio: RadioClient = RadioClient()
+        self.tools_menu: ToolsMenu = ToolsMenu(self.radio)
+
         RadioSettings.radio = self.radio
         gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(RadioSettings)
+
+    def terminate(self):
+        self.tools_menu.terminate()
+        super().terminate()
 
     @scriptHandler.script(
         description=_("play/pause radio"),
@@ -80,4 +86,3 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     )
     def script_open_window(self, gesture):
         wx.CallAfter(RadioGUI.create_radio_gui, self.radio)
-        

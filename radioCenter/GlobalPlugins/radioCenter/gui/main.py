@@ -7,6 +7,8 @@ import ui
 
 import wx
 
+from .base import LabelsGUI
+
 from .collections import RadioCollectionsGUI
 
 from ..client import RadioClient
@@ -25,7 +27,7 @@ from ..utils.parsers.data import ItemData
 addonHandler.initTranslation()
 
 
-class RadioGUI(wx.Dialog):
+class RadioGUI(wx.Dialog, LabelsGUI):
 
     _instance = None
 
@@ -51,11 +53,11 @@ class RadioGUI(wx.Dialog):
         if self._instance is not None:
             return self._instance
 
-        self.radio: RadioClient = client
         RadioGUI._instance = self
 
         dialog_title = _("Radio Center Control")
-        super().__init__(parent, title=dialog_title)
+        super(wx.Dialog, self).__init__(parent, title=dialog_title)
+        super(LabelsGUI, self).__init__(client)
 
         self.build_ui()
         self._bindEvents()
@@ -150,6 +152,7 @@ class RadioGUI(wx.Dialog):
 
         self.Bind(wx.EVT_CHOICE, self.selection_sort_type, self.sort_type)
         self.Bind(wx.EVT_CHOICE, self.selection_priority_type, self.priority_type)
+
         self.Bind(wx.EVT_TEXT, self.changed_text_station, self.station_name)
         self.Bind(wx.EVT_TEXT, self.changed_text_station, self.station_url)
 
@@ -334,18 +337,6 @@ class RadioGUI(wx.Dialog):
 
     def collections(self, event):
         RadioCollectionsGUI.create_collections_gui(self)
-
-    @property
-    def play_label(self) -> str:
-        return _("Pause") if self.radio.need_paused else _("Play")
-
-    @property
-    def record_label(self) -> str:
-        return _("Stop record") if self.radio.is_recording else _("Record")
-
-    @property
-    def mute_label(self) -> str:
-        return _("Unmute") if self.radio.config.is_muted else _("Mute")
 
     def get_station_name(self) -> str:
         name = self.station_name.GetValue()

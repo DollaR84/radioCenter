@@ -2,11 +2,12 @@
 
 import addonHandler
 import gui
+from gui.message import displayDialogAsModal
 import ui
 
 import wx
 
-from .filter import Filters
+from .filter import Filters, FiltersGUI
 
 from .vlc import VirtualListCtrl
 
@@ -176,16 +177,18 @@ class TabCollection(wx.Panel):
 
         wx.CallLater(2000, self.action_button.SetLabel, self.action_label)
         wx.CallLater(2000, self.parent.parent.play_button.SetLabel, self.parent.parent.play_label)
-        wx.CallLater(1000, self.parent.parent.stop_button.Enable, self.parent.parent.radio.is_playing)
+        wx.CallLater(2000, self.parent.parent.stop_button.Enable, self.parent.parent.radio.is_playing)
 
     def test_run(self, event):
         index = self.data.GetIndex()
         item = self.collection_data[index]
+        station_index = self.collection_data_ext.stations.index(item)
 
         self.parent.collections.verify(
-            item, index,
+            item, station_index,
             self.parent.config.repeat_count_collection,
             self.callback_after_verify,
+            is_speech_mode=True,
         )
 
     def add(self, event):
@@ -221,16 +224,18 @@ class TabCollection(wx.Panel):
         self.verify_part_count += 1
 
     def callback_after_verify(self, data: RadioTestData):
-        station = self.collection_data[data.station_index]
+        station = self.collection_data_ext.stations[data.station_index]
         station.status = StationStatusType.Works if data.is_success else StationStatusType.NotWork
 
-        index = self.data.GetIndex()
-        if index == data.station_index:
-            self.action_button.SetLabel(self.action_label)
-            ui.message(_("Station link verified"))
-            ui.message(f"{_('Status')}: {station.status.value}")
+        if self.collection_data and len(self.collection_data) > 0:
+            index = self.data.GetIndex()
+            item = self.collection_data[index]
+            if id(item) == id(station):
+                self.action_button.SetLabel(self.action_label)
 
-        self.collection_data_ext.verified()
+            else:
+                self.collection_data_ext.verified()
+
         if self.parent and data.station_index == self.collection_data_ext.current_check_index:
             self.verify()
 
@@ -294,26 +299,9 @@ class RadioCollectionsGUI(wx.Dialog):
         self.build_ui()
         self._bindEvents()
 
-        self.filters: Filters = Filters()
-
     def build_ui(self):
         collections_data = self.saver.load_collections()
-
         sizer = wx.BoxSizer(wx.VERTICAL)
-        filters_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        filters_helper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.HORIZONTAL)
-
-        self.filter_status_type = filters_helper.addLabeledControl(
-            _("Filter by status type:"), wx.Choice,
-            choices=StationStatusType.get_list_values(),
-        )
-        self.filter_status_type.SetStringSelection(StationStatusType.All.value)
-
-        self.filter_name = filters_helper.addLabeledControl(_("Filter by name:"), wx.TextCtrl)
-        self.filter_info = filters_helper.addLabeledControl(_("Filter by info:"), wx.TextCtrl)
-
-        filters_sizer.Add(filters_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
-        sizer.Add(filters_sizer, 1, wx.EXPAND | wx.ALL, 3)
 
         self.notebook = wx.Notebook(self, wx.ID_ANY)
         for collection_name in self.collections.collections_names:
@@ -333,6 +321,7 @@ class RadioCollectionsGUI(wx.Dialog):
         buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
         buttons_helper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.HORIZONTAL)
         self.update_button = buttons_helper.addItem(wx.Button(self, label=_("Update")))
+        self.filters_button = buttons_helper.addItem(wx.Button(self, label=_("Filters")))
         self.close_button = buttons_helper.addItem(wx.Button(self, wx.ID_ANY, label=_("Close")))
 
         buttons_sizer.Add(buttons_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
@@ -342,13 +331,9 @@ class RadioCollectionsGUI(wx.Dialog):
     def _bindEvents(self):
         self.Bind(wx.EVT_CLOSE, self.close_window)
         self.Bind(wx.EVT_CHAR_HOOK, self.process_char_hooks)
-        self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.notebook_page_changed, self.notebook)
-
-        self.Bind(wx.EVT_CHOICE, self.filter_status_type_handler, self.filter_status_type)
-        self.Bind(wx.EVT_TEXT, self.filter_name_handler, self.filter_name)
-        self.Bind(wx.EVT_TEXT, self.filter_info_handler, self.filter_info)
 
         self.Bind(wx.EVT_BUTTON, self.update, self.update_button)
+        self.Bind(wx.EVT_BUTTON, self.filters, self.filters_button)
         self.Bind(wx.EVT_BUTTON, self.close, self.close_button)
 
     def process_char_hooks(self, event):
@@ -368,27 +353,11 @@ class RadioCollectionsGUI(wx.Dialog):
 
         event.Skip()
 
-    def notebook_page_changed(self, event):
-        page = self.get_select_page()
-        self.filters.status = StationStatusType.get_type_by_value(self.filter_status_type.GetStringSelection())
-        self.filters.name = self.filter_name.GetValue()
-        self.filters.info = self.filter_info.GetValue()
-        page.filtering(self.filters)
-
-    def filter_status_type_handler(self, event):
-        page = self.get_select_page()
-        self.filters.status = StationStatusType.get_type_by_value(self.filter_status_type.GetStringSelection())
-        page.filtering(self.filters)
-
-    def filter_name_handler(self, event):
-        page = self.get_select_page()
-        self.filters.name = self.filter_name.GetValue()
-        page.filtering(self.filters)
-
-    def filter_info_handler(self, event):
-        page = self.get_select_page()
-        self.filters.info = self.filter_info.GetValue()
-        page.filtering(self.filters)
+    def filters(self, event):
+        filters = self.get_filters()
+        if filters:
+            page = self.get_select_page()
+            page.filtering(filters)
 
     def update(self, event):
         if any([tab.is_collection_data_updating for tab in self.tabs]):
@@ -397,6 +366,14 @@ class RadioCollectionsGUI(wx.Dialog):
 
         page = self.get_select_page()
         page.update()
+
+    def close(self, event):
+        self.Close(True)
+
+    def close_window(self, event):
+        self.save_collections_data()
+        self.Destroy()
+        self._instance = None
 
     def save_collections_data(self):
         collections_data: dict[str, CollectionDataExt | None] = {}
@@ -410,10 +387,12 @@ class RadioCollectionsGUI(wx.Dialog):
         page = self.tabs[index]
         return page
 
-    def close(self, event):
-        self.Close(True)
+    def get_filters(self) -> Filters:
+        result = None
 
-    def close_window(self, event):
-        self.save_collections_data()
-        self.Destroy()
-        self._instance = None
+        filters_dialog = FiltersGUI(self)
+        if displayDialogAsModal(filters_dialog) == wx.ID_OK:
+            result = filters_dialog.get_values()
+        filters_dialog.Destroy()
+
+        return result

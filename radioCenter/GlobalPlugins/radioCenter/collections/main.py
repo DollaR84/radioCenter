@@ -50,7 +50,14 @@ class RadioCollections:
         else:
             Player.play(SoundType.Failure)
 
-    def verify(self, collection_data: CollectionData, index: int, repeat_count: int, callback_after: Callable):
+    def verify(
+            self,
+            collection_data: CollectionData,
+            index: int,
+            repeat_count: int,
+            callback_after: Callable,
+            is_speech_mode: bool = False,
+    ):
         if self._future is not None:
             self._future = None
 
@@ -62,14 +69,22 @@ class RadioCollections:
                     index,
                     repeat_count,
                     callback_after,
+                    is_speech_mode,
                 ): index
             }
             for future in as_completed(futures):
                 futures.pop(future)
 
-    def verify_station(self, collection_data: CollectionData, index: int, repeat_count: int, callback_after: Callable):
+    def verify_station(
+            self,
+            collection_data: CollectionData,
+            index: int,
+            repeat_count: int,
+            callback_after: Callable,
+            is_speech_mode: bool = False,
+    ):
         data = RadioTestData(
             callback_after=callback_after, url=collection_data.url,
             name=collection_data.name, station_index=index,
         )
-        RadioTester(data, repeat_count, is_speech_mode=False)
+        RadioTester(data, repeat_count, is_speech_mode=is_speech_mode)
