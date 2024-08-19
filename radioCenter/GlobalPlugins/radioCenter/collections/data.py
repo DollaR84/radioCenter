@@ -1,18 +1,20 @@
 ﻿from dataclasses import dataclass, field
+import sys
+from typing import List
 
 import wx
 
 from .types import StationStatusType
 
 
-@dataclass(slots=True)
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class CollectionData:
     name: str
-    urls: list[str] = field(default_factory=list)
-    info_data: list[str] = field(default_factory=list)
+    urls: List[str] = field(default_factory=list)
+    info_data: List[str] = field(default_factory=list)
 
     status: StationStatusType = StationStatusType.NotVerified
-    _current_url_index: int = 0
+    current_url_index: int = 0
 
     @property
     def url(self) -> str:
@@ -64,11 +66,18 @@ class CollectionData:
         return False
 
 
-@dataclass(slots=True)
 class CollectionDataExt:
-    stations: list[CollectionData]
-    current_check_index: int = 0
-    _verified: bool = False
+    __slots____ = ("stations", "current_check_index", "_verified",)
+
+    def __init__(
+            self,
+            stations: List[CollectionData],
+            current_check_index: int = 0,
+            verified: bool = False,
+    ):
+        self.stations = stations
+        self.current_check_index = current_check_index
+        self._verified = verified
 
     def __iter__(self):
         return self

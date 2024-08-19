@@ -1,6 +1,7 @@
 ﻿from dataclasses import dataclass
 from enum import Enum
 import json
+import sys
 from typing import List, Union
 
 from .base import BaseCollection
@@ -10,7 +11,7 @@ from ..data import CollectionData
 from ...bs4 import BeautifulSoup
 
 
-@dataclass(slots=True)
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class ItemData:
     name: str
     path: str
@@ -25,7 +26,7 @@ class UrlType(Enum):
 class InternetRadioStreamsCollection(BaseCollection):
     order_id: int = 2
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, **kwargs):
         super().__init__(name)
 
         self.base_directory_url: str = "https://github.com/mikepierce/internet-radio-streams/tree"
@@ -94,11 +95,15 @@ class InternetRadioStreamsCollection(BaseCollection):
         return results
 
     def read(self, item: ItemData) -> CollectionData:
-        result = CollectionData(name=item.name.replace("-", " ").replace("_", " "))
+        item.name = item.name.strip().replace("-", " ").replace("_", " ")
+        result = CollectionData(name=item.name)
         data = self.get_request(self.make_url(item.type, item.path))
 
         for line in data.splitlines():
-            if line.strip().startswith("http"):
+            line = line.strip()
+            line_start = line[:4]
+
+            if line_start.lower().startswith("http"):
                 result.add(line)
 
         return result

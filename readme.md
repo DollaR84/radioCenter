@@ -6,6 +6,10 @@
 this addon allows you to play online radio stations and save audio stream to file.
 Recording one radio station does not interfere with listening to another radio station.
 
+In addition to Internet catalogs, it is also possible to add a local catalog with m3u files to collections.
+To get a local collection, you must specify the base path to the catalog in the settings.
+All m3u files in this catalog and all its subdirectories will be checked automatically.
+
 Warnings!
 Checking radio stations from collections is a rather lengthy and resource-intensive process.
 It is recommended to perform it in parts, periodically closing the window, and rerun it later.
@@ -44,6 +48,22 @@ In the lists of collections:
 * manually;
 
 ## List of changes:
+### Version 4.0.0
+* for nvda 2023 made collections compatible, except for one Radio Browser;
+* created a collection for checking m3u files on local storage;
+* added a control menu to the nvda menu;
+* moved filters to a separate dialog box;
+* added sound playback when manually checking a station in collections;
+* fixed a floating error when checking a station after applying filters;
+
+### Version 3.6.0
+* made changes for compatibility with nvda 2023 (collections are disabled for 2023 version);
+* added support for m3u links;
+* added ignoring the case of letters when filtering by name and/or information;
+* added cleaning of spaces at the beginning and end of the radio station name when parsing in collections;
+* added pronunciation of the station status when manually checking by the test button in collections;
+* fixed a floating error when updating collections;
+
 ### Version 3.2.0
 * added support for .pls links;
 * added a name from the audio stream information when saving the recorded file;

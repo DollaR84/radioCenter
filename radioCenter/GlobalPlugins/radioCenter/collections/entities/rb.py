@@ -1,4 +1,5 @@
-﻿from typing import List
+﻿import sys
+from typing import List
 
 from logHandler import log
 
@@ -14,10 +15,14 @@ from ...utils.parsers.data import ItemData
 class RadioBrowserCollection(BaseCollection):
     order_id: int = 1
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, **kwargs):
         super().__init__(name)
 
         self.client: RadioBrowser = RadioBrowser()
+
+    @property
+    def is_available(self) -> bool:
+        return sys.version_info >= (3, 10)
 
     def make_url(self) -> str:
         return ""
@@ -48,7 +53,7 @@ class RadioBrowserCollection(BaseCollection):
         return results
 
     def read(self, item: ItemData) -> CollectionData:
-        result = CollectionData(name=item.name)
+        result = CollectionData(name=item.name.strip())
         result.add(item.url)
         result.add_info(*item.info)
         return result

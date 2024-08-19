@@ -6,6 +6,10 @@
 este complemento te permite escuchar estaciones de radio en línea y guardar  el flujo de audio en un archivo.
 Grabar una estación de radio no interfiere con escuchar otra estación de radio.
 
+En las colecciones, además de los directorios de Internet, también es posible añadir un directorio local con archivos m3u.
+Para obtener una colección local, debe especificar la ruta base al directorio en la configuración.
+Todos los archivos m3u en este directorio y todos sus subdirectorios se escanearán automáticamente.
+
 ¡Advertencias!
 Controlar estaciones de radio de las colecciones es un proceso bastante largo y que requiere muchos recursos.
 Se recomienda realizarlo por partes, cerrando periódicamente la ventana y volver a ejecutarlo más tarde.
@@ -44,6 +48,22 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
+### Versión 4.0.0
+* para nvda 2023, las colecciones son compatibles, excepto un navegador de radio;
+* creó una colección de archivos m3u de verificación en el almacenamiento local;
+* agregó un menú de control al menú NVDA;
+* moví los filtros a un cuadro de diálogo separado;
+* Se agregó reproducción de sonido al verificar manualmente una estación en las colecciones;
+* Se corrigió un error de verificación de la estación flotante después de aplicar filtros;
+
+### Versión 3.6.0
+* se realizaron cambios para compatibilidad con nvda 2023 (las colecciones están deshabilitadas para la versión 2023);
+* soporte agregado para enlaces m3u;
+* agregado ignorando mayúsculas y minúsculas al filtrar por nombre y/o información;
+* se agregó limpieza de espacios al principio y al final de los nombres de las estaciones de radio al analizar en colecciones;
+* pronunciación agregada del estado de la estación al verificar manualmente usando el botón de prueba en las colecciones;
+* Se corrigió un error flotante al actualizar colecciones;
+
 ### Versión 3.2.0
 * soporte agregado para enlaces .pls;
 * agregó un nombre a la información de la transmisión de audio al guardar el archivo grabado;

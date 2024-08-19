@@ -18,15 +18,16 @@ class PLSParser(BaseParser):
 
         for line in data.splitlines():
             line = line.strip()
+            line_start = line[:5]
 
-            if line.startswith("File"):
+            if line_start.lower().startswith("file"):
                 var, url = line.split("=")
-                index = var.replace("File", "")
+                index = var.lower().replace("file", "")
                 urls[index] = url
 
-            if line.startswith("Title"):
+            if line_start.lower().startswith("title"):
                 var, title = line.split("=")
-                index = var.replace("Title", "")
+                index = var.lower().replace("title", "")
                 titles[index] = title
 
         for index, url in urls.items():

@@ -55,6 +55,7 @@ class Saver:
 
     def load_collections(self) -> Dict[str, Union[CollectionDataExt, None]]:
         collections_data = {}
+
         try:
             data_file = open(self.collections_file_name, 'rb')
             collections_data = pickle.load(data_file)

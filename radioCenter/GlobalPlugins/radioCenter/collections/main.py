@@ -26,27 +26,38 @@ class RadioCollections:
     def collections_names(self) -> List[str]:
         return self.collections.get_collections_names()
 
-    def get_collection(self, name: str) -> BaseCollection:
-        return self.collections.get_collection(name)
+    def get_collection(self, name: str, **kwargs) -> BaseCollection:
+        return self.collections.get_collection(name, **kwargs)
 
     def update(self, collection: BaseCollection, callback_finish: Callable):
         if self._future is not None:
             self._future = None
 
         self._future = self._executor.submit(collection.parse)
-        wx.CallLater(1000, self.check, collection.name, callback_finish)
+        wx.CallLater(1000, self.check, self._future, collection.name, callback_finish)
 
-    def check(self, collection_name: str, callback_finish: Callable):
-        if self._future.done():
-            data = self._future.result()
+    def check(self, future: Future, collection_name: str, callback_finish: Callable):
+        if future and future.done():
+            data = future.result()
+            future = None
             Player.play(SoundType.Success)
             callback_finish(collection_name, data)
 
-        else:
-            Player.play(SoundType.Move)
-            wx.CallLater(1000, self.check, collection_name, callback_finish)
+        elif future:
+            Player.play(SoundType.Action)
+            wx.CallLater(1000, self.check, future, collection_name, callback_finish)
 
-    def verify(self, collection_data: CollectionData, index: int, repeat_count: int, callback_after: Callable):
+        else:
+            Player.play(SoundType.Failure)
+
+    def verify(
+            self,
+            collection_data: CollectionData,
+            index: int,
+            repeat_count: int,
+            callback_after: Callable,
+            is_speech_mode: bool = False,
+    ):
         if self._future is not None:
             self._future = None
 
@@ -58,14 +69,22 @@ class RadioCollections:
                     index,
                     repeat_count,
                     callback_after,
+                    is_speech_mode,
                 ): index
             }
             for future in as_completed(futures):
                 futures.pop(future)
 
-    def verify_station(self, collection_data: CollectionData, index: int, repeat_count: int, callback_after: Callable):
+    def verify_station(
+            self,
+            collection_data: CollectionData,
+            index: int,
+            repeat_count: int,
+            callback_after: Callable,
+            is_speech_mode: bool = False,
+    ):
         data = RadioTestData(
             callback_after=callback_after, url=collection_data.url,
             name=collection_data.name, station_index=index,
         )
-        RadioTester(data, repeat_count, is_speech_mode=False)
+        RadioTester(data, repeat_count, is_speech_mode=is_speech_mode)

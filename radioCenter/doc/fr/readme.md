@@ -6,6 +6,10 @@
 cette extension vous permet d'écouter des stations de radio en ligne et d'enregistrer le flux audio dans un fichier.
 L'enregistrement d'une station de radio n'interfère pas avec l'écoute d'une autre station de radio.
 
+Dans les collections, en plus des annuaires Internet, il est également possible d'ajouter un répertoire local avec des fichiers m3u.
+Pour obtenir une collection locale, vous devez spécifier le chemin de base du répertoire dans les paramètres.
+Tous les fichiers m3u de ce répertoire et tous ses sous-répertoires seront automatiquement analysés.
+
 Avertissements!
 Vérifier les stations de radio à partir des collections est un processus assez long et gourmand en ressources.
 Il est recommandé de l'exécuter par parties, en fermant périodiquement la fenêtre, et de le réexécuter plus tard.
@@ -44,6 +48,22 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
+### Version 4.0.0
+* pour NVDA 2023, les collections sont compatibles, à l'exception d'un navigateur radio ;
+* créé une collection de vérification des fichiers m3u sur le stockage local ;
+* ajout d'un menu de contrôle au menu NVDA ;
+* filtres déplacés vers une boîte de dialogue séparée ;
+* ajout de la lecture sonore lors de la vérification manuelle d'une station dans les collections ;
+* correction d'une erreur de vérification de la station flottante après l'application de filtres ;
+
+### Version 3.6.0
+* apporté des modifications pour la compatibilité avec nvda 2023 (les collections sont désactivées pour la version 2023) ;
+* ajout de la prise en charge des liens m3u ;
+* ajout d'ignorer la casse lors du filtrage par nom et/ou information ;
+* ajout de la suppression des espaces au début et à la fin des noms des stations de radio lors de l'analyse dans les collections ;
+* ajout de la prononciation de l'état de la station lors de la vérification manuelle à l'aide du bouton de test dans les collections ;
+* correction d'une erreur flottante lors de la mise à jour des collections ;
+
 ### Version 3.2.0
 * ajout de la prise en charge des liens .pls ;
 * ajout d'un nom à partir des informations du flux audio lors de la sauvegarde du fichier enregistré ;

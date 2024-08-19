@@ -6,6 +6,10 @@
 bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve ses akışını bir dosyaya kaydetmenize olanak tanır.
 Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini engellemez.
 
+Koleksiyonlara İnternet dizinlerinin yanı sıra m3u dosyalarının bulunduğu yerel bir dizin de eklemek mümkündür.
+Yerel bir koleksiyon elde etmek için ayarlarda dizinin temel yolunu belirtmeniz gerekir.
+Bu dizindeki ve tüm alt dizinlerindeki tüm m3u dosyaları otomatik olarak taranacaktır.
+
 Warnings!
 Checking radio stations from collections is a rather lengthy and resource-intensive process.
 It is recommended to perform it in parts, periodically closing the window, and rerun it later.
@@ -45,6 +49,22 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 4.0.0
+* nvda 2023 için, bir Radyo Tarayıcı hariç uyumlu hale getirilmiş koleksiyonlar;
+* yerel depolamadaki m3u dosyalarını kontrol eden bir koleksiyon oluşturdu;
+* nvda menüsüne bir kontrol menüsü eklendi;
+* filtreleri ayrı bir iletişim kutusuna taşıdı;
+* koleksiyonlardaki bir istasyonu manuel olarak kontrol ederken ses çalma eklendi;
+* filtreler uygulandıktan sonra kayan istasyon kontrol hatası düzeltildi;
+
+### Sürüm 3.6.0
+* nvda 2023 ile uyumluluk için değişiklikler yapıldı (koleksiyonlar 2023 sürümü için devre dışı bırakıldı);
+* m3u bağlantıları için destek eklendi;
+* isme ve/veya bilgiye göre filtreleme yaparken büyük/küçük harfin göz ardı edilmesi eklendi;
+* koleksiyonlarda ayrıştırma yapılırken radyo istasyonları adlarının başına ve sonuna boşlukların temizlenmesi eklendi;
+* koleksiyonlardaki test düğmesini kullanarak manuel olarak kontrol ederken istasyon durumunun telaffuzu eklendi;
+* koleksiyonları güncellerken oluşan kayan hata düzeltildi;
+
 ### Sürüm 3.2.0
 * .pls bağlantıları için destek eklendi;
 * kaydedilen dosyayı kaydederken ses akışı bilgilerinden bir ad eklendi;

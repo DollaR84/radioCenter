@@ -6,6 +6,10 @@
 tento doplněk vám umožňuje poslouchat online rozhlasové stanice a uložit audio stream do souboru.
 Nahrávání jedné rozhlasové stanice neruší poslech jiné rozhlasové stanice.
 
+Ve sbírkách je možné kromě internetových adresářů přidat i lokální adresář se soubory m3u.
+Chcete-li získat místní kolekci, musíte v nastavení zadat základní cestu k adresáři.
+Všechny soubory m3u v tomto adresáři a všechny jeho podadresáře budou automaticky zkontrolovány.
+
 Varování!
 Kontrola rádiových stanic ze sbírek je poměrně zdlouhavý a náročný proces.
 Doporučuje se provádět jej po částech, pravidelně zavírat okno a spouštět jej později.
@@ -44,6 +48,22 @@ V seznamech sbírek:
 * ručně;
 
 ## Seznam změn:
+### Verze 4.0.0
+* pro nvda 2023 vyrobené kolekce kompatibilní, s výjimkou jednoho prohlížeče rádia;
+* vytvořil kolekci kontrolních souborů m3u na místním úložišti;
+* přidáno ovládací menu do menu nvda;
+* přesunuty filtry do samostatného dialogového okna;
+* přidáno přehrávání zvuku při ruční kontrole stanice ve sbírkách;
+* opravena chyba kontroly plovoucí stanice po použití filtrů;
+
+### Verze 3.6.0
+* provedli změny pro kompatibilitu s nvda 2023 (sbírky jsou pro verzi 2023 zakázány);
+* přidána podpora pro odkazy m3u;
+* přidáno ignorování velikosti písmen při filtrování podle jména a/nebo informací;
+* přidáno vymazání mezer na začátku a konci názvů rozhlasových stanic při analýze ve sbírkách;
+* přidána výslovnost stavu stanice při ruční kontrole pomocí testovacího tlačítka v kolekcích;
+* opravena plovoucí chyba při aktualizaci kolekcí;
+
 ### Verze 3.2.0
 * přidána podpora pro odkazy .pls;
 * přidán název z informace o audio streamu při ukládání nahraného souboru;
