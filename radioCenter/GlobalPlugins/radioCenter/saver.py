@@ -3,6 +3,7 @@ import pickle
 from typing import Dict, Union
 
 import globalVars
+from logHandler import log
 
 from .collections import CollectionDataExt
 
@@ -50,17 +51,24 @@ class Saver:
         return config
 
     def save_collections(self, collections_data: Dict[str, Union[CollectionDataExt, None]]):
+        if not collections_data:
+            return
+
         with open(self.collections_file_name, 'wb') as data_file:
             pickle.dump(collections_data, data_file)
 
     def load_collections(self) -> Dict[str, Union[CollectionDataExt, None]]:
         collections_data = {}
 
-        try:
-            data_file = open(self.collections_file_name, 'rb')
-            collections_data = pickle.load(data_file)
+        if not os.path.exists(self.collections_file_name) or not os.path.isfile(self.collections_file_name):
+            return collections_data
 
-        except Exception:
-            pass
+        try:
+            with open(self.collections_file_name, 'rb') as data_file:
+                collections_data = pickle.load(data_file)
+
+        except Exception as error:
+            os.remove(self.collections_file_name)
+            log.error(error, exc_info=True)
 
         return collections_data

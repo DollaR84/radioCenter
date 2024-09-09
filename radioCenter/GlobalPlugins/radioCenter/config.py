@@ -18,6 +18,8 @@ class Config:
 
     repeat_count: int = 10
     repeat_count_collection: int = 3
-    verify_part_count_limit: int = 50
 
+    verify_part_count_limit: int = 200
+
+    need_show_station_link: bool = False
     sort_type: SortType = SortType.Nothing

@@ -48,6 +48,12 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
+###Version 4.2.0
+* ajout de l'extraction du nom de la station, le cas échéant, lors du traitement du fichier m3u ;
+* Ajout d'une option aux paramètres permettant d'afficher ou non un lien vers la station ;
+* une option a été ajoutée aux paramètres pour le nombre de stations par portion à vérifier ;
+* correction de quelques erreurs lors de la vérification automatique des stations ;
+
 ### Version 4.0.0
 * pour NVDA 2023, les collections sont compatibles, à l'exception d'un navigateur radio ;
 * créé une collection de vérification des fichiers m3u sur le stockage local ;

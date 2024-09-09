@@ -61,7 +61,7 @@ class RadioCollections:
         if self._future is not None:
             self._future = None
 
-        with ThreadPoolExecutor(max_workers=1) as executor:
+        with ThreadPoolExecutor() as executor:
             futures = {
                 executor.submit(
                     self.verify_station,
@@ -84,7 +84,9 @@ class RadioCollections:
             is_speech_mode: bool = False,
     ):
         data = RadioTestData(
-            callback_after=callback_after, url=collection_data.url,
-            name=collection_data.name, station_index=index,
+            callback_after=callback_after,
+            url=collection_data.url,
+            name=collection_data.name,
+            station_index=index,
         )
         RadioTester(data, repeat_count, is_speech_mode=is_speech_mode)

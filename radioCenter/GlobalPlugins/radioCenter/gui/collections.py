@@ -31,6 +31,7 @@ class DataSource:
 
     def __init__(self, parent):
         self.parent = parent
+
         self.columns = [_("Name"), _("Status"), _("Info"), _("Url")]
 
     def GetColumnHeaders(self):
@@ -41,7 +42,8 @@ class DataSource:
 
     def GetItem(self, index):
         item = self.parent.collection_data[index]
-        return (item.name, item.status.value, item.info, item.url,)
+        url = item.url if self.parent.parent.config.need_show_station_link else ""
+        return (item.name, item.status.value, item.info, url,)
 
     def UpdateCache(self, start, end):
         pass
@@ -103,7 +105,7 @@ class TabCollection(wx.Panel):
 
         if not self.collection_data:
             self.test_button.Disable()
-            self.play_button.Disable()
+            self.action_button.Disable()
             self.add_button.Disable()
             event.Skip()
             return
@@ -230,21 +232,19 @@ class TabCollection(wx.Panel):
         if self.collection_data and len(self.collection_data) > 0:
             index = self.data.GetIndex()
             item = self.collection_data[index]
-            if id(item) == id(station):
-                self.action_button.SetLabel(self.action_label)
-
-            else:
-                self.collection_data_ext.verified()
 
         if self.parent and data.station_index == self.collection_data_ext.current_check_index:
-            self.verify()
+            self.collection_data_ext.verified()
+            if self.verify_part_count != self.parent.config.verify_part_count_limit:
+                self.verify()
+
+        if data.station_index == len(self.collection_data) - 1:
+            self.parent.save_collections_data()
 
         if self.verify_part_count == self.parent.config.verify_part_count_limit:
             self.parent.save_collections_data()
             self.verify_part_count = 0
-
-        if data.station_index == len(self.collection_data) - 1:
-            self.parent.save_collections_data()
+            self.verify()
 
     def filtering(self, filters: Filters):
         if not self.collection_data_ext:

@@ -1,5 +1,5 @@
 ﻿import os
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from logHandler import log
 
@@ -33,15 +33,17 @@ class M3UParser(BaseParser):
         else:
             return results
 
-        for name, urls in data.items():
-            for url in urls:
+        for global_name, urls_names in data.items():
+            for url, name in zip(*urls_names):
+                if not name:
+                    name = global_name
                 results.append(ItemData(name=name, url=url))
 
         return results
 
     def get_data_from_url(self) -> Dict[str, List[str]]:
         data = self.get_request(self.url)
-        return {self.name: self.get_urls_from_m3u(data)}
+        return {self.name: self.get_data_from_m3u(data)}
 
     def get_data_from_path(self, folder: str) -> Dict[str, List[str]]:
         results = {}
@@ -56,7 +58,7 @@ class M3UParser(BaseParser):
                     continue
 
                 with open(os.path.join(folder, file), "r", encoding="utf-8") as file_data:
-                    results[file_name] = self.get_urls_from_m3u(file_data.read())
+                    results[file_name] = self.get_data_from_m3u(file_data.read())
             except Exception as error:
                 log.error(f"Error read file: {file} in {folder}")
                 log.error(error, exc_info=True)
@@ -66,14 +68,22 @@ class M3UParser(BaseParser):
 
         return results
 
-    def get_urls_from_m3u(self, data: str) -> List[str]:
+    def get_data_from_m3u(self, data: str) -> Tuple[List[str], List[str]]:
         urls = []
+        names = []
 
         for line in data.splitlines():
+            current_name = None
             line = line.strip()
-            line_start = line[:4]
+            line_start = line[:8]
+
+            if line_start.lower().startswith("#extinf:"):
+                extinfo = line.split(",")
+                if len(extinfo) > 1:
+                    current_name = extinfo[1]
 
             if line_start.lower().startswith("http"):
                 urls.append(line)
+                names.append(current_name)
 
-        return urls
+        return urls, names

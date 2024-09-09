@@ -48,6 +48,12 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
+### Versión 4.2.0
+* extracción agregada del nombre de la estación, si la hubiera, al procesar el archivo m3u;
+* Se agregó una opción a la configuración para mostrar un enlace a la estación;
+* se ha agregado una opción a la configuración para verificar el número de estaciones por porción;
+* Se corrigieron algunos errores al verificar automáticamente las estaciones;
+
 ### Versión 4.0.0
 * para nvda 2023, las colecciones son compatibles, excepto un navegador de radio;
 * creó una colección de archivos m3u de verificación en el almacenamiento local;

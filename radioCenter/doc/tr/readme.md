@@ -49,6 +49,12 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 4.2.0
+* m3u dosyasını işlerken varsa istasyon adının çıkarılması eklendi;
+* Ayarlara istasyona bağlantı gösterilip gösterilmeyeceği seçeneği eklendi;
+* Ayarlara, kontrol edilecek porsiyon başına istasyon sayısı için bir seçenek eklendi;
+* istasyonları otomatik olarak kontrol ederken bazı hatalar düzeltildi;
+
 ### Sürüm 4.0.0
 * nvda 2023 için, bir Radyo Tarayıcı hariç uyumlu hale getirilmiş koleksiyonlar;
 * yerel depolamadaki m3u dosyalarını kontrol eden bir koleksiyon oluşturdu;

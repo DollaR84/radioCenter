@@ -1,6 +1,6 @@
 ﻿from dataclasses import dataclass, field
 import sys
-from typing import List
+from typing import Any, Dict, List, Union
 
 import wx
 
@@ -84,10 +84,11 @@ class CollectionDataExt:
 
     def __next__(self):
         if self.current_check_index < len(self.stations) - 1:
-            station = self.stations[self.current_check_index]
             if self._verified:
                 self.current_check_index += 1
                 self._verified = False
+
+            station = self.stations[self.current_check_index]
             return station
 
         else:

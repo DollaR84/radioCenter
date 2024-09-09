@@ -1,6 +1,7 @@
 import addonHandler
 import gui
 from gui.settingsDialogs import SettingsPanel
+from logHandler import log
 
 import wx
 
@@ -51,6 +52,15 @@ class RadioSettings(SettingsPanel):
         self.fs_collection_path = directory_entry_control.pathControl
         self.fs_collection_path.Value = self.radio.config.fs_collection_path
 
+        self.need_show_station_link = settings_sizer_helper.addItem(wx.CheckBox(self, label=_("Show radio station link")))
+        self.need_show_station_link.SetValue(self.radio.config.need_show_station_link)
+
+        verify_part_count_limit_label = _("Count of stations in a part for automatic checking")
+        self.verify_part_count_limit = settings_sizer_helper.addLabeledControl(
+            verify_part_count_limit_label, wx.TextCtrl
+        )
+        self.verify_part_count_limit.SetValue(str(self.radio.config.verify_part_count_limit))
+
     def onSave(self):
         sort_by = self.sort_type.GetStringSelection()
         for sort_type in SortType:
@@ -60,4 +70,12 @@ class RadioSettings(SettingsPanel):
 
         self.radio.config.record_path = self.record_path.GetValue()
         self.radio.config.fs_collection_path = self.fs_collection_path.GetValue()
+
+        self.radio.config.need_show_station_link = self.need_show_station_link.IsChecked()
+
+        try:
+            self.radio.config.verify_part_count_limit = int(self.verify_part_count_limit.GetValue())
+        except ValueError as error:
+            log.error(error, exc_info=True)
+
         self.radio.save()
