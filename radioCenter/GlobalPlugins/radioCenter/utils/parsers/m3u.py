@@ -71,9 +71,9 @@ class M3UParser(BaseParser):
     def get_data_from_m3u(self, data: str) -> Tuple[List[str], List[str]]:
         urls = []
         names = []
+        current_name = None
 
         for line in data.splitlines():
-            current_name = None
             line = line.strip()
             line_start = line[:8]
 

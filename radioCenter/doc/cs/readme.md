@@ -48,7 +48,7 @@ V seznamech sbírek:
 * ručně;
 
 ## Seznam změn:
-### Verze 4.2.0
+### Verze 4.2.1
 * přidána extrakce názvu stanice, pokud existuje, při zpracování souboru m3u;
 * Do nastavení přidána možnost, zda zobrazit odkaz na stanici;
 * do nastavení byla přidána možnost pro počet stanic na kontrolovanou porci;

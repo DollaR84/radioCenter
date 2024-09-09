@@ -48,7 +48,7 @@ In the lists of collections:
 * manually;
 
 ## List of changes:
-### Version 4.2.0
+### Version 4.2.1
 * added extraction of station name, if any, when processing m3u file;
 * the option to show a link to a station has been added to the settings;
 * the option to show the number of stations in a portion to check has been added to the settings;

@@ -48,7 +48,7 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
-### Versión 4.2.0
+### Versión 4.2.1
 * extracción agregada del nombre de la estación, si la hubiera, al procesar el archivo m3u;
 * Se agregó una opción a la configuración para mostrar un enlace a la estación;
 * se ha agregado una opción a la configuración para verificar el número de estaciones por porción;

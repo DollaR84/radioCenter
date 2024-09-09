@@ -49,7 +49,7 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
-### Sürüm 4.2.0
+### Sürüm 4.2.1
 * m3u dosyasını işlerken varsa istasyon adının çıkarılması eklendi;
 * Ayarlara istasyona bağlantı gösterilip gösterilmeyeceği seçeneği eklendi;
 * Ayarlara, kontrol edilecek porsiyon başına istasyon sayısı için bir seçenek eklendi;
