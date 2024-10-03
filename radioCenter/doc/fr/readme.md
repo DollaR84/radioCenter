@@ -48,7 +48,7 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
-###Version 4.2.1
+### Version 4.2.1
 * ajout de l'extraction du nom de la station, le cas échéant, lors du traitement du fichier m3u ;
 * Ajout d'une option aux paramètres permettant d'afficher ou non un lien vers la station ;
 * une option a été ajoutée aux paramètres pour le nombre de stations par portion à vérifier ;
