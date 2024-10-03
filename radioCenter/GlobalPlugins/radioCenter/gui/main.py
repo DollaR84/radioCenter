@@ -11,6 +11,8 @@ from .base import LabelsGUI
 
 from .collections import RadioCollectionsGUI
 
+from .menu import ContextMenu
+
 from ..client import RadioClient
 
 from ..stations import Station
@@ -149,6 +151,7 @@ class RadioGUI(wx.Dialog, LabelsGUI):
 
         self.Bind(wx.EVT_LISTBOX, self.selection_station, self.stations)
         self.stations.Bind(wx.EVT_KEY_UP, self.process_hot_keys)
+        self.stations.Bind(wx.EVT_CONTEXT_MENU, self.process_context_menu)
 
         self.Bind(wx.EVT_CHOICE, self.selection_sort_type, self.sort_type)
         self.Bind(wx.EVT_CHOICE, self.selection_priority_type, self.priority_type)
@@ -193,6 +196,13 @@ class RadioGUI(wx.Dialog, LabelsGUI):
             else:
                 Player.play(SoundType.Failure)
         event.Skip()
+
+    def process_context_menu(self, event):
+        index = self.stations.GetSelection()
+
+        menu = ContextMenu(self.radio, index).menu
+        self.PopupMenu(menu, event.GetPosition())
+        menu.Destroy()
 
     def selection_station(self, event):
         index = self.stations.GetSelection()
