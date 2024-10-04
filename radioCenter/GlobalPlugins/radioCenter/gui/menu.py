@@ -24,46 +24,46 @@ class BaseMenu(LabelsGUI):
         self.mute_item = self.menu.Append(wx.ID_ANY, self.mute_label)
         self.record_item = self.menu.Append(wx.ID_ANY, self.record_label)
 
+    def play(self, event):
+        self.radio.play()
+        wx.CallAfter(self.radio.update_controls)
+
+    def stop(self, event):
+        self.radio.release()
+        wx.CallAfter(self.radio.update_controls)
+
+    def mute(self, event):
+        self.radio.mute()
+        wx.CallAfter(self.radio.update_controls)
+
+    def record(self, event):
+        self.radio.record()
+        wx.CallAfter(self.radio.update_controls)
+
+    def update_controls(self):
+        self.play_item.SetItemLabel(self.play_label)
+        self.mute_item.SetItemLabel(self.mute_label)
+        self.record_item.SetItemLabel(self.record_label)
+
         if not self.radio.is_stations_available:
             self.play_item.Enable(False)
             self.stop_item.Enable(False)
             self.record_item.Enable(False)
 
-        elif not self.radio.is_playing:
+        if self.radio.is_playing:
+            self.stop_item.Enable(True)
+        else:
             self.stop_item.Enable(False)
-            self.record_item.Enable(False)
 
         if not self.radio.is_recording_allowed:
             self.record_item.Enable(False)
-
-    def play(self, event):
-        self.radio.play()
-        self.play_item.SetItemLabel(self.play_label)
-
-        self.stop_item.Enable(True)
-        if self.radio.is_recording_allowed:
-            self.record_item.Enable(True)
-
-    def stop(self, event):
-        self.radio.release()
-        self.play_item.SetItemLabel(self.play_label)
-        self.stop_item.Enable(False)
-        if not self.radio.is_recording:
-            self.record_item.Enable(False)
-
-    def mute(self, event):
-        self.radio.mute()
-        self.mute_item.SetItemLabel(self.mute_label)
-
-    def record(self, event):
-        self.radio.record()
-        self.record_item.SetItemLabel(self.record_label)
 
 
 class ToolsMenu(BaseMenu):
 
     def __init__(self, client: RadioClient):
         super().__init__(client)
+        self.radio.tools_menu = self
 
         self.tools_menu = gui.mainFrame.sysTrayIcon.toolsMenu
 
@@ -81,9 +81,7 @@ class ToolsMenu(BaseMenu):
         self.volume_up_item = self.menu.Append(wx.ID_ANY, _("volume up"))
         self.volume_down_item = self.menu.Append(wx.ID_ANY, _("volume down"))
 
-        if not self.radio.is_stations_available:
-            self.station_up_item.Enable(False)
-            self.station_down_item.Enable(False)
+        wx.CallAfter(self.radio.update_controls)
 
         self.radio_menu = self.tools_menu.AppendSubMenu(self.menu, _("RadioCenter"))
 
@@ -117,6 +115,13 @@ class ToolsMenu(BaseMenu):
     def volume_down(self, event):
         self.radio.volume_down()
 
+    def update_controls(self):
+        super().update_controls()
+
+        if not self.radio.is_stations_available:
+            self.station_up_item.Enable(False)
+            self.station_down_item.Enable(False)
+
 
 class ContextMenu(BaseMenu):
 
@@ -128,6 +133,10 @@ class ContextMenu(BaseMenu):
         self.build_ui()
         self._bindEvents()
 
+    def build_ui(self):
+        super().build_ui()
+        self.update_controls()
+
     def _bindEvents(self):
         self.menu.Bind(wx.EVT_MENU, self.play, self.play_item)
         self.menu.Bind(wx.EVT_MENU, self.stop, self.stop_item)
@@ -136,8 +145,13 @@ class ContextMenu(BaseMenu):
 
     def play(self, event):
         self.radio.stations_control.change_station(self.radio_index)
-        super().play(event)
+        self.radio.play(is_forced=True)
+        wx.CallAfter(self.radio.update_controls)
 
     def record(self, event):
         self.radio.stations_control.change_station(self.radio_index)
         super().record(event)
+
+    def update_controls(self):
+        super().update_controls()
+        self.play_item.SetItemLabel(_("Play"))

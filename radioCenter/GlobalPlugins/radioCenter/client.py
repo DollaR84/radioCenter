@@ -36,6 +36,7 @@ class RadioClient:
         self.recorder = None
 
         self.gui = None
+        self.tools_menu = None
 
         self.instance = vlc.Instance('--no-video', '--input-repeat=-1')
         self.player = None
@@ -79,8 +80,13 @@ class RadioClient:
     def stations(self) -> List[Station]:
         return self.stations_control.stations
 
-    def play(self, count: int = 1, url: Union[str, None] = None):
-        if self.is_playing:
+    def play(
+            self,
+            count: int = 1,
+            url: Union[str, None] = None,
+            is_forced: bool = False,
+    ):
+        if self.is_playing and not is_forced:
             if count > 1:
                 self.release()
             else:
@@ -90,8 +96,12 @@ class RadioClient:
         else:
             if count > 1:
                 self.release()
+
             else:
-                if not self._need_paused:
+                if self.is_playing and is_forced:
+                    self.release()
+
+                if not self._need_paused or is_forced:
                     self.set_media(url)
                 self.player.play()
                 self._need_paused = True
@@ -100,8 +110,7 @@ class RadioClient:
                     self.track_process.Stop()
                 self.track_process = wx.CallLater(5 * 1000, self.track_data)
 
-        if self.gui:
-            wx.CallLater(1000, self.gui.play_button.SetLabel, self.gui.play_label)
+        wx.CallLater(1000, self.update_controls)
 
     def stop(self):
         self._need_paused = False
@@ -285,3 +294,10 @@ class RadioClient:
             self._is_recording = not self._is_recording
             self.gui.record_button.SetLabel(self.gui.record_label)
             ui.message(_("Unable to record audio stream. Recording connection error"))
+
+    def update_controls(self):
+        if self.tools_menu:
+            self.tools_menu.update_controls()
+
+        if self.gui:
+            self.gui.update_controls()

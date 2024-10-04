@@ -37,6 +37,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     )
     def script_play(self, gesture):
         self.radio.play(scriptHandler.getLastScriptRepeatCount() + 1)
+        wx.CallAfter(self.radio.update_controls)
 
     @scriptHandler.script(
         description=_("volume up"),
@@ -58,6 +59,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     )
     def script_mute(self, gesture):
         self.radio.mute()
+        wx.CallAfter(self.radio.update_controls)
 
     @scriptHandler.script(
         description=_("station next"),
@@ -79,6 +81,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     )
     def script_info(self, gesture):
         self.radio.get_info()
+
+    @scriptHandler.script(
+        description=_("Record"),
+        gesture="kb:NVDA+ALT+SHIFT+R"
+    )
+    def script_record(self, gesture):
+        self.radio.record()
+        wx.CallAfter(self.radio.update_controls)
 
     @scriptHandler.script(
         description=_("open radio window"),

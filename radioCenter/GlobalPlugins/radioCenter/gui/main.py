@@ -56,8 +56,8 @@ class RadioGUI(wx.Dialog, LabelsGUI):
             return self._instance
 
         RadioGUI._instance = self
-
         dialog_title = _("Radio Center Control")
+
         super(wx.Dialog, self).__init__(parent, title=dialog_title)
         super(LabelsGUI, self).__init__(client)
 
@@ -125,18 +125,7 @@ class RadioGUI(wx.Dialog, LabelsGUI):
         self.change_station_button.Disable()
         self.remove_station_button.Disable()
 
-        if not self.radio.is_stations_available:
-            self.play_button.Disable()
-            self.stop_button.Disable()
-            self.record_button.Disable()
-
-        elif not self.radio.is_playing:
-            self.stop_button.Disable()
-            self.record_button.Disable()
-
-        if not self.radio.is_recording_allowed:
-            self.record_button.Disable()
-
+        wx.CallAfter(self.radio.update_controls)
         self.close_button.SetDefault()
 
         main_sizer.Add(left_sizer, border=5, flag=wx.EXPAND | wx.ALL)
@@ -207,12 +196,11 @@ class RadioGUI(wx.Dialog, LabelsGUI):
     def selection_station(self, event):
         index = self.stations.GetSelection()
         self.radio.stations_control.change_station(index)
-        self.play_button.Enable()
+
+        wx.CallAfter(self.radio.update_controls)
         self.change_station_button.Enable()
         self.remove_station_button.Enable()
-        self.play_button.SetLabel(self.play_label)
-        if self.radio.is_playing and self.radio.is_recording_allowed:
-            self.record_button.Enable()
+
         self.priority_type.SetStringSelection(self.radio.stations_control.selected.priority.value)
         self.Layout()
 
@@ -306,35 +294,28 @@ class RadioGUI(wx.Dialog, LabelsGUI):
         self.stations.Delete(index)
         new_index = self.radio.remove_station(index)
 
-        if len(self.radio.config.stations) == 0:
-            self.play_button.Disable()
-        else:
+        wx.CallAfter(self.radio.update_controls)
+        if self.radio.is_stations_available:
             self.stations.SetSelection(new_index)
+
         self.remove_station_button.Disable()
         self.Layout()
 
     def play(self, event):
         self.radio.play()
-        self.play_button.SetLabel(self.play_label)
-
-        self.stop_button.Enable()
-        if self.radio.is_recording_allowed:
-            self.record_button.Enable()
+        wx.CallAfter(self.radio.update_controls)
 
     def stop(self, event):
         self.radio.release()
-        self.play_button.SetLabel(self.play_label)
-        self.stop_button.Disable()
-        if not self.radio.is_recording:
-            self.record_button.Disable()
+        wx.CallAfter(self.radio.update_controls)
 
     def mute(self, event):
         self.radio.mute()
-        self.mute_button.SetLabel(self.mute_label)
+        wx.CallAfter(self.radio.update_controls)
 
     def record(self, event):
         self.radio.record()
-        self.record_button.SetLabel(self.record_label)
+        wx.CallAfter(self.radio.update_controls)
 
     def close(self, event):
         self.Close(True)
@@ -351,7 +332,7 @@ class RadioGUI(wx.Dialog, LabelsGUI):
     def get_station_name(self) -> str:
         name = self.station_name.GetValue()
         if not name:
-            name = " ".join([_("Station"), str(len(self.radio.config.stations) + 1)])
+            name = " ".join([_("Station"), str(len(self.radio.stations) + 1)])
         return name
 
     def add_station_after(self, data: RadioTestData):
@@ -396,3 +377,24 @@ class RadioGUI(wx.Dialog, LabelsGUI):
 
         else:
             log.error("error opening clipboard")
+
+    def update_controls(self):
+        self.play_button.SetLabel(self.play_label)
+        self.record_button.SetLabel(self.record_label)
+        self.mute_button.SetLabel(self.mute_label)
+
+        if not self.radio.is_stations_available:
+            self.play_button.Disable()
+            self.stop_button.Disable()
+            self.record_button.Disable()
+
+        else:
+            self.play_button.Enable()
+
+        if self.radio.is_playing:
+            self.stop_button.Enable()
+        else:
+            self.stop_button.Disable()
+
+        if self.radio.is_recording_allowed and self.radio.is_stations_available:
+            self.record_button.Enable()
