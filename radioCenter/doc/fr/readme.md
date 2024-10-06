@@ -20,6 +20,7 @@ De plus, l'état de santé des liens change souvent, il est donc recommandé de 
 ## Liste des raccourcis clavier:
 * NVDA+ALT+P: lire/mettre en pause la radio ;
 * NVDA+ALT+P double clic: désactiver la radio ;
+* NVDA+ALT+SHIFT+R : Activer/désactiver l'enregistrement ;
 * NVDA+ALT+M: activer/désactiver le mode sourdine ;
 * NVDA+ALT+Flèche Haut: augmenter le volume ;
 * NVDA+ALT+Flèche Bas: réduire le volume ;
@@ -48,6 +49,15 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
+### Version 4.5.0
+* ajout d'un menu contextuel à la liste des stations de radio dans la fenêtre principale ;
+* ajout d'une combinaison de touches pour enregistrer une station de radio ;
+* disponibilité fixe de l'enregistrement sans qu'il soit nécessaire de commencer à écouter la station de radio ;
+* correction du changement des étiquettes sur les boutons de la fenêtre principale ;
+* correction du changement dans les étiquettes des éléments dans le menu du service NVDA ;
+* changement synchronisé des étiquettes sur les boutons de la fenêtre principale, les éléments du menu de service NVDA, les éléments du menu contextuel, lors de l'appui sur des combinaisons de touches ;
+* ajout d'une traduction arabe (وفيق طاهر);
+
 ### Version 4.2.1
 * ajout de l'extraction du nom de la station, le cas échéant, lors du traitement du fichier m3u ;
 * Ajout d'une option aux paramètres permettant d'afficher ou non un lien vers la station ;

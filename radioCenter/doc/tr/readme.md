@@ -21,6 +21,7 @@ Also, the health status of links often changes, so it is recommended to check th
 
 * NVDA+ALT+P: radyoyu Çal/duraklat;
 * NVDA+ALT+P çift tıklama: radyoyu kapatır;
+* NVDA+ALT+SHIFT+R: Kaydı etkinleştirin/devre dışı bırakın;
 * NVDA+ALT+M: sessize almayı etkinleştir/devre dışı bırak;
 * NVDA+ALT+Yukarı Ok: sesi arttır;
 * NVDA+ALT+Aşağı Ok: sesi azalt;
@@ -49,6 +50,15 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 4.5.0
+* ana penceredeki radyo istasyonları listesine bir içerik menüsü eklendi;
+* bir radyo istasyonunu kaydetmek için bir tuş kombinasyonu eklendi;
+* radyo istasyonunu çalmaya gerek kalmadan sabit kayıt olanağı;
+* ana penceredeki düğmelerdeki etiketlerdeki değişiklik düzeltildi;
+* nvda hizmet menüsündeki öğelerin etiketlerindeki değişiklik düzeltildi;
+* tuş kombinasyonlarına basıldığında ana pencere düğmeleri, nvda servis menüsünün öğeleri, içerik menüsünün öğeleri üzerindeki etiketlerin senkronize değişimi;
+* Arapça çeviri eklendi (وفيق طاهر);
+
 ### Sürüm 4.2.1
 * m3u dosyasını işlerken varsa istasyon adının çıkarılması eklendi;
 * Ayarlara istasyona bağlantı gösterilip gösterilmeyeceği seçeneği eklendi;

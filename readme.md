@@ -20,6 +20,7 @@ Also, the health status of links often changes, so it is recommended to check th
 ## List of hotkeys:
 * NVDA+ALT+P: play/pause radio;
 * NVDA+ALT+P double click: turn off the radio;
+* NVDA+ALT+SHIFT+R: Enable/disable recording;
 * NVDA+ALT+M: enable/disable muting;
 * NVDA+ALT+UpArrow: volume up;
 * NVDA+ALT+DownArrow: volume down;
@@ -48,6 +49,15 @@ In the lists of collections:
 * manually;
 
 ## List of changes:
+### Version 4.5.0
+* added context menu on the list of radio stations in the main window;
+* added a keyboard shortcut for recording a radio station;
+* fixed the availability of recording without having to start playing the radio station;
+* fixed the change of labels on buttons in the main window;
+* fixed the change of labels of elements in the nvda service menu;
+* synchronized change of labels on buttons in the main window, nvda service menu elements, context menu elements, when pressing key combinations;
+* added Arabic translation (وفيق طاهر);
+
 ### Version 4.2.1
 * added extraction of station name, if any, when processing m3u file;
 * the option to show a link to a station has been added to the settings;

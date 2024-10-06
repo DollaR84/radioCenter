@@ -20,6 +20,7 @@ Stav odkazů se také často mění, proto se doporučuje zkontrolovat stav odka
 ## Seznam klávesových zkratek:
 * NVDA+ALT+P: přehrávání/pozastavení rádia;
 * Dvojité kliknutí NVDA+ALT+P: vypněte rádio;
+* NVDA+ALT+SHIFT+R: Povolí/zakáže nahrávání;
 * NVDA+ALT+M: povolit/zakázat ztlumení;
 * NVDA+ALT+šipka nahoru: zvýšení hlasitosti;
 * NVDA+ALT+šipka dolů: snížení hlasitosti;
@@ -48,6 +49,15 @@ V seznamech sbírek:
 * ručně;
 
 ## Seznam změn:
+### Verze 4.5.0
+* přidáno kontextové menu do seznamu rozhlasových stanic v hlavním okně;
+* přidána kombinace kláves pro nahrávání rozhlasové stanice;
+* pevná dostupnost nahrávání bez nutnosti spuštění přehrávání rozhlasové stanice;
+* opravena změna popisků na tlačítkách v hlavním okně;
+* opravena změna v popiscích prvků v servisním menu nvda;
+* synchronizovaná změna popisků na tlačítkách hlavního okna, prvky servisního menu nvda, prvky kontextového menu, při stisknutí kombinací kláves;
+* přidán arabský překlad (وفيق طاهر);
+
 ### Verze 4.2.1
 * přidána extrakce názvu stanice, pokud existuje, při zpracování souboru m3u;
 * Do nastavení přidána možnost, zda zobrazit odkaz na stanici;

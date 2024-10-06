@@ -20,6 +20,7 @@ Además, el estado de salud de los enlaces cambia a menudo, por lo que se recomi
 ## Lista de atajos de teclado:
 * NVDA+ALT+P: reproducir/pausar la radio;
 * NVDA+ALT+P doble clic: desactivar la radio;
+* NVDA+ALT+SHIFT+R: Activar/desactivar la grabación;
 * NVDA+ALT+M: silenciar/desilenciar el sonido;
 * NVDA+ALT+Flecha arriba: subir el volumen;
 * NVDA+ALT+Flecha abajo: bajar el volumen;
@@ -48,6 +49,15 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
+### Versión 4.5.0
+* agregó un menú contextual a la lista de estaciones de radio en la ventana principal;
+* agregó una combinación de teclas para grabar una estación de radio;
+* disponibilidad fija de grabación sin necesidad de iniciar la reproducción de la estación de radio;
+* cambio fijo en las etiquetas de los botones en la ventana principal;
+* cambio fijo en las etiquetas de los elementos en el menú de servicio de NVDA;
+* cambio sincronizado de etiquetas en los botones de la ventana principal, elementos del menú de servicio NVDA, elementos del menú contextual, al presionar combinaciones de teclas;
+* traducción árabe agregada (وفيق طاهر);
+
 ### Versión 4.2.1
 * extracción agregada del nombre de la estación, si la hubiera, al procesar el archivo m3u;
 * Se agregó una opción a la configuración para mostrar un enlace a la estación;
