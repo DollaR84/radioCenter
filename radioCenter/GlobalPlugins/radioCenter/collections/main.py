@@ -58,9 +58,6 @@ class RadioCollections:
             callback_after: Callable,
             is_speech_mode: bool = False,
     ):
-        if self._future is not None:
-            self._future = None
-
         with ThreadPoolExecutor() as executor:
             futures = {
                 executor.submit(

@@ -23,9 +23,11 @@ class Saver:
 
     def load(self) -> Config:
         config = Config()
+
         try:
             data_file = open(self.file_name, 'rb')
             config = pickle.load(data_file)
+            data_file.close()
 
             config = self.fixed_stations(config)
         except Exception:
@@ -50,25 +52,6 @@ class Saver:
 
         return config
 
-    def save_collections(self, collections_data: Dict[str, Union[CollectionDataExt, None]]):
-        if not collections_data:
-            return
-
-        with open(self.collections_file_name, 'wb') as data_file:
-            pickle.dump(collections_data, data_file)
-
-    def load_collections(self) -> Dict[str, Union[CollectionDataExt, None]]:
-        collections_data = {}
-
-        if not os.path.exists(self.collections_file_name) or not os.path.isfile(self.collections_file_name):
-            return collections_data
-
-        try:
-            with open(self.collections_file_name, 'rb') as data_file:
-                collections_data = pickle.load(data_file)
-
-        except Exception as error:
-            os.remove(self.collections_file_name)
-            log.error(error, exc_info=True)
-
-        return collections_data
+    @property
+    def collections_db_filename(self) -> str:
+        return self.collections_file_name

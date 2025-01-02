@@ -1,7 +1,7 @@
 # radioCenter
 
 * Autor: Ruslan Dolovaniuk (Ucrania)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
 
 este complemento te permite escuchar estaciones de radio en línea y guardar  el flujo de audio en un archivo.
 Grabar una estación de radio no interfiere con escuchar otra estación de radio.

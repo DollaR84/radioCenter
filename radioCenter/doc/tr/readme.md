@@ -1,7 +1,7 @@
 # radyo merkezi
 
 * Yazar: Ruslan Dolovaniuk (Ukrayna)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
 
 bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve ses akışını bir dosyaya kaydetmenize olanak tanır.
 Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini engellemez.

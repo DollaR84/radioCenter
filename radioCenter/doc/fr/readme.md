@@ -1,7 +1,7 @@
 # radioCenter
 
 * Auteur: Ruslan Dolovaniuk (Ukraine)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
 
 cette extension vous permet d'écouter des stations de radio en ligne et d'enregistrer le flux audio dans un fichier.
 L'enregistrement d'une station de radio n'interfère pas avec l'écoute d'une autre station de radio.

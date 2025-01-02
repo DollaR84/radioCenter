@@ -1,21 +1,26 @@
 ﻿from dataclasses import dataclass
 from operator import attrgetter
 from typing import List, Set, Union
+import sys
 
 import wx
 
 from .types import SortType, PriorityType
 
 
-@dataclass
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class Station:
     id: int
     manual_id: int
+
     name: str
     url: str
 
     priority: PriorityType = PriorityType.Middle
     is_selected: bool = False
+
+    is_favorites: bool = False
+    favorites_id: int = 0
 
     @property
     def name_url(self) -> str:

@@ -1,6 +1,6 @@
 ﻿from dataclasses import dataclass, field
 import sys
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
 import wx
 
@@ -15,6 +15,7 @@ class CollectionData:
 
     status: StationStatusType = StationStatusType.NotVerified
     current_url_index: int = 0
+    id: Optional[int] = None
 
     @property
     def url(self) -> str:

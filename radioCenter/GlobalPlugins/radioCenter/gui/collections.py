@@ -16,6 +16,8 @@ from ..collections.types import StationStatusType
 
 from ..config import Config
 
+from ..database import CollectionsDB
+
 from ..saver import Saver
 
 from ..types import PriorityType
@@ -51,15 +53,18 @@ class DataSource:
 
 class TabCollection(wx.Panel):
 
-    def __init__(self, notebook, parent, collection, data: Union[CollectionDataExt, None] = None):
+    def __init__(self, notebook, parent, collection, db):
         super().__init__(notebook, wx.ID_ANY)
 
         self.notebook = notebook
         self.parent = parent
         self.collection = collection
+        self.db = db
 
+        data = self.db.load_data(self.collection.name)
         self.collection_data_ext: Optional[CollectionDataExt] = data
         self.collection_data: List[CollectionData] = data.stations if data else []
+
         self.is_collection_data_updating: bool = False
         self.is_collection_data_updated: bool = False
 
@@ -72,9 +77,13 @@ class TabCollection(wx.Panel):
             self.verify()
 
     def build_ui(self):
+        image_list = wx.ImageList(1, 1)
+        self.SetBackgroundColour(wx.Colour(220, 220, 220))
         sizer = wx.BoxSizer(wx.VERTICAL)
+
         box_data = wx.StaticBox(self, wx.ID_ANY, _("List stations:"))
         self.data = VirtualListCtrl(box_data, DataSource(self))
+        self.data.AssignImageList(image_list, wx.IMAGE_LIST_SMALL)
         sizer.Add(self.data, 1, wx.EXPAND | wx.ALL, 5)
 
         buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -84,7 +93,12 @@ class TabCollection(wx.Panel):
         self.add_button = buttons_helper.addItem(wx.Button(self, label=_("Add station")))
         buttons_sizer.Add(buttons_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
         sizer.Add(buttons_sizer, 1, wx.EXPAND | wx.ALL, 3)
+
         self.SetSizer(sizer)
+        self.Layout()
+        self.parent.Layout()
+        self.Fit()
+        self.parent.Fit()
 
         self.test_button.Disable()
         self.action_button.Disable()
@@ -156,6 +170,9 @@ class TabCollection(wx.Panel):
         ui.message(_("Collection data successfully updated"))
         self.show_items()
 
+        self.Fit()
+        self.parent.Fit()
+
         self.station_generator = self._station_generator()
         self.verify()
 
@@ -207,6 +224,12 @@ class TabCollection(wx.Panel):
     def show_items(self):
         self.data.DeleteAllItems()
         self.data.SetItemCount(len(self.collection_data))
+
+        for i in range(self.data.GetColumnCount()):
+            self.data.SetColumnWidth(i, wx.LIST_AUTOSIZE_USEHEADER)
+
+        self.data.Refresh()
+        self.data.Update()
 
     def _station_generator(self):
         for station in self.collection_data_ext:
@@ -292,6 +315,7 @@ class RadioCollectionsGUI(wx.Dialog):
 
         self.collections: RadioCollections = RadioCollections()
         RadioCollectionsGUI._instance = self
+        self.db = CollectionsDB(self.saver.collections_db_filename)
 
         dialog_title = _("Radio Collections")
         super().__init__(parent, title=dialog_title)
@@ -300,7 +324,6 @@ class RadioCollectionsGUI(wx.Dialog):
         self._bindEvents()
 
     def build_ui(self):
-        collections_data = self.saver.load_collections()
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.notebook = wx.Notebook(self, wx.ID_ANY)
@@ -312,9 +335,10 @@ class RadioCollectionsGUI(wx.Dialog):
             tab = TabCollection(
                 self.notebook, self,
                 collection,
-                data = collections_data.get(collection_name),
+                self.db,
             )
             self.notebook.AddPage(tab, collection_name)
+            tab.show_items()
             self.tabs.append(tab)
         sizer.Add(self.notebook, 1, wx.EXPAND | wx.ALL, 5)
 
@@ -326,7 +350,10 @@ class RadioCollectionsGUI(wx.Dialog):
 
         buttons_sizer.Add(buttons_helper.sizer, border=2, flag=wx.EXPAND | wx.ALL)
         sizer.Add(buttons_sizer, 1, wx.EXPAND | wx.ALL, 3)
+
         self.SetSizer(sizer)
+        self.Layout()
+        self.Fit()
 
     def _bindEvents(self):
         self.Bind(wx.EVT_CLOSE, self.close_window)
@@ -374,12 +401,6 @@ class RadioCollectionsGUI(wx.Dialog):
         self.save_collections_data()
         self.Destroy()
         self._instance = None
-
-    def save_collections_data(self):
-        collections_data: dict[str, CollectionDataExt | None] = {}
-        for tab in self.tabs:
-            collections_data[tab.collection.name] = tab.collection_data_ext
-        self.saver.save_collections(collections_data)
 
     def get_select_page(self):
         page = None

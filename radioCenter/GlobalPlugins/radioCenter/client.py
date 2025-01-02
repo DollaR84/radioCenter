@@ -256,7 +256,7 @@ class RadioClient:
 
     @property
     def is_playing(self) -> bool:
-        return bool(self.player) and self.player.is_playing()
+        return (bool(self.player) and self.player.is_playing()) or self.need_paused
 
     @property
     def need_paused(self) -> bool:

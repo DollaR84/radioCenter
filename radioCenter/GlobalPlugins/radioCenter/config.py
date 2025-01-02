@@ -1,12 +1,13 @@
 ﻿from dataclasses import dataclass, field
 from typing import List
+import sys
 
 from .stations import Station
 
 from .types import SortType
 
 
-@dataclass
+@dataclass(**({"slots": True} if sys.version_info >= (3, 10) else {}))
 class Config:
     stations: List[Station] = field(default_factory=list)
 
