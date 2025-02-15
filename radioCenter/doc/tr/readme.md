@@ -1,7 +1,9 @@
 # radyo merkezi
 
 * Yazar: Ruslan Dolovaniuk (Ukrayna)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
+* Telegram Channel: https://t.me/elrusapps
+* Telegram Group: https://t.me/elrus_apps
 
 bu eklenti çevrimiçi radyo istasyonlarını dinlemenize ve ses akışını bir dosyaya kaydetmenize olanak tanır.
 Bir radyo istasyonunun kaydedilmesi, başka bir radyo istasyonunun dinlenmesini engellemez.
@@ -50,6 +52,9 @@ Koleksiyon listelerinde:
 * manuel olarak;
 
 ## Değişiklik listesi:
+### Sürüm 4.6.3  
+* Romence yerelleştirme eklendi (Nicu Untilă);  
+
 ### Sürüm 4.5.0
 * ana penceredeki radyo istasyonları listesine bir içerik menüsü eklendi;
 * bir radyo istasyonunu kaydetmek için bir tuş kombinasyonu eklendi;

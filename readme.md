@@ -1,7 +1,9 @@
 # radioCenter
 
 * Author: Ruslan Dolovaniuk (Ukraine)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
+* Telegram Channel: https://t.me/elrusapps
+* Telegram Group: https://t.me/elrus_apps
 
 this addon allows you to play online radio stations and save audio stream to file.
 Recording one radio station does not interfere with listening to another radio station.
@@ -49,6 +51,9 @@ In the lists of collections:
 * manually;
 
 ## List of changes:
+### Version 4.6.3  
+* added Romanian localization (Nicu Untilă);
+
 ### Version 4.5.0
 * added context menu on the list of radio stations in the main window;
 * added a keyboard shortcut for recording a radio station;

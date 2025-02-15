@@ -1,7 +1,9 @@
 # radioCenter
 
 * Autor: Ruslan Dolovaniuk (Ucrania)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
+* Telegram Channel: https://t.me/elrusapps
+* Telegram Group: https://t.me/elrus_apps
 
 este complemento te permite escuchar estaciones de radio en línea y guardar  el flujo de audio en un archivo.
 Grabar una estación de radio no interfiere con escuchar otra estación de radio.
@@ -49,6 +51,9 @@ En las listas de colecciones:
 * manualmente;
 
 ## Lista de cambios:
+### Versión 4.6.3  
+* Se agregó localización rumana (Nicu Untilă);  
+
 ### Versión 4.5.0
 * agregó un menú contextual a la lista de estaciones de radio en la ventana principal;
 * agregó una combinación de teclas para grabar una estación de radio;

@@ -1,7 +1,9 @@
 # radioCenter
 
 * Auteur: Ruslan Dolovaniuk (Ukraine)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
+* Telegram Channel: https://t.me/elrusapps
+* Telegram Group: https://t.me/elrus_apps
 
 cette extension vous permet d'écouter des stations de radio en ligne et d'enregistrer le flux audio dans un fichier.
 L'enregistrement d'une station de radio n'interfère pas avec l'écoute d'une autre station de radio.
@@ -49,6 +51,9 @@ Dans les listes de collections:
 * manuellement ;
 
 ## Liste des changements:
+### Version 4.6.3
+* Ajout de la localisation roumaine (Nicu Untilă);  
+
 ### Version 4.5.0
 * ajout d'un menu contextuel à la liste des stations de radio dans la fenêtre principale ;
 * ajout d'une combinaison de touches pour enregistrer une station de radio ;

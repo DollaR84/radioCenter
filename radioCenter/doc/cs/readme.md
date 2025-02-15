@@ -1,7 +1,9 @@
 # radiocentrum
 
 * Autor: Ruslan Dolovanyuk (Ukrajina)
-* PayPal: ruslan.dolovaniuk84@gmail.com
+* PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3VG4L8B7CV3Y&source=url
+* Telegram Channel: https://t.me/elrusapps
+* Telegram Group: https://t.me/elrus_apps
 
 tento doplněk vám umožňuje poslouchat online rozhlasové stanice a uložit audio stream do souboru.
 Nahrávání jedné rozhlasové stanice neruší poslech jiné rozhlasové stanice.
@@ -49,6 +51,9 @@ V seznamech sbírek:
 * ručně;
 
 ## Seznam změn:
+### Verze 4.6.3  
+* Přidána rumunská lokalizace (Nicu Untilă);
+
 ### Verze 4.5.0
 * přidáno kontextové menu do seznamu rozhlasových stanic v hlavním okně;
 * přidána kombinace kláves pro nahrávání rozhlasové stanice;
